@@ -98,5 +98,5 @@ GET /api/analytics/export?format=csv&startDate=2024-01-01
 ## Support
 
 - **Docs**: [docs.costkatana.com/analytics](https://docs.costkatana.com/analytics)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 

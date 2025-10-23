@@ -83,7 +83,7 @@ Issue keys per team member with usage tracking.
 
 ## Support
 - **Docs**: [docs.costkatana.com/key-vault](https://docs.costkatana.com/key-vault)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---
 

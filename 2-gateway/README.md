@@ -287,6 +287,6 @@ const response = await gateway.makeRequest(endpoint, data, {
 ## Support
 
 - **Docs**: [docs.costkatana.com/gateway](https://docs.costkatana.com/gateway)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 - **Email**: support@costkatana.com
 

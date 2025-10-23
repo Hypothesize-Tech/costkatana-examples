@@ -509,7 +509,7 @@ const sdk = new NodeSDK({
 
 - **Documentation**: [docs.costkatana.com/observability](https://docs.costkatana.com/observability)
 - **Dashboard**: [costkatana.com/dashboard/traces](https://costkatana.com/dashboard/traces)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---
 

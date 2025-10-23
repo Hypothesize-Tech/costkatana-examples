@@ -342,7 +342,7 @@ console.log('Cortex Metrics:', {
 
 ## 💬 Support
 
-- **Discord**: [#cortex channel](https://discord.gg/Wcwzw8wM)
+- **Discord**: [#cortex channel](https://discord.gg/D8nDArmKbY)
 - **Email**: support@costkatana.com
 
 

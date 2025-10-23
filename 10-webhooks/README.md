@@ -511,7 +511,7 @@ Visit: [costkatana.com/dashboard/webhooks](https://costkatana.com/dashboard/webh
 
 - **Documentation**: [docs.costkatana.com/webhooks](https://docs.costkatana.com/webhooks)
 - **Dashboard**: [costkatana.com/dashboard/webhooks](https://costkatana.com/dashboard/webhooks)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---
 

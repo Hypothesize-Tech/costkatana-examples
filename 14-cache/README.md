@@ -430,7 +430,7 @@ Visit: [costkatana.com/dashboard/cache](https://costkatana.com/dashboard/cache)
 
 - **Documentation**: [docs.costkatana.com/cache](https://docs.costkatana.com/cache)
 - **Dashboard**: [costkatana.com/dashboard/cache](https://costkatana.com/dashboard/cache)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---
 

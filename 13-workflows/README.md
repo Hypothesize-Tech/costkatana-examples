@@ -570,7 +570,7 @@ GET /api/workflows/{workflowId}/metrics
 
 - **Documentation**: [docs.costkatana.com/workflows](https://docs.costkatana.com/workflows)
 - **Dashboard**: [costkatana.com/dashboard/workflows](https://costkatana.com/dashboard/workflows)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---
 

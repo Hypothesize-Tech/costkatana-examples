@@ -419,7 +419,7 @@ print(f"Saved ${result['saved']:.4f} with Cortex!")
 - **Docs**: [docs.costkatana.com/python](https://docs.costkatana.com/python)
 - **PyPI**: [pypi.org/project/costkatana](https://pypi.org/project/costkatana)
 - **GitHub**: [github.com/Hypothesize-Tech/costkatana-python](https://github.com/Hypothesize-Tech/costkatana-python)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---
 

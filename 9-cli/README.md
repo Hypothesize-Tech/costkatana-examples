@@ -266,7 +266,7 @@ cost-katana chat --model claude-3-haiku
 - **Docs**: [docs.costkatana.com/cli](https://docs.costkatana.com/cli)
 - **NPM**: [npmjs.com/package/cost-katana-cli](https://www.npmjs.com/package/cost-katana-cli)
 - **GitHub**: [github.com/Hypothesize-Tech/costkatana-cli](https://github.com/Hypothesize-Tech/costkatana-cli)
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---
 

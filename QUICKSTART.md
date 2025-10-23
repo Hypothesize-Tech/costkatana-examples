@@ -244,7 +244,7 @@ Update package.json:
 
 ## 💬 Get Help
 
-- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/Wcwzw8wM)
+- **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 - **Email**: support@costkatana.com
 - **Docs**: [docs.costkatana.com](https://docs.costkatana.com)
 - **Dashboard**: [costkatana.com](https://costkatana.com)
