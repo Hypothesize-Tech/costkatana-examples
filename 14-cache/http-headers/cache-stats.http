@@ -1,0 +1,130 @@
+### Cost Katana Cache Management: Cache Statistics
+### Monitor semantic cache performance and savings
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Get Cache Statistics
+GET {{baseUrl}}/cache/stats
+Authorization: Bearer {{apiKey}}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "data": {
+#     "redis": {
+#       "hits": 1250,
+#       "misses": 350,
+#       "totalRequests": 1600,
+#       "hitRate": 78.13,
+#       "costSaved": 45.67,
+#       "tokensSaved": 125000,
+#       "provider": "AWS ElastiCache",
+#       "features": {
+#         "semanticCaching": true,
+#         "deduplication": true,
+#         "userScoped": true,
+#         "modelSpecific": true
+#       }
+#     },
+#     "combined": {
+#       "totalHits": 1250,
+#       "totalMisses": 350,
+#       "totalRequests": 1600,
+#       "hitRate": 78.13,
+#       "totalCostSaved": 45.67,
+#       "totalTokensSaved": 125000,
+#       "averageCostSaved": 0.029
+#     }
+#   }
+# }
+
+### 2. Make Request with Semantic Caching Enabled
+POST {{baseUrl}}/gateway/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+X-Cache-TTL: 3600
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the capital of France?"
+    }
+  ]
+}
+
+###
+# Response includes cache headers:
+# X-Cache-Status: miss (first request)
+# X-Cache-Key: semantic_hash_abc123
+# X-Cache-TTL: 3600
+
+### 3. Repeat Same Request (Cache Hit)
+POST {{baseUrl}}/gateway/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the capital of France?"
+    }
+  ]
+}
+
+###
+# Response includes:
+# X-Cache-Status: hit
+# X-Cache-Age: 15 (seconds since cached)
+# X-Cost-Saved: 0.045 (USD saved by cache hit)
+# X-Tokens-Saved: 150 (tokens saved)
+
+### 4. Semantically Similar Request (Cache Hit)
+POST {{baseUrl}}/gateway/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Tell me the capital city of France"
+    }
+  ]
+}
+
+###
+# Semantic cache recognizes similar meaning:
+# X-Cache-Status: hit
+# X-Similarity-Score: 0.95
+# X-Cost-Saved: 0.045
+
+###
+# Cache Headers:
+# X-Enable-Cache: true/false - Enable/disable caching
+# X-Cache-TTL: seconds - Time to live (default 3600)
+# X-Cache-Bypass: true - Force cache bypass
+# X-Cache-Refresh: true - Update cache with new response
+#
+# Response Headers:
+# X-Cache-Status: hit/miss/bypass
+# X-Cache-Key: Unique cache key
+# X-Cache-Age: Age in seconds
+# X-Cost-Saved: USD saved from cache hit
+# X-Tokens-Saved: Tokens saved
+# X-Similarity-Score: Semantic similarity (0-1)
+
+###
+# Cost Savings Example:
+# 1000 requests/day @ $0.045 each = $45/day
+# 80% cache hit rate = $36/day saved
+# Monthly savings: $1,080

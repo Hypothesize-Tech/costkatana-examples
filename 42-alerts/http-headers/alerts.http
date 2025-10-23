@@ -1,0 +1,14 @@
+### Alert Management
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Create Alert
+POST {{baseUrl}}/alerts
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"name": "High Cost Alert", "threshold": 100, "type": "cost"}
+
+### List Alerts
+GET {{baseUrl}}/alerts
+Authorization: Bearer {{apiKey}}

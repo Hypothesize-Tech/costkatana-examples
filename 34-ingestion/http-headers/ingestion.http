@@ -1,0 +1,14 @@
+### Data Ingestion
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Ingest Data
+POST {{baseUrl}}/ingestion
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"source": "custom", "data": [{"request": "sample"}]}
+
+### Get Ingestion Status
+GET {{baseUrl}}/ingestion/status
+Authorization: Bearer {{apiKey}}

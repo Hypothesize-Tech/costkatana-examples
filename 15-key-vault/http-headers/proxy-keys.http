@@ -1,0 +1,59 @@
+### Cost Katana Key Vault: Proxy Keys
+### Create virtual proxy keys for secure API access
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Create Proxy Key
+POST {{baseUrl}}/key-vault/proxy-keys
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "name": "Frontend Proxy Key",
+  "description": "Proxy key for frontend application",
+  "permissions": ["chat", "embeddings"],
+  "rateLimit": {
+    "requestsPerMinute": 60,
+    "requestsPerDay": 10000
+  },
+  "budgetLimit": 100.00,
+  "allowedModels": ["gpt-4", "gpt-3.5-turbo"],
+  "expiresAt": "2025-12-31T23:59:59Z"
+}
+
+### 2. List All Proxy Keys
+GET {{baseUrl}}/key-vault/proxy-keys
+Authorization: Bearer {{apiKey}}
+
+### 3. Update Proxy Key Status (Activate/Deactivate)
+PATCH {{baseUrl}}/key-vault/proxy-keys/{{proxyKeyId}}/status
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "status": "active"
+}
+
+### 4. Delete Proxy Key
+DELETE {{baseUrl}}/key-vault/proxy-keys/{{proxyKeyId}}
+Authorization: Bearer {{apiKey}}
+
+### 5. Use Proxy Key
+POST {{baseUrl}}/gateway/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer pk_your_proxy_key_here
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Hello!"}]
+}
+
+###
+# Proxy Key Features:
+# ✅ Rate limiting
+# ✅ Budget limits
+# ✅ Model restrictions
+# ✅ Usage analytics
+# ✅ Easy revocation
+# ✅ Expiration dates

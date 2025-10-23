@@ -1,0 +1,14 @@
+### Agent Memory
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Store Memory
+POST {{baseUrl}}/memory
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"agentId": "agent_123", "key": "user_pref", "value": {"theme": "dark"}}
+
+### Retrieve Memory
+GET {{baseUrl}}/memory/{{agentId}}/{{key}}
+Authorization: Bearer {{apiKey}}

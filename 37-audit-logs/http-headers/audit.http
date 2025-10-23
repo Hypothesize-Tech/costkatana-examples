@@ -1,0 +1,18 @@
+### Audit Logs
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Get Audit Logs
+GET {{baseUrl}}/audit-logs
+Authorization: Bearer {{apiKey}}
+
+### Get Specific Log
+GET {{baseUrl}}/audit-logs/{{logId}}
+Authorization: Bearer {{apiKey}}
+
+### Search Logs
+POST {{baseUrl}}/audit-logs/search
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"action": "user.login", "from": "2024-01-01"}

@@ -1,0 +1,21 @@
+### AI Agents Management
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Create Agent
+POST {{baseUrl}}/agents
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"name": "Support Bot", "model": "gpt-4", "systemPrompt": "You are helpful"}
+
+### List Agents
+GET {{baseUrl}}/agents
+Authorization: Bearer {{apiKey}}
+
+### Chat with Agent
+POST {{baseUrl}}/agents/{{agentId}}/chat
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"message": "Hello!"}

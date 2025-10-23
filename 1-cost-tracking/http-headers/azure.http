@@ -1,0 +1,107 @@
+### Azure OpenAI Cost Tracking - GPT-4
+# Automatic cost tracking for Azure OpenAI requests
+# Replace YOUR_COSTKATANA_KEY, YOUR_AZURE_KEY, and YOUR_AZURE_ENDPOINT with your actual values
+
+POST https://YOUR_AZURE_ENDPOINT.openai.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-02-15-preview
+api-key: YOUR_AZURE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: azure-openai
+CostKatana-Property-Region: eastus
+
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an Azure cloud architecture expert."
+    },
+    {
+      "role": "user",
+      "content": "Design a highly available web application architecture on Azure."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 1500
+}
+
+### Azure OpenAI Cost Tracking - GPT-3.5-turbo
+POST https://YOUR_AZURE_ENDPOINT.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-02-15-preview
+api-key: YOUR_AZURE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model-Tier: budget
+CostKatana-Property-Deployment: production
+
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are Azure Kubernetes Service best practices?"
+    }
+  ],
+  "max_tokens": 800
+}
+
+### Azure OpenAI Cost Tracking - GPT-4o
+POST https://YOUR_AZURE_ENDPOINT.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-02-15-preview
+api-key: YOUR_AZURE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model: gpt-4o
+CostKatana-Property-Feature: multimodal
+
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain Azure Functions vs Azure Logic Apps."
+    }
+  ],
+  "temperature": 0.6,
+  "max_tokens": 1000
+}
+
+### Azure OpenAI Cost Tracking - Embeddings
+POST https://YOUR_AZURE_ENDPOINT.openai.azure.com/openai/deployments/text-embedding-ada-002/embeddings?api-version=2024-02-15-preview
+api-key: YOUR_AZURE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: semantic-search
+
+{
+  "input": "Azure Cognitive Services provides AI capabilities for vision, speech, and language."
+}
+
+###
+# 📊 Expected Results:
+# - All Azure OpenAI requests tracked automatically
+# - Token usage counted via tiktoken
+# - Cost calculated based on Azure pricing
+# - Deployment name and region tracked
+# - API version logged
+#
+# 💰 Estimated Costs (Azure Pricing):
+# - GPT-4: ~$0.03-0.06 per request (varies by region)
+# - GPT-3.5-turbo: ~$0.001-0.002 per request
+# - GPT-4o: ~$0.005-0.015 per request
+# - Embeddings: ~$0.0001 per request
+#
+# 🎯 Best Practices:
+# - Choose region closest to users
+# - Use deployment names consistently
+# - Enable Azure Monitor integration
+# - Track by deployment for better cost allocation
+#
+# ⚙️ Setup Instructions:
+# 1. Create Azure OpenAI resource
+# 2. Deploy models in Azure Portal
+# 3. Get endpoint URL and API key
+# 4. Replace YOUR_AZURE_ENDPOINT with your resource name
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

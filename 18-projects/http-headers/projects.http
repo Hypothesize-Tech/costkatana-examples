@@ -1,0 +1,29 @@
+### Projects Management
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Create Project
+POST {{baseUrl}}/projects
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"name": "AI Chatbot", "description": "Customer support bot"}
+
+### List Projects
+GET {{baseUrl}}/projects
+Authorization: Bearer {{apiKey}}
+
+### Get Project
+GET {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{apiKey}}
+
+### Update Project
+PUT {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"name": "Updated Name"}
+
+### Delete Project
+DELETE {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{apiKey}}

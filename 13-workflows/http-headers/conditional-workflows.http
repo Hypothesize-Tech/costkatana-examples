@@ -1,0 +1,79 @@
+### Cost Katana Workflows: Conditional Branching
+### Execute different paths based on AI outputs
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Create Conditional Workflow
+POST {{baseUrl}}/workflows/templates
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "name": "Smart Document Routing",
+  "description": "Route documents based on classification",
+  "steps": [
+    {
+      "id": "classify",
+      "name": "classify_document",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Classify this document type (invoice, contract, report, other): {{document}}",
+      "output": "doc_type"
+    },
+    {
+      "id": "process_invoice",
+      "name": "process_invoice",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Extract invoice details from: {{document}}",
+      "dependsOn": ["classify"],
+      "condition": {
+        "variable": "doc_type",
+        "operator": "contains",
+        "value": "invoice"
+      },
+      "output": "invoice_data"
+    },
+    {
+      "id": "process_contract",
+      "name": "process_contract",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Extract contract terms from: {{document}}",
+      "dependsOn": ["classify"],
+      "condition": {
+        "variable": "doc_type",
+        "operator": "contains",
+        "value": "contract"
+      },
+      "output": "contract_data"
+    },
+    {
+      "id": "generic_process",
+      "name": "generic_processing",
+      "type": "ai",
+      "model": "gpt-3.5-turbo",
+      "prompt": "Summarize document: {{document}}",
+      "dependsOn": ["classify"],
+      "condition": {
+        "variable": "doc_type",
+        "operator": "not_in",
+        "value": ["invoice", "contract"]
+      },
+      "output": "summary"
+    }
+  ],
+  "variables": [
+    {"name": "document", "type": "string", "required": true}
+  ]
+}
+
+###
+# Conditional Operators:
+# - equals: exact match
+# - contains: substring match
+# - in: value in array
+# - not_in: value not in array
+# - greater_than: numeric comparison
+# - less_than: numeric comparison

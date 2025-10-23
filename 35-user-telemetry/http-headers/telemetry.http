@@ -1,0 +1,14 @@
+### User Telemetry Configuration
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Get Telemetry Config
+GET {{baseUrl}}/user-telemetry-config
+Authorization: Bearer {{apiKey}}
+
+### Update Telemetry Config
+PUT {{baseUrl}}/user-telemetry-config
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"enabled": true, "sampling": 0.1}

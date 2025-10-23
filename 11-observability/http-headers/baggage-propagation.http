@@ -1,0 +1,55 @@
+### Cost Katana OpenTelemetry: Baggage Propagation
+### Propagate context across service boundaries
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+@gatewayUrl = https://cost-katana-backend.store/api/gateway
+
+### 1. Basic Baggage Propagation
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+baggage: user_id=user123,tenant_id=tenant456,environment=production
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Hello with baggage"}]
+}
+
+###
+# Baggage is automatically propagated to:
+# - All downstream services
+# - Logs and traces
+# - Metrics and spans
+# - Child requests
+
+### 2. Multi-Value Baggage
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+baggage: user_id=user123,tenant_id=tenant456,team=engineering,project=ai-backend,cost_center=cc_789
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [{"role": "user", "content": "Request with multiple baggage items"}]
+}
+
+### 3. Baggage with Trace Context
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
+baggage: request_id=req_abc123,correlation_id=corr_xyz789
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Request with trace and baggage"}]
+}
+
+###
+# Use Cases:
+# - User/tenant identification across services
+# - Cost center allocation
+# - A/B test variant tracking
+# - Feature flag propagation
+# - Request correlation

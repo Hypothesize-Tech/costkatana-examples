@@ -1,0 +1,157 @@
+### Cost Katana Webhooks: Create Webhook
+### Create webhooks to receive real-time notifications for events
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key_here
+
+### 1. Create Webhook for Cost Alerts
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/cost-alerts",
+  "events": [
+    "cost.alert",
+    "cost.threshold_exceeded",
+    "cost.spike_detected",
+    "cost.anomaly_detected"
+  ],
+  "description": "Receive notifications when costs exceed thresholds",
+  "active": true,
+  "secret": "your_webhook_secret_for_signature_verification"
+}
+
+### 2. Create Webhook for Budget Events
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/budget",
+  "events": [
+    "budget.warning",
+    "budget.exceeded"
+  ],
+  "description": "Budget monitoring webhooks",
+  "active": true,
+  "secret": "your_webhook_secret",
+  "config": {
+    "retryPolicy": {
+      "maxRetries": 3,
+      "retryDelay": 1000,
+      "backoffMultiplier": 2
+    },
+    "timeout": 5000
+  }
+}
+
+### 3. Create Webhook for All Optimization Events
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/optimization",
+  "events": [
+    "optimization.completed",
+    "optimization.failed",
+    "optimization.suggested",
+    "savings.milestone_reached"
+  ],
+  "description": "Track optimization opportunities and savings",
+  "active": true,
+  "secret": "your_webhook_secret"
+}
+
+### 4. Create Webhook for Model Performance
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/performance",
+  "events": [
+    "model.performance_degraded",
+    "model.error_rate_high",
+    "model.latency_high",
+    "model.quota_warning"
+  ],
+  "description": "Monitor model health and performance",
+  "active": true,
+  "filters": {
+    "severity": ["high", "critical"],
+    "models": ["gpt-4", "claude-3-5-sonnet-20241022"]
+  }
+}
+
+### 5. Create Webhook with Custom Payload Template
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/custom",
+  "events": ["cost.alert", "budget.exceeded"],
+  "description": "Custom formatted webhooks",
+  "active": true,
+  "secret": "your_webhook_secret",
+  "payloadTemplate": {
+    "alert_type": "{{event.eventType}}",
+    "severity": "{{event.data.severity}}",
+    "message": "{{event.data.title}}",
+    "details": "{{event.data.description}}",
+    "cost": "{{event.data.cost.amount}}",
+    "timestamp": "{{event.occurredAt}}",
+    "action_url": "{{event.data.links.dashboard}}"
+  }
+}
+
+### 6. List All Webhooks
+GET {{baseUrl}}/webhooks
+Authorization: Bearer {{apiKey}}
+
+### 7. Get Specific Webhook
+GET {{baseUrl}}/webhooks/{webhookId}
+Authorization: Bearer {{apiKey}}
+
+### 8. Update Webhook
+PUT {{baseUrl}}/webhooks/{webhookId}
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "active": false,
+  "events": ["cost.alert"]
+}
+
+### 9. Delete Webhook
+DELETE {{baseUrl}}/webhooks/{webhookId}
+Authorization: Bearer {{apiKey}}
+
+### 10. Test Webhook
+POST {{baseUrl}}/webhooks/{webhookId}/test
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "eventType": "cost.alert",
+  "testData": {
+    "cost": {
+      "amount": 125.50,
+      "threshold": 100.00
+    }
+  }
+}
+
+###
+# Expected Response (Create Webhook):
+# {
+#   "id": "wh_1234567890",
+#   "url": "https://your-server.com/webhooks/cost-alerts",
+#   "events": ["cost.alert", "cost.threshold_exceeded"],
+#   "active": true,
+#   "createdAt": "2024-01-15T10:30:00Z",
+#   "secret": "whsec_***" (masked)
+# }
+

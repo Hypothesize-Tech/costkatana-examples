@@ -1,0 +1,80 @@
+### Cost Katana OpenTelemetry: Custom Spans
+### Create custom spans to track specific operations
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+@gatewayUrl = https://cost-katana-backend.store/api/gateway
+
+### 1. Create Custom Span with Attributes
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Session-Id: custom_span_session
+X-Span-Name: document_processing
+X-Span-Attributes: {"document_type":"pdf","page_count":25,"language":"en"}
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Summarize document"}]
+}
+
+### 2. Nested Spans (Parent-Child)
+# Parent Span
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Session-Id: nested_spans_session
+X-Span-Name: data_analysis_pipeline
+X-Span-Attributes: {"pipeline":"analytics","stage":"extraction"}
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Extract entities"}]
+}
+
+# Child Span (continues parent)
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Session-Id: nested_spans_session
+X-Parent-Trace-Id: {{trace_id_from_parent}}
+X-Span-Name: entity_classification
+X-Span-Attributes: {"pipeline":"analytics","stage":"classification"}
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [{"role": "user", "content": "Classify entities"}]
+}
+
+### 3. Span with Error Tracking
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Session-Id: error_tracking_session
+X-Span-Name: high_risk_operation
+X-Span-Attributes: {"retry_count":1,"max_retries":3}
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Process request"}]
+}
+
+###
+# Custom span attributes available:
+# X-Span-Name: Custom operation name
+# X-Span-Attributes: JSON object with custom attributes
+# X-Span-Events: JSON array of span events
+#
+# Example attributes:
+# - user_id, session_type, operation_type
+# - business_context, department, project
+# - performance_tier, priority_level
+# - custom_tag_1, custom_tag_2, etc.
+
+###
+# Benefits:
+# ✅ Track custom business operations
+# ✅ Add contextual metadata
+# ✅ Group related traces
+# ✅ Monitor specific workflows
+# ✅ Debug with rich context

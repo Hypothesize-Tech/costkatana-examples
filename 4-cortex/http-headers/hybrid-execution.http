@@ -1,0 +1,29 @@
+### Cortex Hybrid Execution: Mix Standard & Cortex Processing
+# Use Cortex for long parts, standard for short parts
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Hybrid-Execution: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {"role": "user", "content": "Quick question: What is Kubernetes?"},
+    {"role": "assistant", "content": "Kubernetes is..."},
+    {"role": "user", "content": "Now write a comprehensive 2000-word guide on Kubernetes architecture, components, and best practices."}
+  ]
+}
+
+###
+# 🎯 Hybrid Processing:
+#
+# Message 1 (short): Standard processing
+# Message 2 (short): Standard processing  
+# Message 3 (long): Cortex processing
+#
+# Result: Optimize only where it matters
+# - Saves processing time on short content
+# - Maximizes savings on long content
+# - Best of both worlds!

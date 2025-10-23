@@ -1,0 +1,239 @@
+### Cost Katana Webhooks: Cost & Budget Alerts
+### Examples of webhook payloads you'll receive for cost events
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key_here
+
+### Setup Webhook for Cost Alerts
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/cost",
+  "events": [
+    "cost.alert",
+    "cost.threshold_exceeded",
+    "budget.warning",
+    "budget.exceeded",
+    "cost.spike_detected",
+    "cost.anomaly_detected"
+  ],
+  "active": true,
+  "secret": "your_webhook_secret"
+}
+
+###
+# WEBHOOK PAYLOAD EXAMPLES
+# These are the payloads your server will receive
+
+### Example 1: Cost Alert Payload
+# POST https://your-server.com/webhooks/cost
+# Headers:
+#   X-CostKatana-Signature: sha256=...
+#   X-CostKatana-Event: cost.alert
+#   Content-Type: application/json
+#
+# Body:
+{
+  "event_id": "evt_abc123",
+  "event_type": "cost.alert",
+  "occurred_at": "2024-01-15T10:30:00Z",
+  "severity": "high",
+  "title": "Daily Cost Threshold Exceeded",
+  "description": "Your daily spending has exceeded $100. Current: $125.50",
+  "data": {
+    "cost": {
+      "amount": 125.50,
+      "currency": "USD",
+      "period": "daily",
+      "threshold": 100.00,
+      "excess": 25.50
+    },
+    "metrics": {
+      "current": 125.50,
+      "threshold": 100.00,
+      "changePercentage": 25.5,
+      "unit": "USD"
+    },
+    "breakdown": {
+      "gpt-4": 75.30,
+      "claude-3-5-sonnet": 35.20,
+      "gemini-pro": 15.00
+    },
+    "links": {
+      "dashboard": "https://costkatana.com/dashboard?date=2024-01-15",
+      "details": "https://costkatana.com/analytics/cost-breakdown"
+    }
+  },
+  "user": {
+    "id": "user_123",
+    "email": "user@company.com"
+  },
+  "project": {
+    "id": "proj_456",
+    "name": "Production API"
+  }
+}
+
+### Example 2: Budget Exceeded Payload
+{
+  "event_id": "evt_def456",
+  "event_type": "budget.exceeded",
+  "occurred_at": "2024-01-15T14:20:00Z",
+  "severity": "critical",
+  "title": "Monthly Budget Exceeded",
+  "description": "Monthly budget of $1000 has been exceeded. Current: $1050.25",
+  "data": {
+    "cost": {
+      "amount": 1050.25,
+      "currency": "USD",
+      "period": "monthly",
+      "threshold": 1000.00,
+      "excess": 50.25
+    },
+    "budget": {
+      "id": "budget_789",
+      "name": "Production Monthly Budget",
+      "limit": 1000.00,
+      "spent": 1050.25,
+      "remaining": -50.25,
+      "percentUsed": 105.0
+    },
+    "actions": {
+      "throttling_enabled": true,
+      "notifications_sent": true
+    },
+    "links": {
+      "dashboard": "https://costkatana.com/budgets/budget_789"
+    }
+  }
+}
+
+### Example 3: Cost Spike Detected Payload
+{
+  "event_id": "evt_ghi789",
+  "event_type": "cost.spike_detected",
+  "occurred_at": "2024-01-15T16:45:00Z",
+  "severity": "high",
+  "title": "Unusual Cost Spike Detected",
+  "description": "Spending increased by 300% compared to typical hourly average",
+  "data": {
+    "metrics": {
+      "current": 45.00,
+      "previous": 15.00,
+      "average": 12.00,
+      "changePercentage": 300.0,
+      "unit": "USD/hour"
+    },
+    "spike": {
+      "duration": "1 hour",
+      "started_at": "2024-01-15T16:00:00Z",
+      "model": "gpt-4",
+      "requests": 450,
+      "typical_requests": 120
+    },
+    "context": {
+      "possible_cause": "Increased API traffic",
+      "recommendation": "Check for loops or retry storms"
+    }
+  }
+}
+
+### Example 4: Cost Anomaly Detected Payload
+{
+  "event_id": "evt_jkl012",
+  "event_type": "cost.anomaly_detected",
+  "occurred_at": "2024-01-15T18:30:00Z",
+  "severity": "medium",
+  "title": "Cost Pattern Anomaly",
+  "description": "Detected unusual cost pattern deviating from baseline",
+  "data": {
+    "anomaly": {
+      "type": "pattern_deviation",
+      "confidence": 0.92,
+      "expected_cost": 20.00,
+      "actual_cost": 55.00,
+      "deviation": 175.0
+    },
+    "metrics": {
+      "current": 55.00,
+      "expected": 20.00,
+      "threshold": 30.00,
+      "unit": "USD"
+    },
+    "affected_resources": [
+      {
+        "type": "model",
+        "id": "gpt-4",
+        "cost_increase": 35.00
+      }
+    ],
+    "recommendation": "Review recent changes to prompts or usage patterns"
+  }
+}
+
+### Example 5: Budget Warning (75% threshold) Payload
+{
+  "event_id": "evt_mno345",
+  "event_type": "budget.warning",
+  "occurred_at": "2024-01-15T12:00:00Z",
+  "severity": "medium",
+  "title": "Budget Warning: 75% Used",
+  "description": "You've used 75% of your monthly budget",
+  "data": {
+    "budget": {
+      "id": "budget_789",
+      "name": "Production Monthly Budget",
+      "limit": 1000.00,
+      "spent": 750.00,
+      "remaining": 250.00,
+      "percentUsed": 75.0,
+      "warningThreshold": 75.0
+    },
+    "projection": {
+      "estimated_total": 1050.00,
+      "days_remaining": 10,
+      "average_daily_spend": 25.00,
+      "projected_overage": 50.00
+    },
+    "recommendations": [
+      "Enable Cortex optimization (70-95% savings)",
+      "Use cheaper models for simple tasks",
+      "Enable caching for repeated requests"
+    ]
+  }
+}
+
+###
+# WEBHOOK VERIFICATION
+# Verify webhook signatures to ensure authenticity
+
+### How to Verify Signatures (Pseudocode):
+# 
+# 1. Get signature from header: X-CostKatana-Signature
+# 2. Extract timestamp and signature: "t=1234567890,v1=abc123..."
+# 3. Create signed payload: "{timestamp}.{request_body}"
+# 4. Compute HMAC-SHA256 with your webhook secret
+# 5. Compare computed signature with received signature
+#
+# Example (Node.js):
+# const crypto = require('crypto');
+# const signature = req.headers['x-costkatana-signature'];
+# const [t, v1] = signature.split(',').map(x => x.split('=')[1]);
+# const payload = `${t}.${JSON.stringify(req.body)}`;
+# const expectedSignature = crypto
+#   .createHmac('sha256', webhookSecret)
+#   .update(payload)
+#   .digest('hex');
+# const isValid = crypto.timingSafeEqual(
+#   Buffer.from(v1),
+#   Buffer.from(expectedSignature)
+# );
+
+###
+# Cost Estimates:
+# - Webhook delivery: FREE
+# - No additional costs for receiving alerts
+# - Helps prevent unexpected costs by alerting early
+

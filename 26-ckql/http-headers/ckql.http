@@ -1,0 +1,14 @@
+### CKQL Query Language
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Execute CKQL Query
+POST {{baseUrl}}/ckql/query
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"query": "SELECT * FROM requests WHERE cost > 0.05 LIMIT 10"}
+
+### Get Schema
+GET {{baseUrl}}/ckql/schema
+Authorization: Bearer {{apiKey}}

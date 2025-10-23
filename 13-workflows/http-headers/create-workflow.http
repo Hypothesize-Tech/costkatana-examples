@@ -1,0 +1,262 @@
+### Cost Katana Workflows: Create and Execute Workflows
+### Orchestrate multi-step AI operations with automatic retries and error handling
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key_here
+
+### 1. Create a Simple Workflow Template
+POST {{baseUrl}}/workflows/templates
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "name": "Document Analysis Workflow",
+  "description": "Extract, analyze, and summarize documents",
+  "steps": [
+    {
+      "id": "step_1",
+      "name": "extract_text",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Extract all text from the document: {{document}}",
+      "output": "extracted_text"
+    },
+    {
+      "id": "step_2",
+      "name": "extract_entities",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Extract all entities (people, organizations, locations) from: {{extracted_text}}",
+      "dependsOn": ["step_1"],
+      "output": "entities"
+    },
+    {
+      "id": "step_3",
+      "name": "summarize",
+      "type": "ai",
+      "model": "gpt-3.5-turbo",
+      "prompt": "Create a concise summary of: {{extracted_text}}",
+      "dependsOn": ["step_1"],
+      "output": "summary"
+    }
+  ],
+  "variables": [
+    {
+      "name": "document",
+      "type": "string",
+      "required": true,
+      "description": "The document content to analyze"
+    }
+  ],
+  "config": {
+    "maxRetries": 3,
+    "retryDelay": 1000,
+    "timeout": 60000,
+    "failureHandling": "continue"
+  }
+}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "message": "Workflow template created successfully",
+#   "data": {
+#     "id": "wf_template_abc123",
+#     "name": "Document Analysis Workflow",
+#     "steps": [...],
+#     "createdAt": "2024-01-15T10:30:00Z"
+#   }
+# }
+
+### 2. List All Workflow Templates
+GET {{baseUrl}}/workflows/templates
+Authorization: Bearer {{apiKey}}
+
+###
+# Response shows all available templates
+
+### 3. Get Specific Template
+GET {{baseUrl}}/workflows/templates/{{templateId}}
+Authorization: Bearer {{apiKey}}
+
+### 4. Execute Workflow with Variables
+POST {{baseUrl}}/workflows/templates/{{templateId}}/execute
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "variables": {
+    "document": "John Smith works at Acme Corporation in New York. The company was founded in 1990 and specializes in technology solutions."
+  },
+  "metadata": {
+    "user_id": "user_123",
+    "source": "api"
+  }
+}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "message": "Workflow execution started",
+#   "data": {
+#     "executionId": "wf_exec_xyz789",
+#     "workflowId": "wf_template_abc123",
+#     "status": "running",
+#     "startedAt": "2024-01-15T10:35:00Z"
+#   }
+# }
+
+### 5. Get Workflow Execution Status
+GET {{baseUrl}}/workflows/executions/{{executionId}}
+Authorization: Bearer {{apiKey}}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "data": {
+#     "executionId": "wf_exec_xyz789",
+#     "workflowId": "wf_template_abc123",
+#     "status": "completed",
+#     "startedAt": "2024-01-15T10:35:00Z",
+#     "completedAt": "2024-01-15T10:35:45Z",
+#     "duration": 45000,
+#     "steps": [
+#       {
+#         "id": "step_1",
+#         "name": "extract_text",
+#         "status": "completed",
+#         "duration": 1200,
+#         "cost": 0.045,
+#         "output": "John Smith works at Acme Corporation..."
+#       },
+#       {
+#         "id": "step_2",
+#         "name": "extract_entities",
+#         "status": "completed",
+#         "duration": 1400,
+#         "cost": 0.052,
+#         "output": {
+#           "people": ["John Smith"],
+#           "organizations": ["Acme Corporation"],
+#           "locations": ["New York"]
+#         }
+#       },
+#       {
+#         "id": "step_3",
+#         "name": "summarize",
+#         "status": "completed",
+#         "duration": 800,
+#         "cost": 0.018,
+#         "output": "Summary of document content..."
+#       }
+#     ],
+#     "totalCost": 0.115,
+#     "outputs": {
+#       "extracted_text": "...",
+#       "entities": {...},
+#       "summary": "..."
+#     }
+#   }
+# }
+
+### 6. Get Workflow Trace (Observability)
+GET {{baseUrl}}/workflows/executions/{{executionId}}/trace
+Authorization: Bearer {{apiKey}}
+
+###
+# Returns detailed trace information for each step including:
+# - Trace IDs
+# - Request/response times
+# - Token usage
+# - Cost breakdown
+# - Error details (if any)
+
+### 7. List All Workflow Executions
+GET {{baseUrl}}/workflows/executions?status=completed&limit=20
+Authorization: Bearer {{apiKey}}
+
+###
+# Query parameters:
+# - status: running, completed, failed, paused
+# - limit: number of results (default 50)
+# - offset: pagination offset
+# - startDate: filter by start date
+# - endDate: filter by end date
+
+### 8. Get Workflow Analytics
+GET {{baseUrl}}/workflows/analytics
+Authorization: Bearer {{apiKey}}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "data": {
+#     "totalExecutions": 1250,
+#     "completedExecutions": 1100,
+#     "failedExecutions": 50,
+#     "runningExecutions": 100,
+#     "successRate": 0.88,
+#     "averageDuration": 42000,
+#     "totalCost": 145.67,
+#     "averageCost": 0.117,
+#     "topWorkflows": [
+#       {
+#         "workflowId": "wf_template_abc123",
+#         "name": "Document Analysis",
+#         "executions": 450,
+#         "successRate": 0.95
+#       }
+#     ]
+#   }
+# }
+
+### 9. Pause Running Workflow
+POST {{baseUrl}}/workflows/executions/{{executionId}}/pause
+Authorization: Bearer {{apiKey}}
+
+###
+# Pauses workflow execution after current step completes
+
+### 10. Resume Paused Workflow
+POST {{baseUrl}}/workflows/executions/{{executionId}}/resume
+Authorization: Bearer {{apiKey}}
+
+###
+# Resumes workflow from where it was paused
+
+### 11. Cancel Workflow Execution
+POST {{baseUrl}}/workflows/executions/{{executionId}}/cancel
+Authorization: Bearer {{apiKey}}
+
+###
+# Cancels running or paused workflow immediately
+
+### 12. Get Workflow Metrics
+GET {{baseUrl}}/workflows/{{workflowId}}/metrics
+Authorization: Bearer {{apiKey}}
+
+###
+# Returns detailed metrics for a specific workflow:
+# - Total executions
+# - Success/failure rates
+# - Average duration
+# - Cost analytics
+# - Performance trends
+
+###
+# Workflow Features:
+# ✅ Multi-step AI orchestration
+# ✅ Automatic dependency management
+# ✅ Retry logic with exponential backoff
+# ✅ Error handling and recovery
+# ✅ Pause/resume/cancel controls
+# ✅ Full observability with tracing
+# ✅ Cost tracking per workflow
+# ✅ Variable substitution
+# ✅ Parallel step execution
+# ✅ Conditional branching
+

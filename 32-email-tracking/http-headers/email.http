@@ -1,0 +1,14 @@
+### Email Tracking
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Send Report Email
+POST {{baseUrl}}/email/report
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"recipient": "user@example.com", "reportType": "weekly"}
+
+### Get Email History
+GET {{baseUrl}}/email/history
+Authorization: Bearer {{apiKey}}

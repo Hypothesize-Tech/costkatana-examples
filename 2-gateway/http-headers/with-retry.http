@@ -1,0 +1,135 @@
+### Gateway Example: Automatic Retries with Exponential Backoff
+# Handle rate limits and transient failures automatically
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Retry-Enabled: true
+CostKatana-Retry-Count: 3
+CostKatana-Retry-Factor: 2
+CostKatana-Retry-Min-Timeout: 1000
+CostKatana-Retry-Max-Timeout: 10000
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain distributed systems resilience patterns."
+    }
+  ]
+}
+
+### Aggressive Retry for Critical Requests
+# More retries with longer timeouts for mission-critical requests
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Retry-Enabled: true
+CostKatana-Retry-Count: 5
+CostKatana-Retry-Factor: 2.5
+CostKatana-Retry-Min-Timeout: 2000
+CostKatana-Retry-Max-Timeout: 30000
+CostKatana-Property-Priority: high
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Generate critical business report summary."
+    }
+  ]
+}
+
+### Fast Retry for Time-Sensitive Requests
+# Fewer retries with shorter timeouts for real-time applications
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Retry-Enabled: true
+CostKatana-Retry-Count: 2
+CostKatana-Retry-Factor: 1.5
+CostKatana-Retry-Min-Timeout: 500
+CostKatana-Retry-Max-Timeout: 3000
+CostKatana-Property-Latency-Sensitive: true
+Content-Type: application/json
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Quick answer: What is Docker?"
+    }
+  ],
+  "max_tokens": 100
+}
+
+### Retry + Caching Combination
+# Best of both worlds: retry for reliability, cache for cost savings
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Retry-Enabled: true
+CostKatana-Retry-Count: 3
+CostKatana-Cache-Enabled: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain circuit breaker pattern."
+    }
+  ]
+}
+
+###
+# 🔄 Retry Benefits:
+# ✅ Handle rate limits (429) automatically
+# ✅ Recover from transient failures (5xx errors)
+# ✅ Exponential backoff (1s → 2s → 4s → 8s)
+# ✅ Configurable retry count (1-10)
+# ✅ Min/max timeout control
+# ✅ Intelligent retry decisions (don't retry 4xx client errors)
+#
+# 📊 Retry Behavior:
+# Attempt 1: Immediate
+# Attempt 2: Wait min_timeout * factor^0 = 1s
+# Attempt 3: Wait min_timeout * factor^1 = 2s
+# Attempt 4: Wait min_timeout * factor^2 = 4s
+# (Up to max_timeout limit)
+#
+# 🎯 Best Practices:
+# - Enable retries for production applications
+# - Use 2-3 retries for normal requests
+# - Use 5+ retries for critical requests
+# - Combine with caching for best reliability
+# - Set appropriate timeouts based on use case
+# - Monitor retry rates for optimization
+#
+# 📈 Response Headers:
+# - CostKatana-Retry-Count: Number of retries performed
+# - CostKatana-Retry-Delay: Total retry delay in ms
+#
+# ⚠️ What Gets Retried:
+# ✅ Rate limit errors (429)
+# ✅ Server errors (500, 502, 503, 504)
+# ✅ Network timeouts
+# ✅ Connection errors
+# ❌ Client errors (400, 401, 403, 404) - not retried
+#
+# 💡 Pro Tip:
+# Combine retries + caching + failover for maximum reliability!
+#
+# 📈 View retry analytics at:
+# https://costkatana.com/gateway/reliability
+

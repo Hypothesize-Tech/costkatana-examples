@@ -1,0 +1,136 @@
+### Cost Katana Cache Management: Semantic Caching
+### Advanced semantic similarity caching
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+@gatewayUrl = https://cost-katana-backend.store/api/gateway
+
+### 1. Enable Semantic Caching (Default)
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+X-Semantic-Threshold: 0.90
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the benefits of cloud computing?"
+    }
+  ]
+}
+
+###
+# X-Semantic-Threshold: 0.90 (default)
+# - 1.0: Exact match only
+# - 0.90: High similarity required
+# - 0.80: Moderate similarity
+# - 0.70: Low similarity
+
+### 2. Similar Query (Semantic Match)
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Tell me the advantages of using cloud services"
+    }
+  ]
+}
+
+###
+# Cache recognizes semantic similarity:
+# X-Cache-Status: hit
+# X-Similarity-Score: 0.92
+# X-Original-Query: "What are the benefits of cloud computing?"
+
+### 3. Different Context (Cache Miss)
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a cloud expert"
+    },
+    {
+      "role": "user",
+      "content": "What are the benefits of cloud computing?"
+    }
+  ]
+}
+
+###
+# Different context = different cache key
+# X-Cache-Status: miss
+# System messages affect semantic hash
+
+### 4. Model-Specific Caching
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the benefits of cloud computing?"
+    }
+  ]
+}
+
+###
+# Different model = different cache
+# X-Cache-Status: miss
+# Caches are model-specific
+
+### 5. User-Scoped Caching
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Enable-Cache: true
+X-Cache-Scope: user
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Show me my recent orders"
+    }
+  ]
+}
+
+###
+# User-specific cache key
+# Different users have separate caches
+# X-Cache-Scope: user/global
+
+###
+# Semantic Caching Benefits:
+# ✅ Recognizes paraphrased queries
+# ✅ Handles different phrasings
+# ✅ Language-agnostic matching
+# ✅ Context-aware caching
+# ✅ 70-90% hit rate typical
+# ✅ Save 30-40% on AI costs
+
+###
+# How It Works:
+# 1. Convert query to embedding
+# 2. Search for similar embeddings
+# 3. If similarity > threshold, return cached response
+# 4. Otherwise, call AI model and cache result

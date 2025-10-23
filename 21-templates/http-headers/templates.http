@@ -1,0 +1,14 @@
+### Prompt Templates
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Create Template
+POST {{baseUrl}}/prompt-templates
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"name": "Email Gen", "template": "Write email about {{topic}}"}
+
+### List Templates
+GET {{baseUrl}}/prompt-templates
+Authorization: Bearer {{apiKey}}

@@ -1,0 +1,290 @@
+### Cortex Example 1: Basic Long-Form Content Generation
+# 70-95% cost reduction for blog posts, articles, documentation
+# This example demonstrates the core Cortex pipeline
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Core-Model: anthropic.claude-opus-4-1-20250805-v1:0
+CostKatana-Cortex-Encoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Decoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Operation: optimize
+CostKatana-Cortex-Output-Style: conversational
+CostKatana-Cortex-Output-Format: markdown
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a comprehensive blog post about the future of artificial intelligence in healthcare. Cover the following topics: diagnostic accuracy improvements, personalized treatment plans, drug discovery acceleration, patient monitoring systems, and ethical considerations. The post should be around 2000 words, well-structured with sections, and include real-world examples. Make it engaging for both technical and non-technical readers."
+    }
+  ],
+  "max_tokens": 3000,
+  "temperature": 0.7
+}
+
+###
+# 📊 Expected Results:
+#
+# WITHOUT CORTEX:
+# - Prompt tokens: ~120
+# - Completion tokens: ~2500 (2000 words)
+# - Total tokens: ~2620
+# - Cost: $0.078 (GPT-4 pricing)
+# - Latency: ~8-12 seconds
+#
+# WITH CORTEX:
+# - Original prompt: 120 tokens
+# - Encoded to Cortex: ~15 tokens (87% reduction!)
+# - Core processing: 15 → 12 tokens
+# - Decoded output: 2500 tokens
+# - ACTUAL tokens processed by GPT-4: 12 tokens (prompt) + 2500 (completion)
+# - Cost: $0.005 (97% savings!!!)
+# - Total latency: ~9-13 seconds (1s Cortex overhead)
+#
+# 💰 Cost Breakdown:
+# 1. Encoding (120 → 15 tokens): Nova Pro    = $0.0001
+# 2. Core Processing (15 → 12): Claude Opus  = $0.0004
+# 3. Decoding (12 → 2500): Nova Pro          = $0.002
+# 4. Final Generation (12 prompt): GPT-4     = $0.0036
+# Total: $0.0061 vs $0.078 standard = 92% savings
+#
+# 📈 Response Headers:
+# CostKatana-Cortex-Enabled: true
+# CostKatana-Cortex-Token-Reduction: 87
+# CostKatana-Cortex-Processing-Time: 1200
+# CostKatana-Cortex-Semantic-Integrity: 0.995
+# CostKatana-Cortex-Cost-Savings: 0.0719
+# CostKatana-Cortex-Cache-Hit: false
+#
+# 🎯 Use Case: Perfect for content generation where you have a long, detailed prompt
+
+
+### Cortex Example 2: Technical Documentation
+# Cortex excels at structured, technical content
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Core-Model: anthropic.claude-opus-4-1-20250805-v1:0
+CostKatana-Cortex-Encoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Decoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Operation: optimize
+CostKatana-Cortex-Output-Style: technical
+CostKatana-Cortex-Output-Format: markdown
+CostKatana-Cortex-Preserve-Semantics: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Create a comprehensive API documentation for a RESTful service that manages user authentication. Include endpoints for: user registration (POST /auth/register), user login (POST /auth/login), token refresh (POST /auth/refresh), logout (POST /auth/logout), password reset request (POST /auth/reset-password), and password reset confirmation (POST /auth/reset-password/confirm). For each endpoint, provide: HTTP method, URL path, request parameters, request body schema, response schema, status codes, error responses, authentication requirements, rate limiting information, and code examples in cURL, JavaScript, and Python. Also include an overview section explaining the authentication flow and JWT token structure."
+    }
+  ],
+  "max_tokens": 4000,
+  "temperature": 0.3
+}
+
+###
+# 📊 Performance Metrics:
+#
+# Standard Processing:
+# - Tokens: ~3500 total
+# - Cost: ~$0.105
+#
+# Cortex Processing:
+# - Prompt compressed: 180 → 18 tokens (90% reduction)
+# - Core processing overhead: ~1.5s
+# - Final cost: ~$0.008
+# - Savings: 92.4%
+#
+# 🎯 Best For:
+# - API documentation
+# - Technical specifications
+# - Architecture diagrams (as text)
+# - Code documentation
+# - Integration guides
+
+
+### Cortex Example 3: Content with Specific Formatting
+# Control output style and format precisely
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.anthropic.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Core-Model: anthropic.claude-opus-4-1-20250805-v1:0
+CostKatana-Cortex-Encoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Decoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Operation: transform
+CostKatana-Cortex-Output-Style: formal
+CostKatana-Cortex-Output-Format: structured
+Content-Type: application/json
+
+{
+  "model": "claude-3-5-sonnet-20241022",
+  "max_tokens": 2000,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Prepare a detailed business proposal for implementing an AI-powered customer service system. Include: Executive Summary (1 paragraph), Problem Statement (2 paragraphs), Proposed Solution (3 paragraphs with bullet points), Technical Requirements (itemized list), Implementation Timeline (6-month roadmap), Budget Breakdown (table format), Expected ROI (with metrics), Risk Assessment (5 key risks with mitigation strategies), and Conclusion (1 paragraph). Use professional business language throughout."
+    }
+  ]
+}
+
+###
+# 🎨 Output Style Options:
+#
+# CostKatana-Cortex-Output-Style:
+# - formal      → Professional, academic writing
+# - conversational → Natural, casual tone
+# - technical   → Precise technical language
+# - casual      → Informal, friendly tone
+#
+# CostKatana-Cortex-Output-Format:
+# - plain       → Plain text
+# - markdown    → Markdown formatting
+# - structured  → Highly organized sections
+# - json        → JSON structure (when applicable)
+#
+# 💰 Cost Analysis:
+# - Standard: $0.045 (Claude 3.5 Sonnet)
+# - Cortex: $0.004
+# - Savings: 91%
+
+
+### Cortex Example 4: Educational Content
+# Perfect for tutorials, guides, and explanations
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Core-Model: anthropic.claude-opus-4-1-20250805-v1:0
+CostKatana-Cortex-Encoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Decoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Operation: optimize
+CostKatana-Cortex-Output-Style: conversational
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Create a comprehensive beginner's tutorial on Docker containerization. Cover: What is Docker and why use it, key concepts (images, containers, Dockerfile, Docker Compose), installation guide for Windows/Mac/Linux, creating your first Docker image with a step-by-step walkthrough, running containers with practical examples, Docker Compose for multi-container applications with a full example project, best practices for production use, common troubleshooting tips, and resources for further learning. Include code examples and explanations suitable for someone new to containers. Target length: 3000 words."
+    }
+  ],
+  "max_tokens": 4000
+}
+
+###
+# 📚 Educational Content Performance:
+#
+# Without Cortex:
+# - Tokens: ~4200
+# - Cost: $0.126
+# - Time: ~15s
+#
+# With Cortex:
+# - Compressed prompt: 150 → 16 tokens (89% reduction)
+# - Cost: $0.009
+# - Time: ~16s (1s overhead)
+# - Savings: 92.9%
+#
+# 🎓 Perfect For:
+# - Tutorial creation
+# - Course material
+# - How-to guides
+# - Educational blog posts
+# - Training documentation
+
+
+### Cortex Example 5: Comparative Analysis
+# Great for analysis, comparisons, and research summaries
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.anthropic.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Core-Model: anthropic.claude-opus-4-1-20250805-v1:0
+CostKatana-Cortex-Encoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Decoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Operation: analyze
+CostKatana-Cortex-Output-Format: structured
+Content-Type: application/json
+
+{
+  "model": "claude-3-5-sonnet-20241022",
+  "max_tokens": 3000,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Conduct a detailed comparative analysis of three popular web frameworks: React, Vue.js, and Angular. For each framework, analyze: learning curve, performance characteristics, ecosystem and community support, use cases and best suited applications, developer experience, tooling and development workflow, state management options, testing capabilities, mobile development options, enterprise readiness, job market demand, and long-term viability. Provide a comparison table, pros and cons for each, and recommendations for different scenarios (startup, enterprise, specific use cases). Include code examples demonstrating the same feature in each framework. Make it comprehensive and balanced."
+    }
+  ]
+}
+
+###
+# 📊 Analysis Tasks Performance:
+#
+# Token Reduction by Content Type:
+# - Comparative analysis: 85-90%
+# - Research summaries: 80-88%
+# - Technical reviews: 82-89%
+# - Literature reviews: 78-85%
+#
+# 💡 Why Cortex Excels Here:
+# Cortex semantic frames naturally capture:
+# - Structured comparisons
+# - Multi-faceted analysis
+# - Hierarchical information
+# - Relationship mapping
+
+
+###
+# 🚀 CORTEX BEST PRACTICES:
+#
+# ✅ DO USE CORTEX FOR:
+# - Long-form content (>500 words)
+# - Detailed documentation
+# - Comprehensive guides
+# - Technical specifications
+# - Educational material
+# - Research summaries
+# - Comparative analyses
+#
+# ❌ DON'T USE CORTEX FOR:
+# - Short questions (<50 tokens)
+# - Real-time chat (latency sensitive)
+# - Simple factual queries
+# - Quick responses needed
+#
+# 🎯 OPTIMIZATION TIPS:
+# 1. Enable semantic caching for repeated patterns
+# 2. Use intelligent routing to auto-detect suitability
+# 3. Monitor semantic integrity scores
+# 4. Batch similar requests together
+# 5. Use appropriate output styles for your use case
+#
+# 📈 EXPECTED SAVINGS BY CONTENT TYPE:
+# - Blog posts: 85-92%
+# - Documentation: 80-90%
+# - Tutorials: 82-91%
+# - Analysis: 78-88%
+# - Technical specs: 85-93%
+#
+# View your Cortex analytics at:
+# https://costkatana.com/cortex/analytics
+

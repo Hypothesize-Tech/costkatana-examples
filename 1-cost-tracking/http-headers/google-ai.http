@@ -1,0 +1,148 @@
+### Google AI Cost Tracking - Gemini Pro
+# Automatic cost tracking for Google AI requests
+# Replace YOUR_COSTKATANA_KEY and YOUR_GOOGLE_API_KEY with your actual keys
+
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_GOOGLE_API_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: google
+CostKatana-Property-Feature: content-generation
+
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Write a blog post about the future of artificial intelligence."
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 0.9,
+    "topK": 40,
+    "topP": 0.95,
+    "maxOutputTokens": 1024
+  }
+}
+
+### Google AI Cost Tracking - Gemini Flash (Fast & Cost Optimized)
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=YOUR_GOOGLE_API_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model-Tier: budget
+CostKatana-Property-Speed-Priority: high
+
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Summarize the key features of Google Cloud Platform."
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 0.5,
+    "maxOutputTokens": 512
+  }
+}
+
+### Google AI Cost Tracking - Gemini with Chat History
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_GOOGLE_API_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: conversational-ai
+CostKatana-Session-Id: session_demo_456
+
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "What is machine learning?"
+        }
+      ]
+    },
+    {
+      "role": "model",
+      "parts": [
+        {
+          "text": "Machine learning is a subset of artificial intelligence..."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Can you give me a real-world example?"
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 0.7,
+    "maxOutputTokens": 800
+  }
+}
+
+### Google AI Cost Tracking - Gemini with Safety Settings
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_GOOGLE_API_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: safe-content
+
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Explain how neural networks work."
+        }
+      ]
+    }
+  ],
+  "safetySettings": [
+    {
+      "category": "HARM_CATEGORY_HARASSMENT",
+      "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+      "category": "HARM_CATEGORY_HATE_SPEECH",
+      "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    }
+  ],
+  "generationConfig": {
+    "temperature": 0.6,
+    "maxOutputTokens": 1500
+  }
+}
+
+###
+# 📊 Expected Results:
+# - All Gemini requests tracked automatically
+# - Token/character usage from Google AI response
+# - Cost calculated based on model pricing
+# - Session tracking for conversations
+# - Safety settings logged
+#
+# 💰 Estimated Costs:
+# - Gemini Pro: ~$0.0005/1K input chars, ~$0.0015/1K output chars
+# - Gemini Flash: ~$0.00001875/1K input chars, ~$0.000075/1K output chars
+#
+# 🎯 Best Practices:
+# - Use Gemini Flash for simple, fast tasks (80% cheaper)
+# - Use Gemini Pro for complex reasoning
+# - Enable safety settings for production apps
+# - Track sessions for conversational context
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

@@ -1,0 +1,18 @@
+### Third-Party Integrations
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### List Integrations
+GET {{baseUrl}}/integrations
+Authorization: Bearer {{apiKey}}
+
+### Connect Integration
+POST {{baseUrl}}/integrations/connect
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"provider": "slack", "credentials": {"webhook": "https://hooks.slack.com/..."\}\}
+
+### Get Integration Status
+GET {{baseUrl}}/integrations/{{integrationId}}/status
+Authorization: Bearer {{apiKey}}

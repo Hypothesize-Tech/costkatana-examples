@@ -1,0 +1,122 @@
+### DeepSeek Cost Tracking - DeepSeek Chat
+# Automatic cost tracking for DeepSeek requests
+# Replace YOUR_COSTKATANA_KEY and YOUR_DEEPSEEK_KEY with your actual keys
+
+POST https://api.deepseek.com/v1/chat/completions
+Authorization: Bearer YOUR_DEEPSEEK_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: deepseek
+CostKatana-Property-Feature: coding-assistant
+
+{
+  "model": "deepseek-chat",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert programmer specializing in algorithms."
+    },
+    {
+      "role": "user",
+      "content": "Implement a binary search tree in TypeScript with insert, search, and delete operations."
+    }
+  ],
+  "temperature": 0.5,
+  "max_tokens": 2000
+}
+
+### DeepSeek Cost Tracking - DeepSeek Coder
+POST https://api.deepseek.com/v1/chat/completions
+Authorization: Bearer YOUR_DEEPSEEK_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model: deepseek-coder
+CostKatana-Property-Language: python
+
+{
+  "model": "deepseek-coder",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a Python function to calculate Fibonacci numbers using dynamic programming."
+    }
+  ],
+  "temperature": 0.3,
+  "max_tokens": 1000
+}
+
+### DeepSeek Cost Tracking - with Streaming
+POST https://api.deepseek.com/v1/chat/completions
+Authorization: Bearer YOUR_DEEPSEEK_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: streaming-response
+
+{
+  "model": "deepseek-chat",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain the difference between REST and GraphQL APIs."
+    }
+  ],
+  "stream": true,
+  "max_tokens": 800
+}
+
+### DeepSeek Cost Tracking - Code Review
+POST https://api.deepseek.com/v1/chat/completions
+Authorization: Bearer YOUR_DEEPSEEK_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: code-review
+CostKatana-Property-Severity: high
+
+{
+  "model": "deepseek-coder",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a senior code reviewer focusing on security and performance."
+    },
+    {
+      "role": "user",
+      "content": "Review this code for potential issues:\n\nfunction getUserData(userId) {\n  return db.query('SELECT * FROM users WHERE id = ' + userId);\n}"
+    }
+  ],
+  "temperature": 0.2,
+  "max_tokens": 1500
+}
+
+###
+# 📊 Expected Results:
+# - All DeepSeek requests tracked automatically
+# - Token usage from DeepSeek API response
+# - Cost calculated (very competitive pricing)
+# - Code-specific features logged
+# - Streaming mode tracked
+#
+# 💰 Estimated Costs:
+# - DeepSeek Chat: ~$0.00014/1K input tokens, ~$0.00028/1K output tokens
+# - DeepSeek Coder: ~$0.00014/1K input tokens, ~$0.00028/1K output tokens
+# (Note: DeepSeek is significantly cheaper than GPT-4/Claude)
+#
+# 🎯 Best Practices:
+# - Use DeepSeek for cost-sensitive code generation
+# - Lower temperature (0.2-0.4) for code tasks
+# - Use DeepSeek Coder for programming-specific tasks
+# - Great for high-volume code assistance
+#
+# 🚀 Why DeepSeek:
+# - 95% cheaper than GPT-4
+# - Excellent for code generation
+# - Strong reasoning capabilities
+# - Fast inference speed
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

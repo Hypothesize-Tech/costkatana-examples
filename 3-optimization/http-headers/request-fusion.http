@@ -1,0 +1,20 @@
+### Optimization: Request Fusion
+# Batch similar requests together for cost savings
+POST https://cost-katana-backend.store/api/optimizations/batch
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+Content-Type: application/json
+
+{
+  "requests": [
+    {"prompt": "Translate 'hello' to Spanish"},
+    {"prompt": "Translate 'goodbye' to Spanish"},
+    {"prompt": "Translate 'thank you' to Spanish"}
+  ],
+  "service": "openai",
+  "model": "gpt-4",
+  "options": {
+    "enableRequestFusion": true
+  }
+}
+
+### Expected: 50-70% cost reduction by batching

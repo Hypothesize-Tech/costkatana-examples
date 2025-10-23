@@ -1,0 +1,15 @@
+### Unexplained Costs Detection
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Get Unexplained Costs
+GET {{baseUrl}}/analytics/unexplained-costs
+Authorization: Bearer {{apiKey}}
+
+### Get Cost Anomalies
+GET {{baseUrl}}/analytics/cost-anomalies
+Authorization: Bearer {{apiKey}}
+
+### Investigate Cost
+GET {{baseUrl}}/analytics/investigate/{{requestId}}
+Authorization: Bearer {{apiKey}}

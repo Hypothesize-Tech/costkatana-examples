@@ -1,0 +1,44 @@
+### Gateway Example: Security Firewall
+# Block malicious prompts, injection attacks, and jailbreaks
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Firewall-Enabled: true
+CostKatana-Firewall-Advanced: true
+CostKatana-Firewall-Prompt-Threshold: 0.8
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain cybersecurity best practices."
+    }
+  ]
+}
+
+###
+# ��️ Firewall Protection:
+# ✅ Prompt injection detection
+# ✅ Jailbreak attempt blocking
+# ✅ PII leakage prevention
+# ✅ Malicious content filtering
+# ✅ Data exfiltration blocking
+#
+# 🚨 Blocked Patterns:
+# - "Ignore previous instructions"
+# - "You are now in developer mode"
+# - SQL injection attempts
+# - XSS payloads
+# - PII extraction attempts
+#
+# 📊 Response on Block:
+# HTTP 403 Forbidden
+# {
+#   "error": "Request blocked by firewall",
+#   "reason": "Prompt injection detected",
+#   "threat_score": 0.95
+# }

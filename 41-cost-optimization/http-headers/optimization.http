@@ -1,0 +1,11 @@
+### Cost Optimization Recommendations
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Get Recommendations
+GET {{baseUrl}}/optimization/recommendations
+Authorization: Bearer {{apiKey}}
+
+### Get Savings Report
+GET {{baseUrl}}/optimization/savings
+Authorization: Bearer {{apiKey}}

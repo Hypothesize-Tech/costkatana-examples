@@ -1,0 +1,97 @@
+### Cohere Cost Tracking - Command R+
+# Automatic cost tracking for Cohere requests
+# Replace YOUR_COSTKATANA_KEY and YOUR_COHERE_KEY with your actual keys
+
+POST https://api.cohere.ai/v1/chat
+Authorization: Bearer YOUR_COHERE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: cohere
+CostKatana-Property-Feature: enterprise-chat
+
+{
+  "model": "command-r-plus",
+  "message": "Explain the concept of retrieval-augmented generation (RAG).",
+  "temperature": 0.7,
+  "max_tokens": 1000
+}
+
+### Cohere Cost Tracking - Command (Cost Optimized)
+POST https://api.cohere.ai/v1/chat
+Authorization: Bearer YOUR_COHERE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model-Tier: standard
+
+{
+  "model": "command",
+  "message": "What are the benefits of using embeddings for search?",
+  "temperature": 0.5,
+  "max_tokens": 500
+}
+
+### Cohere Cost Tracking - with Chat History
+POST https://api.cohere.ai/v1/chat
+Authorization: Bearer YOUR_COHERE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Session-Id: session_cohere_789
+
+{
+  "model": "command-r-plus",
+  "message": "Can you give me an example use case?",
+  "chat_history": [
+    {
+      "role": "USER",
+      "message": "What is semantic search?"
+    },
+    {
+      "role": "CHATBOT",
+      "message": "Semantic search is a search technique that..."
+    }
+  ],
+  "temperature": 0.7
+}
+
+### Cohere Cost Tracking - Embeddings
+POST https://api.cohere.ai/v1/embed
+Authorization: Bearer YOUR_COHERE_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: vector-embeddings
+
+{
+  "model": "embed-english-v3.0",
+  "texts": [
+    "Cost Katana helps you track and optimize AI costs across all providers.",
+    "Semantic search uses embeddings to understand meaning rather than keywords."
+  ],
+  "input_type": "search_document"
+}
+
+###
+# 📊 Expected Results:
+# - All Cohere requests tracked automatically
+# - Token usage from Cohere API response
+# - Cost calculated per model
+# - Chat history context tracked
+# - Embedding dimensions logged
+#
+# 💰 Estimated Costs:
+# - Command R+: ~$0.003/1K input tokens, ~$0.015/1K output tokens
+# - Command: ~$0.0005/1K input tokens, ~$0.0015/1K output tokens
+# - Embed v3: ~$0.0001/1K tokens
+#
+# 🎯 Best Practices:
+# - Use Command for standard tasks (6x cheaper)
+# - Use Command R+ for enterprise/complex tasks
+# - Use embeddings for semantic search
+# - Track sessions for conversational apps
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

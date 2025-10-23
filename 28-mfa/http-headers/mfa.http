@@ -1,0 +1,24 @@
+### Multi-Factor Authentication
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Enable MFA
+POST {{baseUrl}}/auth/mfa/enable
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{}
+
+### Verify MFA
+POST {{baseUrl}}/auth/mfa/verify
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"code": "123456"}
+
+### Disable MFA
+POST {{baseUrl}}/auth/mfa/disable
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"code": "123456"}

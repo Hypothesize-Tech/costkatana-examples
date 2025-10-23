@@ -1,0 +1,95 @@
+### Cost Katana Workflows: Parallel Execution
+### Execute multiple AI steps in parallel for faster workflows
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Create Parallel Workflow Template
+POST {{baseUrl}}/workflows/templates
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "name": "Parallel Document Processing",
+  "description": "Process multiple aspects of a document simultaneously",
+  "steps": [
+    {
+      "id": "step_1",
+      "name": "extract_text",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Extract text from: {{document}}",
+      "output": "text"
+    },
+    {
+      "id": "step_2a",
+      "name": "extract_entities",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Extract entities from: {{text}}",
+      "dependsOn": ["step_1"],
+      "parallel": true,
+      "output": "entities"
+    },
+    {
+      "id": "step_2b",
+      "name": "sentiment_analysis",
+      "type": "ai",
+      "model": "gpt-3.5-turbo",
+      "prompt": "Analyze sentiment of: {{text}}",
+      "dependsOn": ["step_1"],
+      "parallel": true,
+      "output": "sentiment"
+    },
+    {
+      "id": "step_2c",
+      "name": "key_phrases",
+      "type": "ai",
+      "model": "gpt-3.5-turbo",
+      "prompt": "Extract key phrases from: {{text}}",
+      "dependsOn": ["step_1"],
+      "parallel": true,
+      "output": "phrases"
+    },
+    {
+      "id": "step_3",
+      "name": "generate_report",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Generate report from entities: {{entities}}, sentiment: {{sentiment}}, phrases: {{phrases}}",
+      "dependsOn": ["step_2a", "step_2b", "step_2c"],
+      "output": "report"
+    }
+  ],
+  "variables": [
+    {"name": "document", "type": "string", "required": true}
+  ]
+}
+
+###
+# Benefits of Parallel Execution:
+# ✅ 3x faster execution (steps 2a, 2b, 2c run simultaneously)
+# ✅ Automatic dependency resolution
+# ✅ Reduced total workflow time
+# ✅ Optimized resource utilization
+
+### 2. Execute Parallel Workflow
+POST {{baseUrl}}/workflows/templates/{{templateId}}/execute
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "variables": {
+    "document": "Cost Katana is an amazing AI cost optimization platform..."
+  }
+}
+
+###
+# Execution Timeline:
+# 0s    - Step 1: Extract text (1.2s)
+# 1.2s  - Steps 2a, 2b, 2c start in parallel
+# 2.6s  - All parallel steps complete (max 1.4s)
+# 2.6s  - Step 3: Generate report (1.0s)
+# 3.6s  - Workflow complete
+#
+# Total: 3.6s (vs 5.8s sequential)

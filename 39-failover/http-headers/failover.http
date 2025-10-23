@@ -1,0 +1,21 @@
+### Failover Configuration
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Get Failover Config
+GET {{baseUrl}}/failover/config
+Authorization: Bearer {{apiKey}}
+
+### Update Failover Config
+PUT {{baseUrl}}/failover/config
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"enabled": true, "providers": ["openai", "anthropic"]}
+
+### Test Failover
+POST {{baseUrl}}/failover/test
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"primaryProvider": "openai"}

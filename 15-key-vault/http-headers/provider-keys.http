@@ -1,0 +1,51 @@
+### Cost Katana Key Vault: Provider Keys Management
+### Securely store and manage AI provider API keys
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Create Provider Key (OpenAI)
+POST {{baseUrl}}/key-vault/provider-keys
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "provider": "openai",
+  "apiKey": "sk-proj-...",
+  "name": "Production OpenAI Key",
+  "description": "Main OpenAI key for production use",
+  "metadata": {
+    "environment": "production",
+    "team": "engineering"
+  }
+}
+
+### 2. Create Provider Key (Anthropic)
+POST {{baseUrl}}/key-vault/provider-keys
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "provider": "anthropic",
+  "apiKey": "sk-ant-...",
+  "name": "Production Claude Key"
+}
+
+### 3. List All Provider Keys
+GET {{baseUrl}}/key-vault/provider-keys
+Authorization: Bearer {{apiKey}}
+
+### 4. Delete Provider Key
+DELETE {{baseUrl}}/key-vault/provider-keys/{{providerKeyId}}
+Authorization: Bearer {{apiKey}}
+
+###
+# Supported Providers:
+# - openai
+# - anthropic
+# - aws-bedrock
+# - google-ai
+# - cohere
+# - azure
+# - deepseek
+# - groq

@@ -1,0 +1,21 @@
+### Content Moderation
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Moderate Content
+POST {{baseUrl}}/moderation/check
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"text": "Sample text to moderate"}
+
+### Get Moderation Settings
+GET {{baseUrl}}/moderation/settings
+Authorization: Bearer {{apiKey}}
+
+### Update Settings
+PUT {{baseUrl}}/moderation/settings
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"enabled": true, "threshold": 0.8}

@@ -1,0 +1,14 @@
+### Cortex Training Data
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Upload Training Data
+POST {{baseUrl}}/cortex/training
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"prompts": [{"input": "Hello", "optimized": "Hi"}]}
+
+### Get Training Stats
+GET {{baseUrl}}/cortex/training/stats
+Authorization: Bearer {{apiKey}}

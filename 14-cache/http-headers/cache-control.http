@@ -1,0 +1,105 @@
+### Cost Katana Cache Management: Cache Control Operations
+### Clear, warmup, export, and import cache
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Clear Entire Cache
+DELETE {{baseUrl}}/cache/clear
+Authorization: Bearer {{apiKey}}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "message": "Cache cleared successfully",
+#   "data": {
+#     "entriesCleared": 1250,
+#     "bytesFreed": 5242880
+#   }
+# }
+
+### 2. Clear Cache with Filters
+DELETE {{baseUrl}}/cache/clear?model=gpt-4&olderThan=86400
+Authorization: Bearer {{apiKey}}
+
+###
+# Query parameters:
+# - model: Clear cache for specific model
+# - olderThan: Clear entries older than N seconds
+# - pattern: Clear keys matching pattern
+
+### 3. Warmup Cache (Pre-populate)
+POST {{baseUrl}}/cache/warmup
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "prompts": [
+    "What is artificial intelligence?",
+    "Explain machine learning",
+    "What is deep learning?"
+  ],
+  "model": "gpt-4",
+  "ttl": 86400
+}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "message": "Cache warmup completed",
+#   "data": {
+#     "cached": 3,
+#     "failed": 0,
+#     "totalCost": 0.135
+#   }
+# }
+
+### 4. Export Cache Data
+GET {{baseUrl}}/cache/export?format=json
+Authorization: Bearer {{apiKey}}
+
+###
+# Downloads cache as JSON file
+# Useful for backup and migration
+
+### 5. Import Cache Data
+POST {{baseUrl}}/cache/import
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "entries": [
+    {
+      "key": "semantic_hash_abc123",
+      "value": "Paris is the capital of France",
+      "ttl": 3600,
+      "metadata": {
+        "model": "gpt-4",
+        "tokens": 150,
+        "cost": 0.045
+      }
+    }
+  ]
+}
+
+###
+# Response:
+# {
+#   "success": true,
+#   "message": "Cache import completed",
+#   "data": {
+#     "imported": 1,
+#     "failed": 0,
+#     "duplicates": 0
+#   }
+# }
+
+###
+# Use Cases:
+# ✅ Clear cache before major updates
+# ✅ Warmup cache for common queries
+# ✅ Export cache for backup
+# ✅ Import cache after deployment
+# ✅ Migrate cache between environments

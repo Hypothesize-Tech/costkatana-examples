@@ -1,0 +1,86 @@
+### AWS Bedrock Cost Tracking - Nova Pro
+# Automatic cost tracking for AWS Bedrock requests
+# Note: AWS Bedrock requires AWS SDK authentication (cannot use pure HTTP)
+# This example shows the request format. Use the NPM package for actual implementation.
+
+POST https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.nova-pro-v1:0/invoke
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: aws-bedrock
+CostKatana-Property-Model-Family: nova
+
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain the benefits of serverless architecture."
+    }
+  ],
+  "inferenceConfig": {
+    "maxTokens": 1000,
+    "temperature": 0.7
+  }
+}
+
+### AWS Bedrock Cost Tracking - Claude on Bedrock
+POST https://bedrock-runtime.us-east-1.amazonaws.com/model/anthropic.claude-3-5-sonnet-20241022-v2:0/invoke
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: aws-bedrock
+CostKatana-Property-Model-Family: claude
+
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Compare AWS Lambda vs ECS for microservices."
+    }
+  ],
+  "anthropic_version": "bedrock-2023-05-31",
+  "max_tokens": 2048,
+  "temperature": 0.5
+}
+
+### AWS Bedrock Cost Tracking - Titan
+POST https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-text-express-v1/invoke
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: aws-bedrock
+CostKatana-Property-Model-Family: titan
+
+{
+  "inputText": "What are the benefits of using Amazon S3 for data storage?",
+  "textGenerationConfig": {
+    "maxTokenCount": 512,
+    "temperature": 0.7,
+    "topP": 0.9
+  }
+}
+
+###
+# ⚠️ Important Notes:
+# - AWS Bedrock requires AWS SigV4 authentication
+# - Cannot use simple HTTP headers for auth
+# - Use the NPM package example for actual implementation
+# - This shows request format only
+#
+# 📊 Expected Results (via NPM):
+# - All Bedrock requests tracked automatically
+# - Token usage from Bedrock API response
+# - Cost calculated per model family
+# - AWS region tracked
+#
+# 💰 Estimated Costs:
+# - Nova Pro: ~$0.0008/1K input tokens, ~$0.0032/1K output tokens
+# - Claude on Bedrock: ~$0.003/1K input tokens, ~$0.015/1K output tokens
+# - Titan Express: ~$0.0008/1K input tokens, ~$0.0016/1K output tokens
+#
+# 🔧 For Working Examples:
+# See: ../npm-package/aws-bedrock.ts
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

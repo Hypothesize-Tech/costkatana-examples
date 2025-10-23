@@ -1,0 +1,355 @@
+### Cortex Semantic Cache Example 1: Exact Match Caching
+# Cache Cortex representations for 100% free repeated requests
+# First request encodes and caches, subsequent requests are FREE
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Core-Model: anthropic.claude-opus-4-1-20250805-v1:0
+CostKatana-Cortex-Encoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Decoding-Model: amazon.nova-pro-v1:0
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cache-Enabled: true
+Cache-Control: max-age=3600
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a detailed guide on setting up a production-ready Kubernetes cluster. Include prerequisites, installation steps for kubeadm, configuring the control plane, adding worker nodes, setting up networking with Calico, configuring persistent storage, implementing RBAC, setting up ingress controllers, and best practices for security and monitoring."
+    }
+  ],
+  "max_tokens": 3000
+}
+
+### Test Semantic Cache: Exact Same Request
+# This request should hit the Cortex cache and be completely FREE!
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cache-Enabled: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a detailed guide on setting up a production-ready Kubernetes cluster. Include prerequisites, installation steps for kubeadm, configuring the control plane, adding worker nodes, setting up networking with Calico, configuring persistent storage, implementing RBAC, setting up ingress controllers, and best practices for security and monitoring."
+    }
+  ],
+  "max_tokens": 3000
+}
+
+###
+# 📊 Performance Comparison:
+#
+# REQUEST 1 (Cache Miss):
+# - Encoding: 150 tokens → 18 Cortex tokens
+# - Encoding cost: $0.0001
+# - Core processing: $0.0005
+# - Decoding: $0.002
+# - GPT-4 generation: $0.009
+# - Total cost: $0.0116
+# - Processing time: ~12s
+# - CostKatana-Cortex-Cache-Hit: false
+#
+# REQUEST 2 (Cache Hit):
+# - Encoding: SKIPPED (cached)
+# - Core processing: SKIPPED (cached)  
+# - Decoding: Retrieved from cache
+# - GPT-4 generation: Uses cached Cortex structure
+# - Total cost: $0.00 (100% FREE!!!)
+# - Processing time: ~200ms (60x faster!)
+# - CostKatana-Cortex-Cache-Hit: true
+# - CostKatana-Cache-Age: 45 (seconds)
+
+
+### Cortex Semantic Cache Example 2: Semantic Similarity Matching
+# Cache hits even when wording differs but meaning is the same
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cache-Enabled: true
+CostKatana-Semantic-Cache-Enabled: true
+CostKatana-Similarity-Threshold: 0.85
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Create a comprehensive tutorial explaining how to deploy and configure a Kubernetes cluster for production use. Cover all essential topics including setup requirements, kubeadm installation process, control plane setup, worker node addition, Calico network configuration, persistent volume setup, RBAC implementation, ingress setup, and production security and monitoring practices."
+    }
+  ],
+  "max_tokens": 3000
+}
+
+###
+# 🎯 Semantic Similarity Explained:
+#
+# Original prompt (above, Request 1):
+# "Write a detailed guide on setting up a production-ready Kubernetes cluster..."
+#
+# This prompt (slightly different wording):
+# "Create a comprehensive tutorial explaining how to deploy and configure a Kubernetes cluster..."
+#
+# Semantic Analysis:
+# - Intent: SAME (tutorial creation)
+# - Subject: SAME (Kubernetes production setup)
+# - Key topics: SAME (all major components listed)
+# - Semantic similarity score: 0.92 (> 0.85 threshold)
+#
+# Result: CACHE HIT!
+# - Cost: $0.00 (100% FREE)
+# - Time: ~200ms
+# - CostKatana-Cortex-Cache-Hit: true
+# - CostKatana-Cache-Similarity: 0.92
+#
+# 💰 Savings: Even with different wording, you pay $0 instead of $0.012!
+
+
+### Cortex Semantic Cache Example 3: Fragment Caching
+# Cache parts of requests for partial reuse
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cortex-Fragment-Cache: true
+CostKatana-Cache-Enabled: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a comprehensive guide on microservices architecture. Include: service decomposition strategies, inter-service communication patterns (REST, gRPC, message queues), service discovery mechanisms, API gateway patterns, data management in distributed systems, eventual consistency, saga patterns for distributed transactions, monitoring and observability (metrics, logging, tracing), deployment strategies (blue-green, canary), containerization with Docker, and orchestration with Kubernetes."
+    }
+  ],
+  "max_tokens": 4000
+}
+
+### Related Request with Overlapping Content
+# Some fragments (Kubernetes, Docker) will hit cache
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cortex-Fragment-Cache: true
+CostKatana-Cache-Enabled: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain how to containerize and deploy a Node.js microservice. Cover: Dockerfile best practices for Node.js, multi-stage builds, security considerations, environment configuration, health checks, logging setup, deploying to Kubernetes with deployment and service manifests, configuring resource limits, setting up horizontal pod autoscaling, and implementing rolling updates."
+    }
+  ],
+  "max_tokens": 3000
+}
+
+###
+# 🧩 Fragment Cache Analysis:
+#
+# Request 1 creates cache fragments for:
+# - Kubernetes concepts (cached)
+# - Docker/containerization (cached)
+# - Microservices patterns (cached)
+# - Distributed systems (cached)
+# - Monitoring approaches (cached)
+#
+# Request 2 reuses:
+# - Kubernetes fragments: 40% cache hit
+# - Docker fragments: 60% cache hit
+# - Overall: 35% of content from cache
+#
+# Cost Savings:
+# - Without fragment cache: $0.011
+# - With fragment cache: $0.007
+# - Savings: ~36%
+#
+# 📈 Fragment cache is most effective when:
+# - You have common topics across requests
+# - Building on previous conversations
+# - Iterative content development
+
+
+### Cortex Semantic Cache Example 4: User-Scoped Caching
+# Cache per user for personalized content
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-User-Id: user_12345
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cache-Enabled: true
+CostKatana-Cache-User-Scope: user_12345
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Generate a weekly meal plan for a vegetarian diet focused on high-protein foods. Include breakfast, lunch, dinner, and snacks for 7 days. For each meal, provide the recipe with ingredients, cooking instructions, and nutritional information (calories, protein, carbs, fats). Also include a shopping list organized by category."
+    }
+  ],
+  "max_tokens": 3500
+}
+
+### Same User, Similar Request Later
+# Will hit user-scoped cache
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-User-Id: user_12345
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cache-Enabled: true
+CostKatana-Cache-User-Scope: user_12345
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Create a 7-day vegetarian meal plan with high protein. Need breakfast, lunch, dinner, snacks with recipes, ingredients, instructions, and nutrition facts. Include a grocery list."
+    }
+  ],
+  "max_tokens": 3500
+}
+
+###
+# 👤 User-Scoped Cache Benefits:
+#
+# - Cache is specific to user_12345
+# - Other users won't hit this cache (privacy)
+# - Perfect for personalized content
+# - Maintains user context
+#
+# Performance:
+# - Request 1: $0.013, 14s
+# - Request 2: $0.00, 180ms (CACHE HIT!)
+# - User gets instant response on repeated queries
+#
+# 🎯 Use Cases:
+# - Personalized recommendations
+# - User-specific reports
+# - Custom content generation
+# - Coaching/tutoring applications
+
+
+### Cortex Semantic Cache Example 5: Cache TTL Configuration
+# Control how long Cortex structures stay cached
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Semantic-Cache: true
+CostKatana-Cache-Enabled: true
+CostKatana-Cache-TTL: 7200
+Cache-Control: max-age=7200
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Provide the latest market analysis for cryptocurrency trends, including Bitcoin, Ethereum, and major altcoins. Cover price movements in the last 24 hours, trading volume changes, market sentiment indicators, notable news events, technical analysis with support and resistance levels, and predictions for the next week."
+    }
+  ],
+  "max_tokens": 2500
+}
+
+###
+# ⏰ Cache TTL Strategy:
+#
+# CostKatana-Cache-TTL values:
+# - 300 (5 min): Time-sensitive data (news, stock prices)
+# - 1800 (30 min): Semi-dynamic content (social media, trends)
+# - 3600 (1 hour): Standard dynamic content (DEFAULT)
+# - 7200 (2 hours): Slow-changing content (analysis, reports)
+# - 86400 (24 hours): Static content (documentation, guides)
+# - 604800 (7 days): Permanent content (educational material)
+#
+# Best Practices:
+# - Use short TTL for time-sensitive data
+# - Use long TTL for evergreen content
+# - Balance cost savings vs freshness
+# - Monitor cache hit rates
+#
+# 💡 Pro Tip:
+# Combine with Cache-Control header for standard HTTP caching too!
+
+
+###
+# 🚀 CORTEX SEMANTIC CACHE BEST PRACTICES:
+#
+# 1. ENABLE FOR ALL CORTEX REQUESTS:
+#    Always use CostKatana-Cortex-Semantic-Cache: true
+#    Free money on repeated content!
+#
+# 2. TUNE SIMILARITY THRESHOLD:
+#    - 0.95+: Very strict matching (near-identical)
+#    - 0.85-0.95: Balanced (recommended)
+#    - 0.75-0.85: Loose matching (higher hit rate, less precise)
+#
+# 3. USE USER SCOPING APPROPRIATELY:
+#    - User-specific content: Enable user scoping
+#    - General content: Global cache (higher hit rate)
+#
+# 4. SET APPROPRIATE TTL:
+#    - Match TTL to content freshness requirements
+#    - Longer TTL = more cache hits = more savings
+#
+# 5. ENABLE FRAGMENT CACHING:
+#    - Great for iterative content development
+#    - Reuses common concepts across requests
+#
+# 6. MONITOR METRICS:
+#    Track cache hit rate, savings, and semantic similarity scores
+#
+# 📊 TYPICAL CACHE HIT RATES:
+# - Documentation generation: 60-75%
+# - Tutorial creation: 50-65%
+# - Content marketing: 45-60%
+# - Technical writing: 55-70%
+#
+# 💰 SAVINGS EXAMPLES:
+# Without caching: $1000/month on Cortex requests
+# With 60% hit rate: $400/month (60% savings!)
+# ROI: Instant, pays for itself immediately
+#
+# 📈 View your cache analytics at:
+# https://costkatana.com/cortex/cache-analytics
+

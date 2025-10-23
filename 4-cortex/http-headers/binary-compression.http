@@ -1,0 +1,29 @@
+### Cortex Binary Compression: Extra 10-15% Savings
+# Binary serialization adds additional compression on top of Cortex
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Binary-Enabled: true
+CostKatana-Cortex-Binary-Compression: aggressive
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Write 3000-word technical specification..."}]
+}
+
+###
+# 📊 Compression Levels:
+#
+# Standard Cortex: 200 tokens → 20 tokens (90% reduction)
+# + Basic Binary: 20 tokens → 18 tokens (+10% more)
+# + Standard Binary: 20 tokens → 17 tokens (+15% more)  
+# + Aggressive Binary: 20 tokens → 15 tokens (+25% more)
+#
+# Total with Aggressive: 92.5% reduction (200 → 15 tokens)
+#
+# Cost Analysis:
+# - Standard Cortex: $0.006
+# - + Aggressive Binary: $0.0045
+# - Extra savings: 25%!

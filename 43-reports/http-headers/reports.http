@@ -1,0 +1,18 @@
+### Report Generation
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Generate Report
+POST {{baseUrl}}/reports/generate
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"type": "monthly", "format": "pdf"}
+
+### List Reports
+GET {{baseUrl}}/reports
+Authorization: Bearer {{apiKey}}
+
+### Download Report
+GET {{baseUrl}}/reports/{{reportId}}/download
+Authorization: Bearer {{apiKey}}

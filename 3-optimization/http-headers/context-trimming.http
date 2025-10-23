@@ -1,0 +1,22 @@
+### Optimization: Context Trimming
+# Intelligently trim conversation history to reduce tokens
+POST https://cost-katana-backend.store/api/optimizations
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+Content-Type: application/json
+
+{
+  "conversationHistory": [
+    {"role": "user", "content": "Old message 1"},
+    {"role": "assistant", "content": "Response 1"},
+    {"role": "user", "content": "Old message 2"},
+    {"role": "assistant", "content": "Response 2"},
+    {"role": "user", "content": "Current question"}
+  ],
+  "service": "openai",
+  "model": "gpt-4",
+  "options": {
+    "enableContextTrimming": true
+  }
+}
+
+### Expected: 40-60% token reduction on long conversations

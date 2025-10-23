@@ -1,0 +1,18 @@
+### Optimization: Basic Prompt Optimization
+POST https://cost-katana-backend.store/api/optimizations
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+Content-Type: application/json
+
+{
+  "prompt": "Can you please help me understand what the concept of machine learning is and how it works in simple terms that anyone can understand?",
+  "service": "openai",
+  "model": "gpt-4",
+  "options": {
+    "targetReduction": 30
+  }
+}
+
+###
+# Expected: 20-30% token reduction
+# Original: ~35 tokens → Optimized: ~25 tokens
+# Optimized: "Explain machine learning simply."

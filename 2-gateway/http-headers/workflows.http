@@ -1,0 +1,52 @@
+### Gateway Example: Workflow Tracking
+# Track multi-step AI workflows end-to-end
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Workflow-Id: workflow_content_gen_123
+CostKatana-Workflow-Name: blog-post-generation
+CostKatana-Workflow-Step: generate-outline
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Create an outline for a blog post about AI."
+    }
+  ]
+}
+
+### Workflow Step 2: Generate Content
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Workflow-Id: workflow_content_gen_123
+CostKatana-Workflow-Name: blog-post-generation
+CostKatana-Workflow-Step: generate-content
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write the blog post based on the outline."
+    }
+  ]
+}
+
+###
+# 📊 Workflow Benefits:
+# ✅ Track end-to-end workflow costs
+# ✅ Analyze step-by-step performance
+# ✅ Identify bottlenecks
+# ✅ Optimize complex processes
+# ✅ Visualize workflow flow
+#
+# View workflow analytics at:
+# https://costkatana.com/workflows

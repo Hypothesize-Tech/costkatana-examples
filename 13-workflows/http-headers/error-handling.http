@@ -1,0 +1,87 @@
+### Cost Katana Workflows: Error Handling & Retries
+### Build resilient workflows with automatic error recovery
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Create Workflow with Error Handling
+POST {{baseUrl}}/workflows/templates
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "name": "Resilient Data Processing",
+  "description": "Process data with automatic retries and fallbacks",
+  "steps": [
+    {
+      "id": "step_1",
+      "name": "primary_processing",
+      "type": "ai",
+      "model": "gpt-4",
+      "prompt": "Process data: {{data}}",
+      "output": "result",
+      "errorHandling": {
+        "maxRetries": 3,
+        "retryDelay": 1000,
+        "backoffMultiplier": 2,
+        "fallbackStep": "step_fallback"
+      }
+    },
+    {
+      "id": "step_fallback",
+      "name": "fallback_processing",
+      "type": "ai",
+      "model": "gpt-3.5-turbo",
+      "prompt": "Process data with simpler model: {{data}}",
+      "output": "result",
+      "condition": {
+        "variable": "step_1.status",
+        "operator": "equals",
+        "value": "failed"
+      }
+    }
+  ],
+  "variables": [
+    {"name": "data", "type": "string", "required": true}
+  ],
+  "config": {
+    "failureHandling": "continue",
+    "onError": "notify",
+    "notificationWebhook": "https://your-server.com/webhooks/workflow-error"
+  }
+}
+
+###
+# Error Handling Strategies:
+# 
+# 1. Automatic Retries:
+#    - maxRetries: 3
+#    - retryDelay: 1000ms
+#    - backoffMultiplier: 2 (exponential backoff)
+#    Schedule: 1s, 2s, 4s
+#
+# 2. Fallback Steps:
+#    - Execute alternative step on failure
+#    - Use cheaper/faster models
+#    - Graceful degradation
+#
+# 3. Failure Handling:
+#    - "stop": Stop workflow on any error
+#    - "continue": Skip failed step and continue
+#    - "rollback": Undo previous steps
+#
+# 4. Notifications:
+#    - Webhook on error
+#    - Email alerts
+#    - Slack notifications
+
+### 2. Monitor Failed Workflows
+GET {{baseUrl}}/workflows/executions?status=failed
+Authorization: Bearer {{apiKey}}
+
+### 3. Retry Failed Execution
+POST {{baseUrl}}/workflows/executions/{{executionId}}/retry
+Authorization: Bearer {{apiKey}}
+
+###
+# Retries failed workflow from last successful step

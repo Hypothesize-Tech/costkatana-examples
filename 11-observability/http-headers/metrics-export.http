@@ -1,0 +1,73 @@
+### Cost Katana OpenTelemetry: Metrics Export
+### Access OpenTelemetry metrics for your AI usage
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Get Current Metrics
+GET {{baseUrl}}/metrics
+Authorization: Bearer {{apiKey}}
+
+# Prometheus format metrics:
+# cost_katana_requests_total{model="gpt-4",status="success"} 1250
+# cost_katana_request_duration_seconds_bucket{model="gpt-4",le="1"} 850
+# cost_katana_cost_usd_total{model="gpt-4"} 45.67
+# cost_katana_tokens_total{model="gpt-4",type="input"} 125000
+
+### 2. Get Telemetry Data
+GET {{baseUrl}}/telemetry
+Authorization: Bearer {{apiKey}}
+
+# Returns detailed telemetry:
+# {
+#   "metrics": {
+#     "requests_per_minute": 125,
+#     "average_latency_ms": 850,
+#     "error_rate": 0.02,
+#     "cost_per_hour": 5.67
+#   },
+#   "traces": {
+#     "active_sessions": 45,
+#     "traces_last_hour": 2500
+#   }
+# }
+
+### 3. Configure Telemetry Collection
+POST {{baseUrl}}/telemetry-config
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "enabled": true,
+  "exportInterval": 60,
+  "includeTraces": true,
+  "includeMetrics": true,
+  "exporters": [
+    {
+      "type": "otlp",
+      "endpoint": "https://your-collector.com:4318"
+    },
+    {
+      "type": "prometheus",
+      "endpoint": "https://your-prometheus.com/push"
+    }
+  ]
+}
+
+###
+# Available Metrics:
+# - Request counts by model/provider
+# - Latency histograms
+# - Cost metrics (total, per-model)
+# - Token usage (input/output)
+# - Error rates
+# - Cache hit rates
+# - Cortex optimization rates
+
+###
+# Export Formats:
+# - Prometheus (pull/push)
+# - OTLP (OpenTelemetry Protocol)
+# - JSON (REST API)
+# - StatsD
+# - Datadog

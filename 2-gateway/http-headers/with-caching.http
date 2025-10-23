@@ -1,0 +1,116 @@
+### Gateway Example: Semantic Caching
+# Save 100% on repeated or similar requests
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Cache-Enabled: true
+CostKatana-Semantic-Cache-Enabled: true
+CostKatana-Similarity-Threshold: 0.85
+CostKatana-Cache-User-Scope: user_123
+Cache-Control: max-age=3600
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is machine learning?"
+    }
+  ]
+}
+
+### Test Semantic Cache - Similar Question
+# This should hit the semantic cache even though wording is different
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Cache-Enabled: true
+CostKatana-Semantic-Cache-Enabled: true
+CostKatana-Similarity-Threshold: 0.85
+CostKatana-Cache-User-Scope: user_123
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Can you explain ML to me?"
+    }
+  ]
+}
+
+### Caching with Multiple Responses (Bucket)
+# Return different cached responses for variety
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Cache-Enabled: true
+CostKatana-Cache-Bucket-Max-Size: 3
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Tell me a joke about programming."
+    }
+  ]
+}
+
+### Deduplication - Block Duplicate Requests
+# Prevent duplicate requests from being processed simultaneously
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Cache-Enabled: true
+CostKatana-Deduplication-Enabled: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Generate a unique ID for this session."
+    }
+  ]
+}
+
+###
+# 💾 Caching Benefits:
+# ✅ Exact match: 100% cost savings
+# ✅ Semantic match: 80-95% cost savings (catches paraphrases)
+# ✅ User-scoped: Personalized cache per user
+# ✅ Global scope: Shared cache across users
+# ✅ Response variety: Multiple cached responses (bucket)
+# ✅ Deduplication: Prevent duplicate concurrent requests
+#
+# 📊 Cache Headers:
+# - CostKatana-Cache-Status: HIT or MISS
+# - CostKatana-Cache-Similarity: Similarity score (0-1)
+# - CostKatana-Cache-Age: Time since cached (seconds)
+#
+# 🎯 Best Practices:
+# - Use semantic caching for similar questions
+# - Set appropriate similarity threshold (0.80-0.95)
+# - Use user-scoped caching for personalized content
+# - Use global caching for general knowledge
+# - Set TTL with Cache-Control header
+# - Enable deduplication to prevent duplicate API calls
+#
+# 💰 Cost Savings:
+# - First request: $0.03 (normal cost)
+# - Cached request: $0.00 (100% savings!)
+# - Semantic match: $0.00 (still free!)
+#
+# 📈 View cache analytics at:
+# https://costkatana.com/gateway/cache
+

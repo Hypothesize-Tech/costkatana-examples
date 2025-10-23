@@ -1,0 +1,372 @@
+### Cost Katana Webhooks: Workflow & System Events
+### Track workflows, experiments, and system events
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key_here
+
+### Setup Webhook for Workflow Events
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/workflows",
+  "events": [
+    "workflow.started",
+    "workflow.completed",
+    "workflow.failed",
+    "workflow.step_completed",
+    "experiment.completed",
+    "training.completed",
+    "agent.task_completed"
+  ],
+  "active": true,
+  "secret": "your_webhook_secret"
+}
+
+###
+# WORKFLOW EVENT PAYLOADS
+
+### Example 1: Workflow Started
+{
+  "event_id": "evt_wf001",
+  "event_type": "workflow.started",
+  "occurred_at": "2024-01-15T10:00:00Z",
+  "severity": "low",
+  "title": "Workflow Started: Data Processing Pipeline",
+  "description": "Multi-step AI workflow initiated",
+  "data": {
+    "workflow": {
+      "id": "wf_abc123",
+      "name": "Data Processing Pipeline",
+      "type": "multi_agent",
+      "total_steps": 5,
+      "estimated_duration": "120 seconds",
+      "estimated_cost": 0.45
+    },
+    "resource": {
+      "type": "workflow",
+      "id": "wf_abc123",
+      "name": "Data Processing Pipeline"
+    },
+    "context": {
+      "triggered_by": "api_request",
+      "project_id": "proj_456",
+      "user_id": "user_123"
+    },
+    "links": {
+      "dashboard": "https://costkatana.com/workflows/wf_abc123",
+      "monitor": "https://costkatana.com/workflows/wf_abc123/monitor"
+    }
+  }
+}
+
+### Example 2: Workflow Step Completed
+{
+  "event_id": "evt_wf002",
+  "event_type": "workflow.step_completed",
+  "occurred_at": "2024-01-15T10:00:30Z",
+  "severity": "low",
+  "title": "Workflow Step Completed: Data Extraction",
+  "description": "Step 1 of 5 completed successfully",
+  "data": {
+    "workflow": {
+      "id": "wf_abc123",
+      "name": "Data Processing Pipeline",
+      "current_step": 1,
+      "total_steps": 5,
+      "progress_percentage": 20.0
+    },
+    "step": {
+      "id": "step_001",
+      "name": "Data Extraction",
+      "duration": 30,
+      "cost": 0.08,
+      "model_used": "gpt-4",
+      "status": "completed",
+      "output_tokens": 150
+    },
+    "metrics": {
+      "elapsed_time": 30,
+      "remaining_time": 90,
+      "cost_so_far": 0.08,
+      "projected_total_cost": 0.40
+    }
+  }
+}
+
+### Example 3: Workflow Completed
+{
+  "event_id": "evt_wf003",
+  "event_type": "workflow.completed",
+  "occurred_at": "2024-01-15T10:02:00Z",
+  "severity": "low",
+  "title": "Workflow Completed Successfully",
+  "description": "Data Processing Pipeline finished in 120 seconds",
+  "data": {
+    "workflow": {
+      "id": "wf_abc123",
+      "name": "Data Processing Pipeline",
+      "status": "completed",
+      "duration": 120,
+      "total_steps": 5,
+      "successful_steps": 5,
+      "failed_steps": 0
+    },
+    "metrics": {
+      "total_cost": 0.42,
+      "estimated_cost": 0.45,
+      "cost_variance": -0.03,
+      "total_tokens": 2500,
+      "total_requests": 5,
+      "average_latency": 24
+    },
+    "results": {
+      "status": "success",
+      "output_size": "1.2 MB",
+      "quality_score": 0.94
+    },
+    "optimization": {
+      "cortex_used": true,
+      "savings": 0.18,
+      "savings_percentage": 30.0
+    },
+    "links": {
+      "results": "https://costkatana.com/workflows/wf_abc123/results",
+      "analytics": "https://costkatana.com/workflows/wf_abc123/analytics"
+    }
+  }
+}
+
+### Example 4: Workflow Failed
+{
+  "event_id": "evt_wf004",
+  "event_type": "workflow.failed",
+  "occurred_at": "2024-01-15T11:30:00Z",
+  "severity": "high",
+  "title": "Workflow Failed: Data Processing Pipeline",
+  "description": "Workflow failed at step 3 due to rate limit",
+  "data": {
+    "workflow": {
+      "id": "wf_def456",
+      "name": "Data Processing Pipeline",
+      "status": "failed",
+      "duration": 45,
+      "total_steps": 5,
+      "successful_steps": 2,
+      "failed_step": 3
+    },
+    "error": {
+      "step_id": "step_003",
+      "step_name": "Data Analysis",
+      "error_type": "rate_limit_exceeded",
+      "error_message": "API rate limit exceeded for model gpt-4",
+      "retry_count": 3,
+      "recoverable": true
+    },
+    "metrics": {
+      "cost_incurred": 0.15,
+      "time_elapsed": 45
+    },
+    "action_taken": {
+      "workflow_paused": true,
+      "auto_retry_scheduled": true,
+      "retry_at": "2024-01-15T11:35:00Z"
+    },
+    "recommendations": [
+      "Enable automatic retry with exponential backoff",
+      "Consider using failover models",
+      "Implement rate limit monitoring"
+    ]
+  }
+}
+
+### Example 5: Experiment Completed
+{
+  "event_id": "evt_exp001",
+  "event_type": "experiment.completed",
+  "occurred_at": "2024-01-15T12:00:00Z",
+  "severity": "low",
+  "title": "A/B Test Completed: Prompt Optimization",
+  "description": "Experiment comparing 2 prompt variants completed",
+  "data": {
+    "experiment": {
+      "id": "exp_abc123",
+      "name": "Prompt Optimization Test",
+      "type": "ab_test",
+      "variants": 2,
+      "total_samples": 1000,
+      "duration": "24 hours",
+      "status": "completed"
+    },
+    "results": {
+      "winner": "variant_b",
+      "confidence": 0.95,
+      "improvement": {
+        "cost_reduction": 25.0,
+        "quality_improvement": 8.0,
+        "latency_reduction": 15.0
+      }
+    },
+    "variants": [
+      {
+        "id": "variant_a",
+        "name": "Original Prompt",
+        "samples": 500,
+        "avg_cost": 0.04,
+        "avg_quality": 0.88,
+        "avg_latency": 1200
+      },
+      {
+        "id": "variant_b",
+        "name": "Optimized Prompt",
+        "samples": 500,
+        "avg_cost": 0.03,
+        "avg_quality": 0.95,
+        "avg_latency": 1020
+      }
+    ],
+    "metrics": {
+      "total_cost": 35.00,
+      "cost_savings_potential": 8.75,
+      "projected_annual_savings": 3150.00
+    },
+    "recommendation": "Deploy variant_b to production",
+    "links": {
+      "results": "https://costkatana.com/experiments/exp_abc123",
+      "deploy": "https://costkatana.com/experiments/exp_abc123/deploy"
+    }
+  }
+}
+
+### Example 6: Training Completed
+{
+  "event_id": "evt_train001",
+  "event_type": "training.completed",
+  "occurred_at": "2024-01-15T14:00:00Z",
+  "severity": "low",
+  "title": "Fine-tuning Job Completed",
+  "description": "Custom model training finished successfully",
+  "data": {
+    "training": {
+      "id": "train_abc123",
+      "model_name": "custom-gpt-3.5-turbo",
+      "base_model": "gpt-3.5-turbo",
+      "status": "completed",
+      "duration": "2 hours",
+      "epochs": 3,
+      "training_samples": 5000
+    },
+    "metrics": {
+      "training_cost": 25.50,
+      "final_loss": 0.12,
+      "validation_accuracy": 0.94,
+      "improvement_over_base": 15.0
+    },
+    "model_info": {
+      "model_id": "ft-gpt-3.5-turbo-abc123",
+      "size": "850 MB",
+      "deployment_ready": true
+    },
+    "cost_analysis": {
+      "training_cost": 25.50,
+      "estimated_inference_cost_reduction": 30.0,
+      "break_even_requests": 2500
+    },
+    "links": {
+      "model": "https://costkatana.com/models/ft-gpt-3.5-turbo-abc123",
+      "deploy": "https://costkatana.com/models/ft-gpt-3.5-turbo-abc123/deploy"
+    }
+  }
+}
+
+### Example 7: Agent Task Completed
+{
+  "event_id": "evt_agent001",
+  "event_type": "agent.task_completed",
+  "occurred_at": "2024-01-15T15:30:00Z",
+  "severity": "low",
+  "title": "AI Agent Task Completed",
+  "description": "Autonomous agent finished data analysis task",
+  "data": {
+    "agent": {
+      "id": "agent_abc123",
+      "name": "Data Analysis Agent",
+      "type": "autonomous",
+      "task_id": "task_def456"
+    },
+    "task": {
+      "name": "Quarterly Report Analysis",
+      "duration": 180,
+      "steps_executed": 12,
+      "tools_used": ["gpt-4", "claude-3-5-sonnet", "data_retrieval"]
+    },
+    "results": {
+      "status": "success",
+      "insights_generated": 25,
+      "recommendations": 8,
+      "confidence_score": 0.91
+    },
+    "metrics": {
+      "total_cost": 0.85,
+      "tokens_used": 5200,
+      "api_calls": 12,
+      "time_saved_vs_manual": "4 hours"
+    },
+    "links": {
+      "report": "https://costkatana.com/agents/agent_abc123/reports/task_def456"
+    }
+  }
+}
+
+###
+# System Events
+
+### Example 8: System Error
+{
+  "event_id": "evt_sys001",
+  "event_type": "system.error",
+  "occurred_at": "2024-01-15T16:00:00Z",
+  "severity": "high",
+  "title": "System Error Occurred",
+  "description": "Temporary service disruption detected",
+  "data": {
+    "error": {
+      "type": "service_unavailable",
+      "service": "anthropic",
+      "duration": 120,
+      "affected_requests": 45
+    },
+    "action_taken": {
+      "failover_triggered": true,
+      "alternative_provider": "openai",
+      "requests_recovered": 45
+    },
+    "resolution": "Automatic failover to backup provider"
+  }
+}
+
+###
+# Webhook Management
+
+### Get Webhook Delivery History
+GET {{baseUrl}}/webhooks/{webhookId}/deliveries
+Authorization: Bearer {{apiKey}}
+
+### Get Specific Delivery
+GET {{baseUrl}}/webhooks/deliveries/{deliveryId}
+Authorization: Bearer {{apiKey}}
+
+### Retry Failed Delivery
+POST {{baseUrl}}/webhooks/deliveries/{deliveryId}/replay
+Authorization: Bearer {{apiKey}}
+
+###
+# Best Practices:
+# 1. Use workflows for complex multi-step processes
+# 2. Monitor workflow costs in real-time
+# 3. Set up alerts for failed workflows
+# 4. Track experiment results for optimization
+# 5. Use agents for autonomous tasks
+# 6. Implement idempotency in webhook handlers
+

@@ -1,0 +1,169 @@
+### Cost Katana OpenTelemetry: Basic Distributed Tracing
+### Enable distributed tracing across your AI applications
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key_here
+@gatewayUrl = https://cost-katana-backend.store/api/gateway
+
+### 1. Make AI Request with Trace Headers
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Session-Id: session_abc123
+X-Parent-Trace-Id: trace_parent_xyz789
+traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
+tracestate: costkatana=tracked
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain distributed tracing"
+    }
+  ]
+}
+
+###
+# Response will include trace headers:
+# X-Trace-Id: trace_abc123
+# X-Session-Id: session_abc123
+# X-Request-Duration: 1250ms
+
+### 2. View Trace Session
+GET {{baseUrl}}/v1/sessions/{{sessionId}}
+Authorization: Bearer {{apiKey}}
+
+# Response shows all requests in the session:
+# {
+#   "sessionId": "session_abc123",
+#   "traces": [
+#     {
+#       "traceId": "trace_abc123",
+#       "parentId": "trace_parent_xyz789",
+#       "operation": "chat.completion",
+#       "duration": 1250,
+#       "cost": 0.045
+#     }
+#   ],
+#   "totalCost": 0.045,
+#   "totalDuration": 1250
+# }
+
+### 3. Get Specific Trace
+GET {{baseUrl}}/v1/traces/{{traceId}}
+Authorization: Bearer {{apiKey}}
+
+# Response shows detailed trace information:
+# {
+#   "traceId": "trace_abc123",
+#   "sessionId": "session_abc123",
+#   "parentId": "trace_parent_xyz789",
+#   "operation": "chat.completion",
+#   "model": "gpt-4",
+#   "provider": "openai",
+#   "startTime": "2024-01-15T10:30:00Z",
+#   "endTime": "2024-01-15T10:30:01.250Z",
+#   "duration": 1250,
+#   "cost": 0.045,
+#   "tokens": {
+#     "input": 15,
+#     "output": 150,
+#     "total": 165
+#   },
+#   "spans": [
+#     {
+#       "name": "request_validation",
+#       "duration": 5,
+#       "startTime": "2024-01-15T10:30:00.000Z"
+#     },
+#     {
+#       "name": "model_inference",
+#       "duration": 1200,
+#       "startTime": "2024-01-15T10:30:00.005Z"
+#     },
+#     {
+#       "name": "response_formatting",
+#       "duration": 45,
+#       "startTime": "2024-01-15T10:30:01.205Z"
+#     }
+#   ]
+# }
+
+### 4. W3C Trace Context (Standard Format)
+# traceparent format: version-trace-id-parent-id-flags
+# 00: version
+# 4bf92f3577b34da6a3ce929d0e0e4736: trace ID (128-bit)
+# 00f067aa0ba902b7: parent span ID (64-bit)
+# 01: flags (sampled)
+
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+traceparent: 00-{{$guid}}-{{$randomInt}}-01
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [{"role": "user", "content": "Hello with tracing!"}]
+}
+
+### 5. Multi-Service Tracing
+# Parent Service creates trace
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Session-Id: multi_service_session
+X-Service-Name: frontend-api
+traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "First service call"}]
+}
+
+# Child Service continues trace (use returned X-Trace-Id as parent)
+POST {{gatewayUrl}}/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+X-Session-Id: multi_service_session
+X-Parent-Trace-Id: {{trace_id_from_previous_response}}
+X-Service-Name: backend-processor
+traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-{{new_span_id}}-01
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [{"role": "user", "content": "Second service call"}]
+}
+
+### 6. View Complete Session Trace
+GET {{baseUrl}}/v1/sessions/multi_service_session/traces
+Authorization: Bearer {{apiKey}}
+
+# Shows trace hierarchy:
+# Session: multi_service_session
+# ├─ Trace 1: frontend-api (parent)
+# │  └─ Trace 2: backend-processor (child)
+# Total Cost: $0.067
+# Total Duration: 2450ms
+
+###
+# Key Headers for Tracing:
+# 
+# X-Session-Id: Groups related requests
+# X-Parent-Trace-Id: Links child traces to parents
+# traceparent: W3C standard trace context
+# tracestate: Additional vendor-specific data
+#
+# Response Headers:
+# X-Trace-Id: Unique trace identifier
+# X-Request-Duration: Request duration in ms
+# X-Cost: Request cost
+
+###
+# Benefits:
+# ✅ Track requests across services
+# ✅ Identify performance bottlenecks
+# ✅ Monitor cost per trace
+# ✅ Debug complex workflows
+# ✅ Standards-compliant (W3C Trace Context)
+

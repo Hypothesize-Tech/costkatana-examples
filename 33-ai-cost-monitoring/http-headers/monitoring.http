@@ -1,0 +1,15 @@
+### AI Cost Monitoring
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Get Cost Trends
+GET {{baseUrl}}/monitoring/cost-trends
+Authorization: Bearer {{apiKey}}
+
+### Get Model Usage
+GET {{baseUrl}}/monitoring/model-usage
+Authorization: Bearer {{apiKey}}
+
+### Get Predictions
+GET {{baseUrl}}/monitoring/predictions
+Authorization: Bearer {{apiKey}}

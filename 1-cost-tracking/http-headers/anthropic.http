@@ -1,0 +1,110 @@
+### Anthropic Cost Tracking - Claude 3.5 Sonnet
+# Automatic cost tracking for Anthropic Claude requests
+# Replace YOUR_COSTKATANA_KEY and YOUR_ANTHROPIC_KEY with your actual keys
+
+POST https://api.anthropic.com/v1/messages
+x-api-key: YOUR_ANTHROPIC_KEY
+anthropic-version: 2023-06-01
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: anthropic
+CostKatana-Property-Feature: advanced-reasoning
+
+{
+  "model": "claude-3-5-sonnet-20241022",
+  "max_tokens": 1024,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Analyze the pros and cons of microservices architecture."
+    }
+  ]
+}
+
+### Anthropic Cost Tracking - Claude 3 Haiku (Cost Optimized)
+POST https://api.anthropic.com/v1/messages
+x-api-key: YOUR_ANTHROPIC_KEY
+anthropic-version: 2023-06-01
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model-Tier: budget
+CostKatana-Property-Speed-Priority: high
+
+{
+  "model": "claude-3-haiku-20240307",
+  "max_tokens": 512,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Summarize the key points of agile methodology."
+    }
+  ]
+}
+
+### Anthropic Cost Tracking - Claude with System Prompt
+POST https://api.anthropic.com/v1/messages
+x-api-key: YOUR_ANTHROPIC_KEY
+anthropic-version: 2023-06-01
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: code-assistant
+
+{
+  "model": "claude-3-5-sonnet-20241022",
+  "max_tokens": 2048,
+  "system": "You are an expert software architect with 20 years of experience in distributed systems.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Design a scalable event-driven architecture for a high-traffic e-commerce platform."
+    }
+  ],
+  "temperature": 0.3
+}
+
+### Anthropic Cost Tracking - Claude 3 Opus (Maximum Capability)
+POST https://api.anthropic.com/v1/messages
+x-api-key: YOUR_ANTHROPIC_KEY
+anthropic-version: 2023-06-01
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model-Tier: premium
+CostKatana-Property-Complexity: high
+
+{
+  "model": "claude-3-opus-20240229",
+  "max_tokens": 4096,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a comprehensive technical specification document for a real-time collaborative document editing system similar to Google Docs."
+    }
+  ],
+  "temperature": 0.5
+}
+
+###
+# 📊 Expected Results:
+# - All Claude requests tracked automatically
+# - Token usage from Anthropic API response
+# - Cost calculated based on model pricing
+# - Response latency measured
+# - Tagged by model tier for easy filtering
+#
+# 💰 Estimated Costs:
+# - Claude 3.5 Sonnet: ~$0.003-0.015 per request
+# - Claude 3 Haiku: ~$0.0003-0.0015 per request  
+# - Claude 3 Opus: ~$0.015-0.075 per request
+#
+# 🎯 Best Practices:
+# - Use Haiku for simple tasks (10x cheaper)
+# - Use Sonnet for balanced performance
+# - Use Opus only for complex reasoning
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

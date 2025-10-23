@@ -1,0 +1,11 @@
+### Monitoring: System Health & Metrics
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Get System Metrics
+GET {{baseUrl}}/monitoring/metrics
+Authorization: Bearer {{apiKey}}
+
+### Get Health Status
+GET {{baseUrl}}/monitoring/health
+Authorization: Bearer {{apiKey}}

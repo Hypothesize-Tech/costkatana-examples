@@ -1,0 +1,26 @@
+### Cost Katana Key Vault: Analytics
+### Monitor key usage and security
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key
+
+### 1. Get Key Vault Dashboard
+GET {{baseUrl}}/key-vault/dashboard
+Authorization: Bearer {{apiKey}}
+
+### 2. Get Proxy Key Analytics
+GET {{baseUrl}}/key-vault/analytics
+Authorization: Bearer {{apiKey}}
+
+### 3. Get Specific Proxy Key Analytics
+GET {{baseUrl}}/key-vault/analytics?proxyKeyId={{proxyKeyId}}
+Authorization: Bearer {{apiKey}}
+
+###
+# Analytics Include:
+# - Total requests
+# - Cost per key
+# - Rate limit usage
+# - Budget utilization
+# - Model usage breakdown
+# - Geographic distribution

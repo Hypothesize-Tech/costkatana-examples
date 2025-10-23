@@ -1,0 +1,31 @@
+### Gateway Example: Multi-Provider Failover
+# Automatic fallback when providers fail
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Failover-Policy: cost-optimized
+CostKatana-Project-Id: YOUR_PROJECT_ID
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain high availability architecture."
+    }
+  ]
+}
+
+###
+# 🔀 Failover Policies:
+# - fastest: OpenAI → Groq → Anthropic
+# - cheapest: DeepSeek → Groq → GPT-3.5
+# - cost-optimized: Balance cost and quality
+# - quality-first: GPT-4 → Claude → Gemini
+#
+# ✅ Automatic failover on:
+# - Provider downtime
+# - Rate limits
+# - Timeouts
+# - Errors

@@ -1,0 +1,99 @@
+### OpenAI Cost Tracking - GPT-4
+# Automatic cost tracking for OpenAI requests via HTTP headers
+# Replace YOUR_COSTKATANA_KEY and YOUR_OPENAI_KEY with your actual keys
+
+POST https://api.openai.com/v1/chat/completions
+Authorization: Bearer YOUR_OPENAI_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Environment: production
+CostKatana-Property-Feature: chat-example
+CostKatana-User-Id: user_demo_123
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "Explain quantum computing in simple terms."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 500
+}
+
+### OpenAI Cost Tracking - GPT-3.5-turbo (Cost Optimized)
+POST https://api.openai.com/v1/chat/completions
+Authorization: Bearer YOUR_OPENAI_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model-Tier: budget
+CostKatana-Property-Use-Case: simple-queries
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the capital of France?"
+    }
+  ],
+  "max_tokens": 50
+}
+
+### OpenAI Cost Tracking - GPT-4o (Multimodal)
+POST https://api.openai.com/v1/chat/completions
+Authorization: Bearer YOUR_OPENAI_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: multimodal
+
+{
+  "model": "gpt-4o",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a creative story about AI."
+    }
+  ],
+  "temperature": 0.9,
+  "max_tokens": 1000
+}
+
+### OpenAI Cost Tracking - Embeddings
+POST https://api.openai.com/v1/embeddings
+Authorization: Bearer YOUR_OPENAI_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Feature: vector-search
+
+{
+  "model": "text-embedding-ada-002",
+  "input": "Cost Katana helps you track and optimize AI costs."
+}
+
+###
+# 📊 Expected Results:
+# - Request automatically tracked in Cost Katana dashboard
+# - Token usage counted (prompt + completion)
+# - Exact cost calculated based on OpenAI pricing
+# - Response time measured
+# - All metadata and tags saved for filtering
+#
+# 💰 Estimated Costs:
+# - GPT-4: ~$0.03-0.06 per request (depends on response length)
+# - GPT-3.5-turbo: ~$0.001-0.002 per request
+# - GPT-4o: ~$0.005-0.015 per request
+# - Embeddings: ~$0.0001 per request
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

@@ -1,0 +1,123 @@
+### Groq Cost Tracking - Llama 3 70B
+# Automatic cost tracking for Groq requests (ultra-fast inference)
+# Replace YOUR_COSTKATANA_KEY and YOUR_GROQ_KEY with your actual keys
+
+POST https://api.groq.com/openai/v1/chat/completions
+Authorization: Bearer YOUR_GROQ_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Provider: groq
+CostKatana-Property-Feature: fast-inference
+
+{
+  "model": "llama3-70b-8192",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful AI assistant."
+    },
+    {
+      "role": "user",
+      "content": "Explain the benefits of edge computing."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 1024
+}
+
+### Groq Cost Tracking - Llama 3 8B (Ultra Fast & Cheap)
+POST https://api.groq.com/openai/v1/chat/completions
+Authorization: Bearer YOUR_GROQ_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model-Size: 8b
+CostKatana-Property-Speed-Priority: maximum
+
+{
+  "model": "llama3-8b-8192",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is containerization in software development?"
+    }
+  ],
+  "temperature": 0.5,
+  "max_tokens": 512
+}
+
+### Groq Cost Tracking - Mixtral 8x7B
+POST https://api.groq.com/openai/v1/chat/completions
+Authorization: Bearer YOUR_GROQ_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model: mixtral
+
+{
+  "model": "mixtral-8x7b-32768",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Compare microservices vs monolithic architecture."
+    }
+  ],
+  "temperature": 0.6,
+  "max_tokens": 2048
+}
+
+### Groq Cost Tracking - Gemma 7B
+POST https://api.groq.com/openai/v1/chat/completions
+Authorization: Bearer YOUR_GROQ_KEY
+Content-Type: application/json
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Property-Model: gemma
+
+{
+  "model": "gemma-7b-it",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain API rate limiting best practices."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 800
+}
+
+###
+# 📊 Expected Results:
+# - All Groq requests tracked automatically
+# - Token usage from Groq API response
+# - Cost calculated per model
+# - Ultra-fast response times logged (< 1 second typical)
+# - Model size and architecture tracked
+#
+# 💰 Estimated Costs:
+# - Llama 3 70B: ~$0.00059/1K input tokens, ~$0.00079/1K output tokens
+# - Llama 3 8B: ~$0.00005/1K input tokens, ~$0.00008/1K output tokens
+# - Mixtral 8x7B: ~$0.00024/1K input tokens, ~$0.00024/1K output tokens
+# - Gemma 7B: ~$0.00007/1K input tokens, ~$0.00007/1K output tokens
+#
+# 🎯 Best Practices:
+# - Use Llama 3 8B for ultra-fast, cheap responses
+# - Use Llama 3 70B for better quality
+# - Use Mixtral for long context (32K tokens)
+# - Great for real-time applications
+#
+# ⚡ Why Groq:
+# - World's fastest LLM inference (500+ tokens/sec)
+# - Very competitive pricing
+# - Great for latency-sensitive apps
+# - OpenAI-compatible API
+#
+# 🚀 Speed Comparison:
+# - Groq: ~500-1000 tokens/second
+# - OpenAI: ~50-100 tokens/second
+# - 10x faster inference!
+#
+# 📈 View your tracked data at:
+# https://costkatana.com/dashboard
+

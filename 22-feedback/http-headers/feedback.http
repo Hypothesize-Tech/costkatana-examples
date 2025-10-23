@@ -1,0 +1,10 @@
+### Request Feedback
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Submit Feedback
+POST {{baseUrl}}/v1/feedback
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"requestId": "req_123", "rating": 5, "comment": "Great response"}

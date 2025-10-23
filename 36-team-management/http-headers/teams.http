@@ -1,0 +1,21 @@
+### Team Management
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Create Team
+POST {{baseUrl}}/teams
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"name": "Engineering Team"}
+
+### Add Member
+POST {{baseUrl}}/teams/{{teamId}}/members
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"email": "user@example.com", "role": "developer"}
+
+### List Teams
+GET {{baseUrl}}/teams
+Authorization: Bearer {{apiKey}}

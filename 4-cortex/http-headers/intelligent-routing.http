@@ -1,0 +1,61 @@
+### Cortex Intelligent Routing: Auto-Optimize Based on Content
+# Cortex automatically decides whether to use its pipeline based on cost-benefit analysis
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Priority: cost
+CostKatana-Cortex-Intelligent-Routing: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "Write comprehensive microservices guide (2000 words)"}]
+}
+
+###
+# 🧠 Intelligent Routing Decision Logic:
+#
+# Cortex analyzes:
+# - Prompt length (>100 tokens → likely beneficial)
+# - Content complexity (structured → highly beneficial)
+# - Expected output length (>500 tokens → beneficial)
+# - Historical savings for similar requests
+#
+# Decision: ROUTE TO CORTEX ✅
+# - Prompt: 12 tokens (short but complex output expected)
+# - Expected savings: 90%+
+# - Overhead acceptable: 1.2s for $0.08 savings
+#
+# Result: Uses Cortex pipeline, saves 92%
+
+### Short Question: Intelligent Routing Skips Cortex
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Enable-Cortex: true
+CostKatana-Cortex-Priority: cost
+CostKatana-Cortex-Intelligent-Routing: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [{"role": "user", "content": "What is Docker?"}]
+}
+
+###
+# Decision: SKIP CORTEX ❌
+# - Prompt: 3 tokens
+# - Expected output: ~50 tokens
+# - Overhead: 1.2s
+# - Savings: $0.0015
+# - Not worth overhead for such small request
+#
+# Result: Uses standard processing
+
+### Priority Modes:
+# cost: Maximize savings (default)
+# speed: Minimize latency
+# quality: Maximize semantic integrity
+# balanced: Balance all factors

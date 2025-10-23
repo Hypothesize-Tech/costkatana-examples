@@ -1,0 +1,385 @@
+### Cost Katana Webhooks: Signature Verification
+### Secure your webhooks by verifying signatures
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key_here
+
+### Create Webhook with Secret
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/secure",
+  "events": ["cost.alert", "budget.exceeded"],
+  "active": true,
+  "secret": "whsec_your_strong_secret_key_here_min_32_chars"
+}
+
+###
+# WEBHOOK SIGNATURE VERIFICATION GUIDE
+# 
+# Cost Katana signs all webhook requests with HMAC-SHA256
+# Headers included:
+#   X-CostKatana-Signature: t=1234567890,v1=abc123def456...
+#   X-CostKatana-Event: cost.alert
+#   X-CostKatana-Delivery-Id: del_abc123
+
+###
+# Example Webhook Request Your Server Receives
+
+### Incoming Webhook Request
+# POST https://your-server.com/webhooks/secure
+# Headers:
+#   X-CostKatana-Signature: t=1705320600,v1=5f9c4ab08cac7457e9111a30e4337ba06d567d7b1...
+#   X-CostKatana-Event: cost.alert
+#   X-CostKatana-Delivery-Id: del_abc123
+#   Content-Type: application/json
+#
+# Body:
+{
+  "event_id": "evt_abc123",
+  "event_type": "cost.alert",
+  "occurred_at": "2024-01-15T10:30:00Z",
+  "data": {
+    "cost": {
+      "amount": 125.50,
+      "threshold": 100.00
+    }
+  }
+}
+
+###
+# SIGNATURE VERIFICATION IMPLEMENTATION EXAMPLES
+
+### 1. Node.js Implementation
+# const crypto = require('crypto');
+# 
+# function verifyWebhookSignature(req, webhookSecret) {
+#   // 1. Get signature header
+#   const signature = req.headers['x-costkatana-signature'];
+#   if (!signature) {
+#     throw new Error('No signature header');
+#   }
+#   
+#   // 2. Extract timestamp and signature
+#   const parts = signature.split(',');
+#   const timestamp = parts[0].split('=')[1];
+#   const receivedSignature = parts[1].split('=')[1];
+#   
+#   // 3. Check timestamp (prevent replay attacks)
+#   const currentTime = Math.floor(Date.now() / 1000);
+#   const tolerance = 300; // 5 minutes
+#   if (Math.abs(currentTime - timestamp) > tolerance) {
+#     throw new Error('Timestamp too old');
+#   }
+#   
+#   // 4. Construct signed payload
+#   const payload = `${timestamp}.${JSON.stringify(req.body)}`;
+#   
+#   // 5. Compute expected signature
+#   const expectedSignature = crypto
+#     .createHmac('sha256', webhookSecret)
+#     .update(payload, 'utf8')
+#     .digest('hex');
+#   
+#   // 6. Compare signatures (timing-safe)
+#   const isValid = crypto.timingSafeEqual(
+#     Buffer.from(receivedSignature, 'hex'),
+#     Buffer.from(expectedSignature, 'hex')
+#   );
+#   
+#   if (!isValid) {
+#     throw new Error('Invalid signature');
+#   }
+#   
+#   return true;
+# }
+# 
+# // Usage in Express
+# app.post('/webhooks/secure', (req, res) => {
+#   try {
+#     verifyWebhookSignature(req, process.env.WEBHOOK_SECRET);
+#     // Process webhook
+#     console.log('Valid webhook:', req.body);
+#     res.status(200).json({ received: true });
+#   } catch (error) {
+#     console.error('Invalid webhook:', error.message);
+#     res.status(401).json({ error: 'Invalid signature' });
+#   }
+# });
+
+### 2. Python Implementation
+# import hmac
+# import hashlib
+# import time
+# from flask import Flask, request, jsonify
+# 
+# def verify_webhook_signature(request, webhook_secret):
+#     # 1. Get signature header
+#     signature = request.headers.get('X-CostKatana-Signature')
+#     if not signature:
+#         raise ValueError('No signature header')
+#     
+#     # 2. Extract timestamp and signature
+#     parts = signature.split(',')
+#     timestamp = int(parts[0].split('=')[1])
+#     received_signature = parts[1].split('=')[1]
+#     
+#     # 3. Check timestamp (prevent replay attacks)
+#     current_time = int(time.time())
+#     tolerance = 300  # 5 minutes
+#     if abs(current_time - timestamp) > tolerance:
+#         raise ValueError('Timestamp too old')
+#     
+#     # 4. Construct signed payload
+#     payload = f"{timestamp}.{request.get_data(as_text=True)}"
+#     
+#     # 5. Compute expected signature
+#     expected_signature = hmac.new(
+#         webhook_secret.encode('utf-8'),
+#         payload.encode('utf-8'),
+#         hashlib.sha256
+#     ).hexdigest()
+#     
+#     # 6. Compare signatures (timing-safe)
+#     is_valid = hmac.compare_digest(
+#         received_signature,
+#         expected_signature
+#     )
+#     
+#     if not is_valid:
+#         raise ValueError('Invalid signature')
+#     
+#     return True
+# 
+# # Usage in Flask
+# app = Flask(__name__)
+# 
+# @app.route('/webhooks/secure', methods=['POST'])
+# def webhook_handler():
+#     try:
+#         verify_webhook_signature(request, os.environ['WEBHOOK_SECRET'])
+#         # Process webhook
+#         data = request.get_json()
+#         print(f"Valid webhook: {data}")
+#         return jsonify({'received': True}), 200
+#     except ValueError as e:
+#         print(f"Invalid webhook: {str(e)}")
+#         return jsonify({'error': 'Invalid signature'}), 401
+
+### 3. Go Implementation
+# package main
+# 
+# import (
+#     "crypto/hmac"
+#     "crypto/sha256"
+#     "encoding/hex"
+#     "encoding/json"
+#     "fmt"
+#     "io/ioutil"
+#     "net/http"
+#     "strconv"
+#     "strings"
+#     "time"
+# )
+# 
+# func verifyWebhookSignature(r *http.Request, webhookSecret string) error {
+#     // 1. Get signature header
+#     signature := r.Header.Get("X-CostKatana-Signature")
+#     if signature == "" {
+#         return fmt.Errorf("no signature header")
+#     }
+#     
+#     // 2. Extract timestamp and signature
+#     parts := strings.Split(signature, ",")
+#     timestampStr := strings.Split(parts[0], "=")[1]
+#     receivedSignature := strings.Split(parts[1], "=")[1]
+#     
+#     timestamp, err := strconv.ParseInt(timestampStr, 10, 64)
+#     if err != nil {
+#         return fmt.Errorf("invalid timestamp")
+#     }
+#     
+#     // 3. Check timestamp
+#     currentTime := time.Now().Unix()
+#     tolerance := int64(300)
+#     if abs(currentTime-timestamp) > tolerance {
+#         return fmt.Errorf("timestamp too old")
+#     }
+#     
+#     // 4. Read body
+#     body, err := ioutil.ReadAll(r.Body)
+#     if err != nil {
+#         return err
+#     }
+#     
+#     // 5. Construct signed payload
+#     payload := fmt.Sprintf("%d.%s", timestamp, body)
+#     
+#     // 6. Compute expected signature
+#     mac := hmac.New(sha256.New, []byte(webhookSecret))
+#     mac.Write([]byte(payload))
+#     expectedSignature := hex.EncodeToString(mac.Sum(nil))
+#     
+#     // 7. Compare signatures
+#     if !hmac.Equal([]byte(receivedSignature), []byte(expectedSignature)) {
+#         return fmt.Errorf("invalid signature")
+#     }
+#     
+#     return nil
+# }
+
+### 4. Ruby Implementation
+# require 'openssl'
+# require 'json'
+# 
+# def verify_webhook_signature(request, webhook_secret)
+#   # 1. Get signature header
+#   signature = request.headers['X-CostKatana-Signature']
+#   raise 'No signature header' unless signature
+#   
+#   # 2. Extract timestamp and signature
+#   parts = signature.split(',')
+#   timestamp = parts[0].split('=')[1].to_i
+#   received_signature = parts[1].split('=')[1]
+#   
+#   # 3. Check timestamp
+#   current_time = Time.now.to_i
+#   tolerance = 300
+#   raise 'Timestamp too old' if (current_time - timestamp).abs > tolerance
+#   
+#   # 4. Construct signed payload
+#   payload = "#{timestamp}.#{request.raw_body}"
+#   
+#   # 5. Compute expected signature
+#   expected_signature = OpenSSL::HMAC.hexdigest(
+#     'sha256',
+#     webhook_secret,
+#     payload
+#   )
+#   
+#   # 6. Compare signatures
+#   unless Rack::Utils.secure_compare(received_signature, expected_signature)
+#     raise 'Invalid signature'
+#   end
+#   
+#   true
+# end
+
+###
+# TESTING SIGNATURE VERIFICATION
+
+### Generate Test Signature (Node.js)
+# const crypto = require('crypto');
+# 
+# function generateTestSignature(payload, secret) {
+#   const timestamp = Math.floor(Date.now() / 1000);
+#   const payloadString = `${timestamp}.${JSON.stringify(payload)}`;
+#   const signature = crypto
+#     .createHmac('sha256', secret)
+#     .update(payloadString, 'utf8')
+#     .digest('hex');
+#   return `t=${timestamp},v1=${signature}`;
+# }
+# 
+# // Test
+# const payload = { event_type: 'cost.alert', data: { amount: 100 } };
+# const secret = 'whsec_test_secret';
+# console.log(generateTestSignature(payload, secret));
+
+###
+# SECURITY BEST PRACTICES
+
+### 1. Store Secrets Securely
+# ❌ BAD: const secret = 'whsec_abc123';
+# ✅ GOOD: const secret = process.env.WEBHOOK_SECRET;
+
+### 2. Use Timing-Safe Comparison
+# ❌ BAD: if (receivedSignature === expectedSignature)
+# ✅ GOOD: if (crypto.timingSafeEqual(Buffer.from(received), Buffer.from(expected)))
+
+### 3. Verify Timestamp (Prevent Replay Attacks)
+# ✅ Check timestamp is within 5 minutes
+# ✅ Store processed event IDs to prevent duplicates
+
+### 4. Use HTTPS Only
+# ✅ Only accept webhooks over HTTPS
+# ✅ Reject HTTP webhook URLs
+
+### 5. Implement Idempotency
+# ✅ Track event_id to prevent duplicate processing
+# ✅ Return 200 OK for already-processed events
+
+###
+# Example Idempotent Handler
+# const processedEvents = new Set();
+# 
+# app.post('/webhooks/secure', (req, res) => {
+#   try {
+#     verifyWebhookSignature(req, process.env.WEBHOOK_SECRET);
+#     
+#     const eventId = req.body.event_id;
+#     
+#     // Check if already processed
+#     if (processedEvents.has(eventId)) {
+#       console.log('Event already processed:', eventId);
+#       return res.status(200).json({ received: true, duplicate: true });
+#     }
+#     
+#     // Process event
+#     processWebhook(req.body);
+#     
+#     // Mark as processed
+#     processedEvents.add(eventId);
+#     
+#     res.status(200).json({ received: true });
+#   } catch (error) {
+#     res.status(401).json({ error: 'Invalid signature' });
+#   }
+# });
+
+###
+# WEBHOOK DELIVERY STATUS
+
+### Check Delivery Status
+GET {{baseUrl}}/webhooks/deliveries/{deliveryId}
+Authorization: Bearer {{apiKey}}
+
+# Response:
+# {
+#   "id": "del_abc123",
+#   "webhook_id": "wh_xyz789",
+#   "event_type": "cost.alert",
+#   "status": "delivered",
+#   "response_code": 200,
+#   "response_time_ms": 145,
+#   "attempts": 1,
+#   "delivered_at": "2024-01-15T10:30:00Z"
+# }
+
+###
+# Common Issues and Solutions
+
+### Issue 1: Signature Mismatch
+# Cause: Body modified before verification
+# Solution: Verify signature before parsing body
+# ✅ Verify on raw body, not parsed JSON
+
+### Issue 2: Timestamp Too Old
+# Cause: Server time out of sync
+# Solution: Sync server time with NTP
+# ✅ Check system time accuracy
+
+### Issue 3: Failed Deliveries
+# Cause: Server timeout or error
+# Solution: Respond quickly, process async
+# ✅ Return 200 OK immediately
+# ✅ Process webhook in background job
+
+###
+# Cost: Webhook delivery is FREE
+# Security: Always verify signatures
+# Reliability: Implement retry logic
+# Performance: Process asynchronously
+

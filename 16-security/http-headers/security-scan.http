@@ -1,0 +1,16 @@
+### Security: Threat Detection & Scanning
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Security Scan
+POST {{baseUrl}}/security/scan
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "type": "request",
+  "data": {
+    "prompt": "User input to scan",
+    "context": "chat"
+  }
+}

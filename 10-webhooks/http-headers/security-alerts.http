@@ -1,0 +1,306 @@
+### Cost Katana Webhooks: Security & Compliance Alerts
+### Receive notifications for security events, compliance violations, and moderation
+
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_cost_katana_api_key_here
+
+### Setup Webhook for Security Events
+POST {{baseUrl}}/webhooks
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "url": "https://your-server.com/webhooks/security",
+  "events": [
+    "security.alert",
+    "compliance.violation",
+    "data.privacy_alert",
+    "moderation.blocked"
+  ],
+  "active": true,
+  "secret": "your_webhook_secret",
+  "filters": {
+    "severity": ["high", "critical"]
+  }
+}
+
+###
+# WEBHOOK PAYLOAD EXAMPLES
+
+### Example 1: Security Alert - Prompt Injection Detected
+{
+  "event_id": "evt_sec001",
+  "event_type": "security.alert",
+  "occurred_at": "2024-01-15T10:30:00Z",
+  "severity": "critical",
+  "title": "Prompt Injection Attempt Detected",
+  "description": "Malicious prompt injection detected and blocked",
+  "data": {
+    "threat": {
+      "type": "prompt_injection",
+      "confidence": 0.95,
+      "blocked": true,
+      "attack_vector": "ignore_previous_instructions"
+    },
+    "resource": {
+      "type": "request",
+      "id": "req_abc123",
+      "model": "gpt-4",
+      "timestamp": "2024-01-15T10:30:00Z"
+    },
+    "context": {
+      "user_id": "user_123",
+      "ip_address": "192.168.1.100",
+      "user_agent": "Mozilla/5.0...",
+      "request_pattern": "suspicious"
+    },
+    "action_taken": {
+      "blocked": true,
+      "reason": "High confidence prompt injection detected",
+      "recommendation": "Review user access and implement additional validation"
+    },
+    "links": {
+      "dashboard": "https://costkatana.com/security/incidents/sec001",
+      "details": "https://costkatana.com/security/threat-analysis"
+    }
+  }
+}
+
+### Example 2: Compliance Violation - PII Detected
+{
+  "event_id": "evt_comp001",
+  "event_type": "compliance.violation",
+  "occurred_at": "2024-01-15T11:15:00Z",
+  "severity": "high",
+  "title": "PII Detected in Request",
+  "description": "Personally identifiable information found in prompt",
+  "data": {
+    "violation": {
+      "type": "pii_detected",
+      "pii_types": ["email", "phone_number", "ssn"],
+      "confidence": 0.98,
+      "masked": true
+    },
+    "resource": {
+      "type": "request",
+      "id": "req_def456",
+      "model": "claude-3-5-sonnet-20241022"
+    },
+    "compliance_frameworks": [
+      "GDPR",
+      "CCPA",
+      "HIPAA"
+    ],
+    "action_taken": {
+      "pii_masked": true,
+      "request_logged": true,
+      "alert_sent": true,
+      "masked_fields": [
+        "email: u***@example.com",
+        "phone: ***-***-1234"
+      ]
+    },
+    "recommendations": [
+      "Implement PII detection before API calls",
+      "Review data handling procedures",
+      "Enable automatic PII masking"
+    ]
+  }
+}
+
+### Example 3: Data Privacy Alert - Sensitive Data Exposure Risk
+{
+  "event_id": "evt_priv001",
+  "event_type": "data.privacy_alert",
+  "occurred_at": "2024-01-15T12:00:00Z",
+  "severity": "high",
+  "title": "Sensitive Data Exposure Risk",
+  "description": "API response may contain sensitive customer data",
+  "data": {
+    "risk": {
+      "type": "data_exposure",
+      "sensitivity_level": "high",
+      "data_categories": [
+        "customer_records",
+        "financial_information"
+      ],
+      "confidence": 0.89
+    },
+    "resource": {
+      "type": "response",
+      "request_id": "req_ghi789",
+      "model": "gpt-4"
+    },
+    "detected_patterns": [
+      "credit_card_pattern",
+      "bank_account_pattern"
+    ],
+    "action_taken": {
+      "response_filtered": true,
+      "admin_notified": true,
+      "audit_log_created": true
+    },
+    "remediation": {
+      "immediate": "Response filtered and logged",
+      "recommended": [
+        "Review data handling in prompts",
+        "Enable advanced content filtering",
+        "Implement data classification"
+      ]
+    }
+  }
+}
+
+### Example 4: Moderation Blocked - Harmful Content
+{
+  "event_id": "evt_mod001",
+  "event_type": "moderation.blocked",
+  "occurred_at": "2024-01-15T13:30:00Z",
+  "severity": "medium",
+  "title": "Content Blocked by Moderation",
+  "description": "Request blocked due to policy violation",
+  "data": {
+    "moderation": {
+      "blocked": true,
+      "reason": "harmful_content_detected",
+      "categories": ["violence", "hate_speech"],
+      "confidence": 0.92
+    },
+    "resource": {
+      "type": "request",
+      "id": "req_jkl012",
+      "model": "gpt-3.5-turbo"
+    },
+    "policy": {
+      "violated_policies": [
+        "content_policy_v2",
+        "acceptable_use_policy"
+      ],
+      "action": "block_and_alert"
+    },
+    "user_info": {
+      "user_id": "user_789",
+      "warnings_count": 2,
+      "violations_count": 1
+    },
+    "action_taken": {
+      "request_blocked": true,
+      "user_notified": false,
+      "admin_alerted": true
+    }
+  }
+}
+
+### Example 5: Security Alert - Rate Limit Abuse
+{
+  "event_id": "evt_sec002",
+  "event_type": "security.alert",
+  "occurred_at": "2024-01-15T14:45:00Z",
+  "severity": "high",
+  "title": "Suspicious Rate Limit Pattern",
+  "description": "Potential rate limit abuse detected",
+  "data": {
+    "abuse": {
+      "type": "rate_limit_abuse",
+      "pattern": "distributed_attack",
+      "requests_per_minute": 1200,
+      "normal_rpm": 50,
+      "confidence": 0.88
+    },
+    "source": {
+      "user_id": "user_456",
+      "ip_addresses": [
+        "192.168.1.100",
+        "192.168.1.101",
+        "192.168.1.102"
+      ],
+      "geographic_spread": "multiple_regions"
+    },
+    "metrics": {
+      "total_requests": 3600,
+      "time_window": "3 minutes",
+      "unique_ips": 12,
+      "failed_requests": 280
+    },
+    "action_taken": {
+      "throttling_applied": true,
+      "suspicious_ips_blocked": true,
+      "user_account_flagged": true
+    },
+    "recommendations": [
+      "Review API key security",
+      "Implement IP whitelisting",
+      "Enable advanced rate limiting"
+    ]
+  }
+}
+
+### Example 6: Security Alert - Anomalous Access Pattern
+{
+  "event_id": "evt_sec003",
+  "event_type": "security.alert",
+  "occurred_at": "2024-01-15T15:20:00Z",
+  "severity": "medium",
+  "title": "Unusual Access Pattern Detected",
+  "description": "Access from new location and unusual time",
+  "data": {
+    "anomaly": {
+      "type": "access_pattern",
+      "indicators": [
+        "new_geographic_location",
+        "unusual_time_of_day",
+        "different_user_agent"
+      ],
+      "risk_score": 75
+    },
+    "access_info": {
+      "user_id": "user_123",
+      "location": "Russia",
+      "previous_locations": ["United States", "Canada"],
+      "access_time": "03:20 AM EST",
+      "typical_access_time": "09:00 AM - 05:00 PM EST"
+    },
+    "action_taken": {
+      "mfa_challenged": true,
+      "session_flagged": true,
+      "monitoring_increased": true
+    }
+  }
+}
+
+###
+# RESPONDING TO WEBHOOKS
+# Your server should respond with 200 OK within 5 seconds
+
+### Example Response Handler:
+# POST https://your-server.com/webhooks/security
+# 
+# Response:
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "received": true,
+  "event_id": "evt_sec001",
+  "processed_at": "2024-01-15T10:30:05Z"
+}
+
+###
+# WEBHOOK RETRY POLICY
+# If your server doesn't respond with 200 OK:
+# - Retry 1: After 1 second
+# - Retry 2: After 2 seconds
+# - Retry 3: After 4 seconds
+# - Retry 4: After 8 seconds
+# - After 4 failed attempts, webhook is marked as failed
+
+###
+# Security Best Practices:
+# 1. Always verify webhook signatures
+# 2. Use HTTPS endpoints only
+# 3. Implement idempotency (check event_id)
+# 4. Respond quickly (< 5 seconds)
+# 5. Process events asynchronously
+# 6. Log all security events
+# 7. Set up alerting for critical events
+

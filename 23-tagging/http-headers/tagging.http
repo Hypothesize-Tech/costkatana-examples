@@ -1,0 +1,14 @@
+### Tagging System
+@baseUrl = https://cost-katana-backend.store/api
+@apiKey = your_api_key
+
+### Add Tag
+POST {{baseUrl}}/tags
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{"requestId": "req_123", "tags": ["production", "high-priority"]}
+
+### Query by Tags
+GET {{baseUrl}}/tags?tag=production
+Authorization: Bearer {{apiKey}}

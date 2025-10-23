@@ -1,0 +1,10 @@
+import axios from 'axios';
+const API = 'https://cost-katana-backend.store/api'\;
+const KEY = process.env.COST_KATANA_API_KEY;
+
+export async function submitFeedback(requestId: string, rating: number) {
+  const res = await axios.post(`${API}/v1/feedback`, {requestId, rating},
+    {headers: {'Authorization': `Bearer ${KEY}`}});
+  console.log('✅ Feedback submitted');
+  return res.data.data;
+}

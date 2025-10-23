@@ -1,0 +1,75 @@
+### Gateway Example: Basic Routing to OpenAI
+# Route any AI provider through Cost Katana gateway
+# Replace YOUR_COSTKATANA_KEY with your actual key
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain the benefits of using an AI gateway."
+    }
+  ]
+}
+
+### Gateway Example: Route to Anthropic
+POST https://cost-katana-backend.store/api/gateway/v1/messages
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.anthropic.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+Content-Type: application/json
+
+{
+  "model": "claude-3-5-sonnet-20241022",
+  "max_tokens": 1024,
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the advantages of centralized AI request routing?"
+    }
+  ]
+}
+
+### Gateway Example: Route to Google AI
+POST https://cost-katana-backend.store/api/gateway/v1/models/gemini-pro:generateContent
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://generativelanguage.googleapis.com
+CostKatana-Project-Id: YOUR_PROJECT_ID
+Content-Type: application/json
+
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Explain the concept of API gateway patterns."
+        }
+      ]
+    }
+  ]
+}
+
+###
+# 🌐 Benefits of Gateway Routing:
+# ✅ Single endpoint for all providers
+# ✅ Automatic cost tracking
+# ✅ Built-in monitoring
+# ✅ Easy provider switching
+# ✅ Centralized access control
+# ✅ Rate limiting & quotas
+# ✅ Request/response logging
+#
+# 📊 Response Headers:
+# - CostKatana-Id: Unique request ID
+# - CostKatana-Processing-Time: Gateway latency
+# - CostKatana-Cache-Status: HIT or MISS
+#
+# 📈 View gateway analytics at:
+# https://costkatana.com/gateway/analytics
+
