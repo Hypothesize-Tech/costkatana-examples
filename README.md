@@ -566,7 +566,6 @@ Documentation:      50 comprehensive READMEs
 
 Updated:            Weekly
 Maintained by:      Cost Katana Team
-Community:          1000+ developers
 ```
 
 ---
