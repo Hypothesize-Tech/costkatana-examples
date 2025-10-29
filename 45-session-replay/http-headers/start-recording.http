@@ -1,0 +1,95 @@
+### Start Session Recording
+# Creates a new session replay recording for an in-app feature
+
+POST https://cost-katana-backend.store/api/session-replay/recording/start
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "userId": "user_12345",
+  "feature": "chat",
+  "label": "Customer Support Chat - 2025-10-28"
+}
+
+### Expected Response
+# {
+#   "success": true,
+#   "data": {
+#     "sessionId": "inapp_chat_1234567890_abc123"
+#   }
+# }
+
+###
+
+### Start Recording - Experimentation Session
+
+POST https://cost-katana-backend.store/api/session-replay/recording/start
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "userId": "user_12345",
+  "feature": "experimentation",
+  "label": "A/B Test: Prompt Temperature",
+  "metadata": {
+    "experiment": "prompt-temp-test",
+    "variant": "high-temp"
+  }
+}
+
+###
+
+### Start Recording - Workflow Session
+
+POST https://cost-katana-backend.store/api/session-replay/recording/start
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "userId": "user_12345",
+  "feature": "workflow",
+  "label": "Document Processing Pipeline",
+  "metadata": {
+    "workflow": "doc-processing",
+    "version": "v2.1"
+  }
+}
+
+###
+
+### Start Recording - Agent Session
+
+POST https://cost-katana-backend.store/api/session-replay/recording/start
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "userId": "user_12345",
+  "feature": "agent",
+  "label": "Research Agent - Market Analysis",
+  "metadata": {
+    "agent_type": "research",
+    "task": "market-analysis"
+  }
+}
+
+###
+
+### Start Recording - Notebook Session
+
+POST https://cost-katana-backend.store/api/session-replay/recording/start
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "userId": "user_12345",
+  "feature": "notebook",
+  "label": "Jupyter Notebook - Data Analysis",
+  "metadata": {
+    "notebook": "sales-analysis.ipynb",
+    "kernel": "python3"
+  }
+}
+
+###
+

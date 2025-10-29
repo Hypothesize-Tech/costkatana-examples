@@ -1,0 +1,99 @@
+### Get Session Replay by ID
+# Retrieve complete session replay with all interactions
+
+GET https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}
+Authorization: Bearer {{API_KEY}}
+
+### Expected Response
+# {
+#   "success": true,
+#   "data": {
+#     "sessionId": "inapp_chat_1234567890_abc123",
+#     "userId": "user_12345",
+#     "label": "Customer Support Chat - 2025-10-28",
+#     "source": "in-app",
+#     "appFeature": "chat",
+#     "startedAt": "2025-10-28T16:30:00.000Z",
+#     "endedAt": "2025-10-28T16:35:30.000Z",
+#     "duration": 330000,
+#     "status": "completed",
+#     "hasErrors": false,
+#     "errorCount": 0,
+#     "replayData": {
+#       "aiInteractions": [
+#         {
+#           "timestamp": "2025-10-28T16:30:15.000Z",
+#           "model": "gpt-4",
+#           "prompt": "Hello, how can I help?",
+#           "response": "Hi! I'd like to track...",
+#           "tokens": { "input": 10, "output": 25 },
+#           "cost": 0.0012,
+#           "latency": 850,
+#           "provider": "openai"
+#         }
+#       ],
+#       "userActions": [
+#         {
+#           "timestamp": "2025-10-28T16:30:10.000Z",
+#           "action": "button_click",
+#           "target": "send_message"
+#         }
+#       ],
+#       "codeContext": [],
+#       "systemMetrics": []
+#     },
+#     "summary": {
+#       "totalCost": 0.0035,
+#       "totalTokens": { "input": 150, "output": 200 },
+#       "totalSpans": 5
+#     }
+#   }
+# }
+
+###
+
+### Export Session as JSON
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/export
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "format": "json"
+}
+
+###
+
+### Export Session as CSV
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/export
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "format": "csv"
+}
+
+###
+
+### Generate Shareable Link
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/share
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "expiresIn": 86400
+}
+
+### Expected Response
+# {
+#   "success": true,
+#   "data": {
+#     "shareUrl": "https://costkatana.com/shared/session/abc123xyz",
+#     "expiresAt": "2025-10-29T16:30:00.000Z"
+#   }
+# }
+
+###
+

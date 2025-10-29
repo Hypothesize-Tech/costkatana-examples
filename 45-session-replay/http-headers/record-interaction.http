@@ -1,0 +1,204 @@
+### Record AI Interaction
+# Records a complete AI interaction with all metadata
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "type": "interaction",
+  "data": {
+    "timestamp": "2025-10-28T16:30:00.000Z",
+    "model": "gpt-4",
+    "prompt": "What are the best practices for React performance optimization?",
+    "response": "Here are the key React performance optimization techniques:\n\n1. Use React.memo() for expensive components\n2. Implement code splitting with lazy loading\n3. Optimize re-renders with useMemo and useCallback\n4. Use virtual scrolling for long lists\n5. Minimize bundle size",
+    "tokens": {
+      "input": 12,
+      "output": 85
+    },
+    "cost": 0.0015,
+    "latency": 1850,
+    "provider": "openai",
+    "parameters": {
+      "temperature": 0.7,
+      "max_tokens": 500,
+      "top_p": 1.0
+    },
+    "requestMetadata": {
+      "region": "us-east-1",
+      "version": "2024-02-01"
+    },
+    "responseMetadata": {
+      "finish_reason": "stop",
+      "model_version": "gpt-4-0613"
+    }
+  }
+}
+
+### Expected Response
+# {
+#   "success": true,
+#   "message": "Interaction recorded"
+# }
+
+###
+
+### Record Streaming AI Interaction
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "type": "interaction",
+  "data": {
+    "timestamp": "2025-10-28T16:31:00.000Z",
+    "model": "claude-3-sonnet",
+    "prompt": "Write a Python function to calculate Fibonacci numbers",
+    "response": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
+    "tokens": {
+      "input": 10,
+      "output": 35
+    },
+    "cost": 0.0008,
+    "latency": 1200,
+    "provider": "anthropic",
+    "parameters": {
+      "temperature": 0.5,
+      "max_tokens": 300,
+      "stream": true
+    },
+    "requestMetadata": {
+      "stream": true,
+      "chunks_received": 15
+    },
+    "responseMetadata": {
+      "stop_reason": "end_turn"
+    }
+  }
+}
+
+###
+
+### Record Multi-Modal Interaction (Vision)
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "type": "interaction",
+  "data": {
+    "timestamp": "2025-10-28T16:32:00.000Z",
+    "model": "gpt-4-vision",
+    "prompt": "What is in this image?",
+    "response": "This image shows a beautiful sunset over mountains with orange and purple hues in the sky.",
+    "tokens": {
+      "input": 285,
+      "output": 20
+    },
+    "cost": 0.0035,
+    "latency": 2100,
+    "provider": "openai",
+    "parameters": {
+      "temperature": 0.7,
+      "max_tokens": 300,
+      "detail": "high"
+    },
+    "requestMetadata": {
+      "image_url": "https://example.com/sunset.jpg",
+      "image_detail": "high"
+    },
+    "responseMetadata": {
+      "finish_reason": "stop"
+    }
+  }
+}
+
+###
+
+### Record Function Calling Interaction
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "type": "interaction",
+  "data": {
+    "timestamp": "2025-10-28T16:33:00.000Z",
+    "model": "gpt-4",
+    "prompt": "Get the current weather in San Francisco",
+    "response": "{\"function_call\": {\"name\": \"get_weather\", \"arguments\": \"{\\\"location\\\": \\\"San Francisco\\\"}\"}}", 
+    "tokens": {
+      "input": 50,
+      "output": 25
+    },
+    "cost": 0.0012,
+    "latency": 950,
+    "provider": "openai",
+    "parameters": {
+      "temperature": 0,
+      "functions": [
+        {
+          "name": "get_weather",
+          "description": "Get current weather",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "requestMetadata": {
+      "function_calling": true
+    },
+    "responseMetadata": {
+      "finish_reason": "function_call",
+      "function_name": "get_weather"
+    }
+  }
+}
+
+###
+
+### Record Error Interaction
+
+POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "type": "interaction",
+  "data": {
+    "timestamp": "2025-10-28T16:34:00.000Z",
+    "model": "gpt-4",
+    "prompt": "Generate a very long response...",
+    "response": "",
+    "tokens": {
+      "input": 15,
+      "output": 0
+    },
+    "cost": 0.0001,
+    "latency": 500,
+    "provider": "openai",
+    "parameters": {
+      "temperature": 0.7,
+      "max_tokens": 10
+    },
+    "requestMetadata": {
+      "attempt": 1
+    },
+    "responseMetadata": {
+      "finish_reason": "length",
+      "error": "max_tokens_exceeded"
+    }
+  }
+}
+
+###
+
