@@ -1,0 +1,88 @@
+### Gateway Example: Disable Auto-Tracking
+# Use the gateway proxy without tracking requests in the database
+# Replace YOUR_COSTKATANA_KEY with your actual key
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Auto-Track: false
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "This request will be proxied but not tracked in the database."
+    }
+  ]
+}
+
+### Gateway Example: Enable Auto-Tracking (Default)
+# This is the default behavior - requests are automatically tracked
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Auto-Track: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "This request will be tracked in the database."
+    }
+  ]
+}
+
+### Gateway Example: Auto-Track with Other Features
+# You can combine autoTrack with other gateway features like caching
+
+POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Auto-Track: false
+CostKatana-Cache-Enabled: true
+Content-Type: application/json
+
+{
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "user",
+      "content": "This request uses caching but is not tracked."
+    }
+  ]
+}
+
+###
+# 📝 Use Cases for Disabling Auto-Track:
+# 
+# 1. Test/Development Requests
+#    - Don't pollute production analytics with test data
+#    - Keep development costs separate from production
+#
+# 2. High-Volume Proxy-Only Scenarios
+#    - When you just need gateway features (caching, retries) but not tracking
+#    - Reduce database load for high-frequency requests
+#
+# 3. Privacy-Sensitive Requests
+#    - When tracking sensitive data is not desired
+#    - Combine with omitRequest/omitResponse headers for maximum privacy
+#
+# ⚠️ Important Notes:
+# - When autoTrack: false, gateway still proxies requests normally
+# - All gateway features (caching, retries, failover) still work
+# - Only database tracking is skipped
+# - Default value is true (tracking enabled)
+#
+# 📊 Response Headers:
+# - CostKatana-Id: Unique request ID (still generated)
+# - CostKatana-Processing-Time: Gateway latency (still measured)
+# - CostKatana-Cache-Status: HIT or MISS (caching still works)
+#
+# 💡 Tip: Use autoTrack: false for development/testing to keep
+#    your production analytics clean and accurate.
+

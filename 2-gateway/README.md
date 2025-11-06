@@ -59,6 +59,7 @@ const response = await gateway.openai({
 5. [Proxy Keys](./http-headers/proxy-keys.http) - Secure key management
 6. [Failover](./http-headers/failover.http) - Multi-provider fallback
 7. [Workflows](./http-headers/workflows.http) - Track multi-step processes
+8. [Without Tracking](./http-headers/without-tracking.http) - Disable auto-tracking
 
 ### NPM Package
 
@@ -69,6 +70,7 @@ const response = await gateway.openai({
 5. [Proxy Keys](./npm-package/proxy-keys.ts)
 6. [Failover](./npm-package/failover.ts)
 7. [Workflows](./npm-package/workflows.ts)
+8. [Without Tracking](./npm-package/without-tracking.ts) - Disable auto-tracking
 
 ## Key Features
 
@@ -199,6 +201,7 @@ CostKatana-Workflow-Step: generate-outline
 - `CostKatana-LLM-Security-Enabled`: Enable LLM-specific security
 
 ### Tracking
+- `CostKatana-Auto-Track`: Enable/disable automatic tracking (default: true)
 - `CostKatana-Project-Id`: Project for cost allocation
 - `CostKatana-Session-Id`: Session identifier
 - `CostKatana-Workflow-Id`: Workflow identifier
