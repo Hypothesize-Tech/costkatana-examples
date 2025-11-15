@@ -198,7 +198,7 @@ Authorization: Bearer {{apiKey}}
       "projected_overage": 50.00
     },
     "recommendations": [
-      "Enable Cortex optimization (70-95% savings)",
+      "Enable Cortex optimization (40-75% savings)",
       "Use cheaper models for simple tasks",
       "Enable caching for repeated requests"
     ]

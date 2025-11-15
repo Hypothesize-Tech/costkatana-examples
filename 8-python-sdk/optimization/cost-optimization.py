@@ -44,7 +44,7 @@ def main():
     print("   • Use gpt-3.5-turbo for simple tasks (10x cheaper)")
     print("   • Use claude-3-haiku for speed (fastest + cheap)")
     print("   • Use gpt-4 only for complex reasoning")
-    print("   • Enable Cortex for long-form content (70-95% savings)\n")
+    print("   • Enable Cortex for long-form content (40-75% savings)\n")
 
 if __name__ == '__main__':
     main()
