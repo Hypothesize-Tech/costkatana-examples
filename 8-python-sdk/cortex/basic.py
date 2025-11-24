@@ -1,6 +1,6 @@
 """
 Cost Katana Python SDK: Cortex Optimization
-Revolutionary 70-95% cost reduction for long-form content.
+Revolutionary 40-75% cost reduction for long-form content.
 """
 
 import cost_katana as ck
@@ -18,7 +18,7 @@ def main():
     print(f"  Cost: ${normal.cost:.6f}")
     print(f"  Tokens: {normal.tokens}\n")
     
-    # With Cortex - 70-95% savings!
+    # With Cortex - 40-75% savings!
     print("With Cortex:")
     optimized = ck.ai('gpt-4', long_prompt, cortex=True)
     print(f"  Cost: ${optimized.cost:.6f}")

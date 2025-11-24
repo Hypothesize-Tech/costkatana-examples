@@ -175,7 +175,7 @@ When adding examples, try to cover:
 - Cohere (Command R+)
 - Azure OpenAI
 - DeepSeek
-- Groq (Llama 3)
+- Grok (Llama 3)
 
 ### Questions?
 

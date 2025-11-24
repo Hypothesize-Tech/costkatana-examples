@@ -1,5 +1,5 @@
-### Groq Cost Tracking - Llama 3 70B
-# Automatic cost tracking for Groq requests (ultra-fast inference)
+### Grok Cost Tracking - Llama 3 70B
+# Automatic cost tracking for Grok requests (ultra-fast inference)
 # Replace YOUR_COSTKATANA_KEY and YOUR_GROQ_KEY with your actual keys
 
 POST https://api.groq.com/openai/v1/chat/completions
@@ -26,7 +26,7 @@ CostKatana-Property-Feature: fast-inference
   "max_tokens": 1024
 }
 
-### Groq Cost Tracking - Llama 3 8B (Ultra Fast & Cheap)
+### Grok Cost Tracking - Llama 3 8B (Ultra Fast & Cheap)
 POST https://api.groq.com/openai/v1/chat/completions
 Authorization: Bearer YOUR_GROQ_KEY
 Content-Type: application/json
@@ -47,7 +47,7 @@ CostKatana-Property-Speed-Priority: maximum
   "max_tokens": 512
 }
 
-### Groq Cost Tracking - Mixtral 8x7B
+### Grok Cost Tracking - Mixtral 8x7B
 POST https://api.groq.com/openai/v1/chat/completions
 Authorization: Bearer YOUR_GROQ_KEY
 Content-Type: application/json
@@ -67,7 +67,7 @@ CostKatana-Property-Model: mixtral
   "max_tokens": 2048
 }
 
-### Groq Cost Tracking - Gemma 7B
+### Grok Cost Tracking - Gemma 7B
 POST https://api.groq.com/openai/v1/chat/completions
 Authorization: Bearer YOUR_GROQ_KEY
 Content-Type: application/json
@@ -89,8 +89,8 @@ CostKatana-Property-Model: gemma
 
 ###
 # 📊 Expected Results:
-# - All Groq requests tracked automatically
-# - Token usage from Groq API response
+# - All Grok requests tracked automatically
+# - Token usage from Grok API response
 # - Cost calculated per model
 # - Ultra-fast response times logged (< 1 second typical)
 # - Model size and architecture tracked
@@ -107,14 +107,14 @@ CostKatana-Property-Model: gemma
 # - Use Mixtral for long context (32K tokens)
 # - Great for real-time applications
 #
-# ⚡ Why Groq:
+# ⚡ Why Grok:
 # - World's fastest LLM inference (500+ tokens/sec)
 # - Very competitive pricing
 # - Great for latency-sensitive apps
 # - OpenAI-compatible API
 #
 # 🚀 Speed Comparison:
-# - Groq: ~500-1000 tokens/second
+# - Grok: ~500-1000 tokens/second
 # - OpenAI: ~50-100 tokens/second
 # - 10x faster inference!
 #

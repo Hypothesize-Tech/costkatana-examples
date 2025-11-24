@@ -284,7 +284,7 @@ const response = await gateway.makeRequest(endpoint, data, {
 ## Next Steps
 
 - **Optimization**: Reduce costs 20-40% → [../3-optimization](../3-optimization/)
-- **Cortex**: Save 70-95% with meta-language → [../4-cortex](../4-cortex/)
+- **Cortex**: Save 40-75% with meta-language → [../4-cortex](../4-cortex/)
 - **Analytics**: Monitor usage and costs → [../5-analytics](../5-analytics/)
 
 ## Support

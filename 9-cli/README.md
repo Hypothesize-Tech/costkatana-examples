@@ -34,7 +34,7 @@ cost-katana chat
 - [Budget Tracking](./optimization/budget.md) - Set spending limits
 
 ### 4. Cortex
-- [Enable Cortex](./cortex/enable.md) - 70-95% cost savings
+- [Enable Cortex](./cortex/enable.md) - 40-75% cost savings
 - [Long-Form Content](./cortex/long-form.md) - Blog posts, articles
 
 ### 5. Advanced Usage
@@ -188,7 +188,7 @@ cost-katana chat --model gpt-4
 
 ### Enable Cortex for Long Content
 ```bash
-# 70-95% savings on long-form content
+# 40-75% savings on long-form content
 cost-katana chat --cortex
 ```
 
@@ -210,14 +210,14 @@ cost-katana chat --cache
 - Simple 2-step setup
 - One command for all providers
 - Real-time cost tracking
-- Built-in 70-95% optimization
+- Built-in 40-75% optimization
 - Dashboard integration
 
 ## Features
 
 - ✅ Universal AI access (all providers)
 - ✅ Real-time cost tracking
-- ✅ 70-95% cost savings with Cortex
+- ✅ 40-75% cost savings with Cortex
 - ✅ Smart caching
 - ✅ Budget alerts
 - ✅ Beautiful terminal UI

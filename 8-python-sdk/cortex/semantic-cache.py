@@ -25,7 +25,7 @@ def main():
     print(f"  Total Savings: 100%\n")
     
     print("💰 Cortex + Caching = Ultimate Savings!")
-    print("   First request: 70-95% savings with Cortex")
+    print("   First request: 40-75% savings with Cortex")
     print("   Repeat requests: 100% free from cache\n")
 
 if __name__ == '__main__':

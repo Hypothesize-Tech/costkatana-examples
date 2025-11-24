@@ -19,8 +19,8 @@ Content-Type: application/json
 
 ###
 # 🔀 Failover Policies:
-# - fastest: OpenAI → Groq → Anthropic
-# - cheapest: DeepSeek → Groq → GPT-3.5
+# - fastest: OpenAI → Grok → Anthropic
+# - cheapest: DeepSeek → Grok → GPT-3.5
 # - cost-optimized: Balance cost and quality
 # - quality-first: GPT-4 → Claude → Gemini
 #

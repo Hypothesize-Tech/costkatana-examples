@@ -1,6 +1,6 @@
 # Cortex Meta-Language Examples
 
-**Revolutionary 70-95% AI cost reduction through semantic compression**
+**Revolutionary 40-75% AI cost reduction through semantic compression**
 
 ## 🧬 What is Cortex?
 
@@ -45,7 +45,7 @@ Discuss both opportunities and challenges, and make it around 2000 words.
 ## ✨ Features
 
 ### 1. Basic Cortex Processing
-Enable Cortex for automatic 70-95% savings on long-form content.
+Enable Cortex for automatic 40-75% savings on long-form content.
 
 ### 2. Semantic Cache
 Cache Cortex representations for 100% free repeated requests.
@@ -110,7 +110,7 @@ console.log(`Savings: 95%!`);
 ## 📖 Examples
 
 ### HTTP Headers
-- [Basic Cortex](./http-headers/basic-cortex.http) - Enable 70-95% savings
+- [Basic Cortex](./http-headers/basic-cortex.http) - Enable 40-75% savings
 - [Semantic Cache](./http-headers/semantic-cache.http) - Cache Cortex structures
 - [Intelligent Routing](./http-headers/intelligent-routing.http) - Auto-optimize routing
 - [Binary Compression](./http-headers/binary-compression.http) - Extra 10-15% savings
@@ -348,5 +348,5 @@ console.log('Cortex Metrics:', {
 
 ---
 
-**Ready to save 70-95% on AI costs?** Start with [Basic Cortex](./http-headers/basic-cortex.http) 🚀
+**Ready to save 40-75% on AI costs?** Start with [Basic Cortex](./http-headers/basic-cortex.http) 🚀
 

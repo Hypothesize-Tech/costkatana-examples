@@ -44,7 +44,7 @@ Content-Type: application/json
 - [Cohere](./http-headers/cohere.http)
 - [Azure](./http-headers/azure.http)
 - [DeepSeek](./http-headers/deepseek.http)
-- [Groq](./http-headers/groq.http)
+- [Grok](./http-headers/groq.http)
 
 ### 2. NPM Package (Best Developer Experience)
 
@@ -72,7 +72,7 @@ console.log(`Cost: $${response.cost}`);
 - [Cohere](./npm-package/cohere.ts)
 - [Azure](./npm-package/azure.ts)
 - [DeepSeek](./npm-package/deepseek.ts)
-- [Groq](./npm-package/groq.ts)
+- [Grok](./npm-package/groq.ts)
 
 ## Quick Start
 
@@ -182,7 +182,7 @@ await tracker.trackUsage({
 - 📊 Token counting: From API response
 - 💰 Pricing: Per-token pricing (very competitive)
 
-### Groq
+### Grok
 - ✅ Supports: Llama 3, Mixtral, Gemma
 - 📊 Token counting: From API response
 - 💰 Pricing: Per-token pricing (fast inference)
@@ -199,7 +199,7 @@ After running examples, view your tracked data at:
 
 - **Gateway**: Route through Cost Katana's intelligent gateway → [../2-gateway](../2-gateway/)
 - **Optimization**: Reduce costs 20-40% → [../3-optimization](../3-optimization/)
-- **Cortex**: Save 70-95% with meta-language → [../4-cortex](../4-cortex/)
+- **Cortex**: Save 40-75% with meta-language → [../4-cortex](../4-cortex/)
 
 ## Support
 

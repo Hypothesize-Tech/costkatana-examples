@@ -1,7 +1,7 @@
 /**
  * Cortex Example: Basic Meta-Language Processing
  * 
- * Demonstrates the revolutionary Cortex meta-language for 70-95% cost reduction.
+ * Demonstrates the revolutionary Cortex meta-language for 40-75% cost reduction.
  * Perfect for long-form content, documentation, and comprehensive responses.
  * 
  * Run: npm run example 4-cortex/npm-package/basic-cortex.ts
@@ -13,7 +13,7 @@ import { logResult, formatCost, formatTokens, calculateSavings } from '../../sha
 
 async function main() {
   console.log('\n🧬 Cortex Meta-Language Examples\n');
-  console.log('Revolutionary 70-95% AI cost reduction through semantic compression\n');
+  console.log('Revolutionary 40-75% AI cost reduction through semantic compression\n');
   
   validateConfig(['costKatanaKey', 'projectId']);
   
@@ -234,7 +234,7 @@ status codes, authentication requirements, and code examples in cURL, JavaScript
   
   console.log('\n✅ All Cortex examples completed!');
   console.log('\n🎯 Key Takeaways:');
-  console.log('   • Cortex provides 70-95% cost reduction for long-form content');
+  console.log('   • Cortex provides 40-75% cost reduction for long-form content');
   console.log('   • Best for content > 500 tokens (blog posts, docs, tutorials)');
   console.log('   • Maintains 99.5% semantic integrity');
   console.log('   • Adds ~1-2s processing overhead (worth it for savings!)');

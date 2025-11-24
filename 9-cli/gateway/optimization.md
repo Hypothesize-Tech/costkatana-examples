@@ -24,7 +24,7 @@ AI: [Same response from cache]
 
 ## Benefits Combined
 
-- **Cortex**: 70-95% cost savings
+- **Cortex**: 40-75% cost savings
 - **Cache**: 100% free on repeat requests
 - **Retry**: Never fails on rate limits
 - **Failover**: Switches providers if needed

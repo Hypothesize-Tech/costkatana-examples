@@ -41,4 +41,4 @@ cost-katana chat --system "You are a Python expert. Be concise."
 cost-katana chat --cortex
 ```
 
-Saves 70-95% on long responses!
+Saves 40-75% on long responses!

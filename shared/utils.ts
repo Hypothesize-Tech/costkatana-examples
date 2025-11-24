@@ -57,7 +57,7 @@ export function extractModelFromUrl(url: string): string {
   if (url.includes('anthropic')) return 'Anthropic';
   if (url.includes('google')) return 'Google AI';
   if (url.includes('cohere')) return 'Cohere';
-  if (url.includes('groq')) return 'Groq';
+  if (url.includes('groq')) return 'Grok';
   if (url.includes('deepseek')) return 'DeepSeek';
   if (url.includes('azure')) return 'Azure OpenAI';
   if (url.includes('bedrock') || url.includes('amazonaws')) return 'AWS Bedrock';

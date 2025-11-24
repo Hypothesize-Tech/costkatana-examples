@@ -7,7 +7,7 @@ cost-katana chat --cortex
 ```
 
 **Benefits:**
-- 70-95% cost reduction
+- 40-75% cost reduction
 - Best for long-form content
 - Automatic optimization
 

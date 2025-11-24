@@ -1,5 +1,5 @@
 ### Cortex Example 1: Basic Long-Form Content Generation
-# 70-95% cost reduction for blog posts, articles, documentation
+# 40-75% cost reduction for blog posts, articles, documentation
 # This example demonstrates the core Cortex pipeline
 
 POST https://cost-katana-backend.store/api/gateway/v1/chat/completions

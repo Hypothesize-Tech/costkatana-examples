@@ -494,7 +494,7 @@ Cost Katana works with all major AI providers:
 - ✅ **Cohere** (Command, Embed)
 - ✅ **Azure OpenAI** (All models)
 - ✅ **DeepSeek** (DeepSeek models)
-- ✅ **Groq** (Llama, Mixtral)
+- ✅ **Grok** (Llama, Mixtral)
 - ✅ **HuggingFace** (Open models)
 - ✅ **Ollama** (Local models)
 - ✅ **Replicate** (All models)

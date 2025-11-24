@@ -2,7 +2,7 @@
 
 **AI that just works. With automatic cost tracking.**
 
-Zero-config AI calls with built-in cost tracking, caching, and 70-95% optimization.
+Zero-config AI calls with built-in cost tracking, caching, and 40-75% optimization.
 
 ## Installation
 
@@ -37,7 +37,7 @@ print(f"Cost: ${response.cost}")
 - [Cost Optimization](./optimization/cost-optimization.py) - Choose the right model
 
 ### 4. Cortex
-- [Basic Cortex](./cortex/basic.py) - 70-95% cost reduction
+- [Basic Cortex](./cortex/basic.py) - 40-75% cost reduction
 - [Long-Form Content](./cortex/long-form.py) - Massive savings on blog posts
 - [Semantic Cache](./cortex/semantic-cache.py) - Cache optimized structures
 
@@ -90,7 +90,7 @@ r2 = ck.ai('gpt-4', 'What is Python?', cache=True)
 
 ### Cortex Optimization
 ```python
-# 70-95% cost savings on long content
+# 40-75% cost savings on long content
 response = ck.ai('gpt-4', long_prompt, cortex=True)
 print(f"Saved: ${response.saved_amount}")
 ```
@@ -142,7 +142,7 @@ response = ck.ai(
     prompt='Your prompt here',
     
     # Optimization
-    cortex=True,           # 70-95% savings
+    cortex=True,           # 40-75% savings
     cache=True,            # 100% on cache hits
     
     # Reliability
@@ -313,7 +313,7 @@ ck.ai('gpt-4', 'Design a microservices architecture')
 
 ### 2. Enable Cortex for Long Content
 ```python
-# 70-95% savings on long-form content
+# 40-75% savings on long-form content
 ck.ai('gpt-4', long_prompt, cortex=True)
 ```
 
@@ -329,7 +329,7 @@ ck.ai('gpt-4', prompt, cache=True)
 response = ck.ai(
     'gpt-4',
     long_prompt,
-    cortex=True,    # 70-95% savings
+    cortex=True,    # 40-75% savings
     cache=True,     # 100% on cache hits
     failover=True   # High availability
 )
@@ -388,7 +388,7 @@ def generate_blog_post(topic: str) -> dict:
     
     # Configure for optimal performance
     ck.configure(
-        cortex=True,    # 70-95% savings
+        cortex=True,    # 40-75% savings
         cache=True,     # Cache repeated requests
         failover=True   # High availability
     )

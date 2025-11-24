@@ -99,7 +99,7 @@ OPENAI_API_KEY=sk-your_openai_key  # or another provider
 # See 100% savings with caching
 npm run example 2-gateway/npm-package/with-caching.ts
 
-# See 70-95% savings with Cortex
+# See 40-75% savings with Cortex
 npm run example 4-cortex/npm-package/basic-cortex.ts
 ```
 
@@ -160,7 +160,7 @@ CostKatana-Semantic-Cache-Enabled: true
 
 See: `2-gateway/http-headers/with-caching.http`
 
-### 3. Use Cortex for 70-95% Savings
+### 3. Use Cortex for 40-75% Savings
 **For long-form content:**
 
 ```typescript
@@ -184,7 +184,7 @@ Then visit: `http://localhost:3000/api/chat`
 - [Cost Tracking](./1-cost-tracking/) - Track usage and costs
 - [Gateway](./2-gateway/) - Caching, retries, security
 - [Optimization](./3-optimization/) - 20-40% savings
-- [Cortex](./4-cortex/) - 70-95% savings
+- [Cortex](./4-cortex/) - 40-75% savings
 - [Analytics](./5-analytics/) - Reports and exports
 - [Advanced](./6-advanced/) - Complex use cases
 - [Frameworks](./7-frameworks/) - Express, Next.js, etc.
