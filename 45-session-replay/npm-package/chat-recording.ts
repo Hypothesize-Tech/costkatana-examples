@@ -9,7 +9,7 @@ import type { AIInteraction } from 'cost-katana/trace/types';
 // Initialize the session replay client
 const replayClient = new SessionReplayClient({
   apiKey: process.env.COST_KATANA_API_KEY!,
-  baseURL: 'https://cost-katana-backend.store'
+  baseURL: 'https://api.costkatana.com'
 });
 
 interface ChatMessage {

@@ -1,5 +1,5 @@
 ### Email Tracking
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_api_key
 
 ### Send Report Email

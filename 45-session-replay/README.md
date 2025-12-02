@@ -167,11 +167,11 @@ console.log(`Found ${total} replays`);
 
 ```bash
 # Export session as JSON
-curl https://cost-katana-backend.store/api/session-replay/session_123/export \
+curl https://api.costkatana.com/api/session-replay/session_123/export \
   -H "Authorization: Bearer YOUR_API_KEY"
 
 # Generate shareable link
-curl -X POST https://cost-katana-backend.store/api/session-replay/session_123/share \
+curl -X POST https://api.costkatana.com/api/session-replay/session_123/share \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

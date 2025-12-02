@@ -1,7 +1,7 @@
 ### Gateway Example: Multi-Provider Failover
 # Automatic fallback when providers fail
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Failover-Policy: cost-optimized
 CostKatana-Project-Id: YOUR_PROJECT_ID

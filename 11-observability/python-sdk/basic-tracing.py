@@ -10,7 +10,7 @@ import os
 import uuid
 import requests
 
-API_BASE = "https://cost-katana-backend.store/api"
+API_BASE = "https://api.costkatana.com/api"
 GATEWAY_URL = f"{API_BASE}/gateway/v1/chat/completions"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 

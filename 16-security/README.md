@@ -4,7 +4,7 @@
 
 ## Quick Start
 ```bash
-curl -X POST https://cost-katana-backend.store/api/security/scan \
+curl -X POST https://api.costkatana.com/api/security/scan \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{"type": "request", "data": {"prompt": "Check this"}}'
 ```

@@ -9,7 +9,7 @@ Cost Katana's semantic caching system automatically caches AI responses and reco
 ### 1. Enable Caching
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/gateway/v1/chat/completions \
+curl -X POST https://api.costkatana.com/api/gateway/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "X-Enable-Cache: true" \
   -H "X-Cache-TTL: 3600" \
@@ -29,7 +29,7 @@ X-Cache-Key: semantic_hash_abc123
 
 ```bash
 # Repeat same request
-curl -X POST https://cost-katana-backend.store/api/gateway/v1/chat/completions \
+curl -X POST https://api.costkatana.com/api/gateway/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "X-Enable-Cache: true" \
   -d '{
@@ -49,7 +49,7 @@ X-Tokens-Saved: 150
 
 ```bash
 # Different wording, same meaning
-curl -X POST https://cost-katana-backend.store/api/gateway/v1/chat/completions \
+curl -X POST https://api.costkatana.com/api/gateway/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "X-Enable-Cache: true" \
   -d '{

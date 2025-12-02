@@ -1,6 +1,6 @@
 ### Optimization: Request Fusion
 # Batch similar requests together for cost savings
-POST https://cost-katana-backend.store/api/optimizations/batch
+POST https://api.costkatana.com/api/optimizations/batch
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 Content-Type: application/json
 

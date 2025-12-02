@@ -9,7 +9,7 @@ Run: python 18-cache/python-sdk/semantic_caching.py
 import os
 import requests
 
-GATEWAY_URL = "https://cost-katana-backend.store/api/gateway/v1/chat/completions"
+GATEWAY_URL = "https://api.costkatana.com/api/gateway/v1/chat/completions"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 
 def semantic_caching_demo():

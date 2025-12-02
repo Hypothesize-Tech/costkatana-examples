@@ -1,7 +1,7 @@
 ### Cost Katana Webhooks: Security & Compliance Alerts
 ### Receive notifications for security events, compliance violations, and moderation
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key_here
 
 ### Setup Webhook for Security Events

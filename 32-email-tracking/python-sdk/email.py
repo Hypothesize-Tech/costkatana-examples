@@ -1,5 +1,5 @@
 import os, requests
-API = "https://cost-katana-backend.store/api"
+API = "https://api.costkatana.com/api"
 KEY = os.getenv("COST_KATANA_API_KEY")
 
 def send_report(recipient, report_type):

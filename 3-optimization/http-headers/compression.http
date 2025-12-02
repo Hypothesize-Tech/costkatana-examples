@@ -1,5 +1,5 @@
 ### Optimization: Aggressive Compression
-POST https://cost-katana-backend.store/api/optimizations
+POST https://api.costkatana.com/api/optimizations
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 Content-Type: application/json
 

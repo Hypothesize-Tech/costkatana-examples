@@ -9,7 +9,7 @@
 
 import axios from 'axios';
 
-const API_BASE = 'https://cost-katana-backend.store/api';
+const API_BASE = 'https://api.costkatana.com/api';
 const API_KEY = process.env.COST_KATANA_API_KEY;
 
 interface WorkflowStep {

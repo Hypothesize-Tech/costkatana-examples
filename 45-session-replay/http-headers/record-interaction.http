@@ -1,7 +1,7 @@
 ### Record AI Interaction
 # Records a complete AI interaction with all metadata
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/snapshot
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 
@@ -45,7 +45,7 @@ Authorization: Bearer {{API_KEY}}
 
 ### Record Streaming AI Interaction
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/snapshot
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 
@@ -82,7 +82,7 @@ Authorization: Bearer {{API_KEY}}
 
 ### Record Multi-Modal Interaction (Vision)
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/snapshot
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 
@@ -119,7 +119,7 @@ Authorization: Bearer {{API_KEY}}
 
 ### Record Function Calling Interaction
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/snapshot
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 
@@ -168,7 +168,7 @@ Authorization: Bearer {{API_KEY}}
 
 ### Record Error Interaction
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/snapshot
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/snapshot
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 

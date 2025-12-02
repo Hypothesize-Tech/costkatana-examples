@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API = 'https://cost-katana-backend.store/api'\;
+const API = 'https://api.costkatana.com/api'\;
 const KEY = process.env.COST_KATANA_API_KEY;
 
 export async function listIntegrations() {

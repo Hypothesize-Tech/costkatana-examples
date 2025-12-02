@@ -1,9 +1,9 @@
 ### Cost Katana OpenTelemetry: Basic Distributed Tracing
 ### Enable distributed tracing across your AI applications
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key_here
-@gatewayUrl = https://cost-katana-backend.store/api/gateway
+@gatewayUrl = https://api.costkatana.com/api/gateway
 
 ### 1. Make AI Request with Trace Headers
 POST {{gatewayUrl}}/v1/chat/completions

@@ -9,7 +9,7 @@ Webhooks allow you to receive instant HTTP callbacks when important events occur
 ### 1. Create a Webhook
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/webhooks \
+curl -X POST https://api.costkatana.com/api/webhooks \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -358,7 +358,7 @@ Use webhook.site for testing:
 ```bash
 # 1. Go to https://webhook.site and get your unique URL
 # 2. Create webhook with that URL
-curl -X POST https://cost-katana-backend.store/api/webhooks \
+curl -X POST https://api.costkatana.com/api/webhooks \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
     "name": "Test Webhook",
@@ -367,7 +367,7 @@ curl -X POST https://cost-katana-backend.store/api/webhooks \
   }'
 
 # 3. Test it
-curl -X POST https://cost-katana-backend.store/api/webhooks/{id}/test \
+curl -X POST https://api.costkatana.com/api/webhooks/{id}/test \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

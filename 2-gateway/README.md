@@ -18,7 +18,7 @@ The Cost Katana Gateway provides:
 ### HTTP Headers Method
 
 ```http
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Cache-Enabled: true

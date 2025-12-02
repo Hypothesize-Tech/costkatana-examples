@@ -10,7 +10,7 @@ import os
 import requests
 from typing import List, Optional
 
-API_BASE = "https://cost-katana-backend.store/api"
+API_BASE = "https://api.costkatana.com/api"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 
 def clear_cache(model: Optional[str] = None, older_than: Optional[int] = None):

@@ -1,7 +1,7 @@
 ### Cost Katana Workflows: Error Handling & Retries
 ### Build resilient workflows with automatic error recovery
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key
 
 ### 1. Create Workflow with Error Handling

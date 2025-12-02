@@ -1,7 +1,7 @@
 ### Cost Katana Webhooks: Workflow & System Events
 ### Track workflows, experiments, and system events
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key_here
 
 ### Setup Webhook for Workflow Events

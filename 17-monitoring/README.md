@@ -4,7 +4,7 @@
 
 ## Quick Start
 ```bash
-curl https://cost-katana-backend.store/api/monitoring/metrics \
+curl https://api.costkatana.com/api/monitoring/metrics \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

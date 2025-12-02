@@ -9,7 +9,7 @@ Workflows allow you to chain multiple AI operations together, execute steps in p
 ### 1. Create a Workflow Template
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/workflows/templates \
+curl -X POST https://api.costkatana.com/api/workflows/templates \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -38,7 +38,7 @@ curl -X POST https://cost-katana-backend.store/api/workflows/templates \
 ### 2. Execute Workflow
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/workflows/templates/{templateId}/execute \
+curl -X POST https://api.costkatana.com/api/workflows/templates/{templateId}/execute \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{"variables": {"document": "Your document content..."}}'
 ```
@@ -46,7 +46,7 @@ curl -X POST https://cost-katana-backend.store/api/workflows/templates/{template
 ### 3. Monitor Execution
 
 ```bash
-curl https://cost-katana-backend.store/api/workflows/executions/{executionId} \
+curl https://api.costkatana.com/api/workflows/executions/{executionId} \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

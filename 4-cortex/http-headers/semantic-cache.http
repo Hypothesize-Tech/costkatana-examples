@@ -2,7 +2,7 @@
 # Cache Cortex representations for 100% free repeated requests
 # First request encodes and caches, subsequent requests are FREE
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -29,7 +29,7 @@ Content-Type: application/json
 ### Test Semantic Cache: Exact Same Request
 # This request should hit the Cortex cache and be completely FREE!
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -76,7 +76,7 @@ Content-Type: application/json
 ### Cortex Semantic Cache Example 2: Semantic Similarity Matching
 # Cache hits even when wording differs but meaning is the same
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -125,7 +125,7 @@ Content-Type: application/json
 ### Cortex Semantic Cache Example 3: Fragment Caching
 # Cache parts of requests for partial reuse
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -149,7 +149,7 @@ Content-Type: application/json
 ### Related Request with Overlapping Content
 # Some fragments (Kubernetes, Docker) will hit cache
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -199,7 +199,7 @@ Content-Type: application/json
 ### Cortex Semantic Cache Example 4: User-Scoped Caching
 # Cache per user for personalized content
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -224,7 +224,7 @@ Content-Type: application/json
 ### Same User, Similar Request Later
 # Will hit user-scoped cache
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -269,7 +269,7 @@ Content-Type: application/json
 ### Cortex Semantic Cache Example 5: Cache TTL Configuration
 # Control how long Cortex structures stay cached
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID

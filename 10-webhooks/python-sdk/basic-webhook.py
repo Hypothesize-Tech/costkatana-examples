@@ -10,7 +10,7 @@ import os
 import requests
 from typing import List, Dict, Optional
 
-API_BASE_URL = "https://cost-katana-backend.store/api"
+API_BASE_URL = "https://api.costkatana.com/api"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 
 def create_webhook(

@@ -31,7 +31,7 @@ console.log('Cost:', response.headers?.['x-cost']);
 ### 2. W3C Trace Context
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/gateway/v1/chat/completions \
+curl -X POST https://api.costkatana.com/api/gateway/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01" \
   -d '{"model":"gpt-4","messages":[{"role":"user","content":"Hello"}]}'
@@ -40,7 +40,7 @@ curl -X POST https://cost-katana-backend.store/api/gateway/v1/chat/completions \
 ### 3. View Session Traces
 
 ```bash
-curl https://cost-katana-backend.store/api/v1/sessions/my_session_123 \
+curl https://api.costkatana.com/api/v1/sessions/my_session_123 \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

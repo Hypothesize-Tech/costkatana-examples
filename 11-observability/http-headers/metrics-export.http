@@ -1,7 +1,7 @@
 ### Cost Katana OpenTelemetry: Metrics Export
 ### Access OpenTelemetry metrics for your AI usage
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key
 
 ### 1. Get Current Metrics

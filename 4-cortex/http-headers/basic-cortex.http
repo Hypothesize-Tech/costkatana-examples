@@ -2,7 +2,7 @@
 # 40-75% cost reduction for blog posts, articles, documentation
 # This example demonstrates the core Cortex pipeline
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -67,7 +67,7 @@ Content-Type: application/json
 ### Cortex Example 2: Technical Documentation
 # Cortex excels at structured, technical content
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -117,7 +117,7 @@ Content-Type: application/json
 ### Cortex Example 3: Content with Specific Formatting
 # Control output style and format precisely
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.anthropic.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -165,7 +165,7 @@ Content-Type: application/json
 ### Cortex Example 4: Educational Content
 # Perfect for tutorials, guides, and explanations
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -213,7 +213,7 @@ Content-Type: application/json
 ### Cortex Example 5: Comparative Analysis
 # Great for analysis, comparisons, and research summaries
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.anthropic.com
 CostKatana-Project-Id: YOUR_PROJECT_ID

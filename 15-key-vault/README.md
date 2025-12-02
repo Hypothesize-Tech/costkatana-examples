@@ -9,7 +9,7 @@ The Key Vault provides enterprise-grade API key management with proxy keys that 
 ### 1. Store Provider Key
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/key-vault/provider-keys \
+curl -X POST https://api.costkatana.com/api/key-vault/provider-keys \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{"provider": "openai", "apiKey": "sk-proj-...", "name": "Production Key"}'
 ```
@@ -17,7 +17,7 @@ curl -X POST https://cost-katana-backend.store/api/key-vault/provider-keys \
 ### 2. Create Proxy Key
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/key-vault/proxy-keys \
+curl -X POST https://api.costkatana.com/api/key-vault/proxy-keys \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
     "name": "Frontend Proxy",
@@ -30,7 +30,7 @@ curl -X POST https://cost-katana-backend.store/api/key-vault/proxy-keys \
 ### 3. Use Proxy Key
 
 ```bash
-curl -X POST https://cost-katana-backend.store/api/gateway/v1/chat/completions \
+curl -X POST https://api.costkatana.com/api/gateway/v1/chat/completions \
   -H "Authorization: Bearer pk_your_proxy_key" \
   -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Hello"}]}'
 ```

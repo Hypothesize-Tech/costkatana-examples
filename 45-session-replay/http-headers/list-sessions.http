@@ -1,7 +1,7 @@
 ### List All Session Replays
 # Get paginated list of all session replays
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20
 Authorization: Bearer {{API_KEY}}
 
 ### Expected Response
@@ -35,56 +35,56 @@ Authorization: Bearer {{API_KEY}}
 
 ### Filter by Feature
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&source=in-app&appFeature=chat
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&source=in-app&appFeature=chat
 Authorization: Bearer {{API_KEY}}
 
 ###
 
 ### Filter by Date Range
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&startDate=2025-10-01&endDate=2025-10-31
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&startDate=2025-10-01&endDate=2025-10-31
 Authorization: Bearer {{API_KEY}}
 
 ###
 
 ### Filter by Status
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&status=completed
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&status=completed
 Authorization: Bearer {{API_KEY}}
 
 ###
 
 ### Filter by Cost Range
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&minCost=0.01&maxCost=1.00
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&minCost=0.01&maxCost=1.00
 Authorization: Bearer {{API_KEY}}
 
 ###
 
 ### Filter by AI Model
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&aiModel=gpt-4
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&aiModel=gpt-4
 Authorization: Bearer {{API_KEY}}
 
 ###
 
 ### Search by Label
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&search=customer%20support
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&search=customer%20support
 Authorization: Bearer {{API_KEY}}
 
 ###
 
 ### Complex Filter - High Cost Chat Sessions
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&source=in-app&appFeature=chat&minCost=0.05&status=completed&sortBy=cost&sortOrder=desc
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&source=in-app&appFeature=chat&minCost=0.05&status=completed&sortBy=cost&sortOrder=desc
 Authorization: Bearer {{API_KEY}}
 
 ###
 
 ### Complex Filter - Recent Error Sessions
 
-GET https://cost-katana-backend.store/api/session-replay/list?page=1&limit=20&status=error&hasErrors=true&sortBy=startedAt&sortOrder=desc
+GET https://api.costkatana.com/api/session-replay/list?page=1&limit=20&status=error&hasErrors=true&sortBy=startedAt&sortOrder=desc
 Authorization: Bearer {{API_KEY}}
 
 ###

@@ -1,7 +1,7 @@
 ### Cost Katana Key Vault: Analytics
 ### Monitor key usage and security
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key
 
 ### 1. Get Key Vault Dashboard

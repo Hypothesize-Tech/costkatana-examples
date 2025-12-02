@@ -12,7 +12,7 @@ import requests
 class SessionReplayClient:
     """Python client for Cost Katana Session Replay API"""
     
-    def __init__(self, api_key: str, base_url: str = "https://cost-katana-backend.store"):
+    def __init__(self, api_key: str, base_url: str = "https://api.costkatana.com"):
         self.api_key = api_key
         self.base_url = base_url
         self.headers = {

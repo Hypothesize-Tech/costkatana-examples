@@ -74,7 +74,7 @@ Mix Cortex and standard processing for optimal efficiency.
 ### HTTP Headers
 
 ```http
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_KEY
 CostKatana-Enable-Cortex: true
 CostKatana-Cortex-Core-Model: anthropic.claude-opus-4-1-20250805-v1:0

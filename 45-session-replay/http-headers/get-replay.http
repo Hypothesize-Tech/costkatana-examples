@@ -1,7 +1,7 @@
 ### Get Session Replay by ID
 # Retrieve complete session replay with all interactions
 
-GET https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}
+GET https://api.costkatana.com/api/session-replay/{{SESSION_ID}}
 Authorization: Bearer {{API_KEY}}
 
 ### Expected Response
@@ -54,7 +54,7 @@ Authorization: Bearer {{API_KEY}}
 
 ### Export Session as JSON
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/export
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/export
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 
@@ -66,7 +66,7 @@ Authorization: Bearer {{API_KEY}}
 
 ### Export Session as CSV
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/export
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/export
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 
@@ -78,7 +78,7 @@ Authorization: Bearer {{API_KEY}}
 
 ### Generate Shareable Link
 
-POST https://cost-katana-backend.store/api/session-replay/{{SESSION_ID}}/share
+POST https://api.costkatana.com/api/session-replay/{{SESSION_ID}}/share
 Content-Type: application/json
 Authorization: Bearer {{API_KEY}}
 

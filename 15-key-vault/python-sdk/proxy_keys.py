@@ -7,7 +7,7 @@ Run: python 19-key-vault/python-sdk/proxy_keys.py
 import os
 import requests
 
-API_BASE = "https://cost-katana-backend.store/api"
+API_BASE = "https://api.costkatana.com/api"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 
 def create_proxy_key(config):

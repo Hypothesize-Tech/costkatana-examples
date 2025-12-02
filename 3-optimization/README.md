@@ -13,7 +13,7 @@ Reduce AI costs by 20-40% with intelligent prompt optimization.
 
 ### HTTP Example
 ```http
-POST https://cost-katana-backend.store/api/optimizations
+POST https://api.costkatana.com/api/optimizations
 CostKatana-Auth: Bearer YOUR_KEY
 {
   "prompt": "Your long prompt here...",

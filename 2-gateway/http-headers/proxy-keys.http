@@ -1,6 +1,6 @@
 ### Gateway Example: Proxy Keys for Secure API Key Management
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer ck-proxy-your_proxy_key_here
 Content-Type: application/json
 

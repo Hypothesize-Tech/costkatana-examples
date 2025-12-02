@@ -9,7 +9,7 @@ Run: python 11-observability/python-sdk/metrics.py
 import os
 import requests
 
-API_BASE = "https://cost-katana-backend.store/api"
+API_BASE = "https://api.costkatana.com/api"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 
 def collect_prometheus_metrics():

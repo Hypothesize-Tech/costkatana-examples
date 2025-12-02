@@ -11,7 +11,7 @@ import os
 
 app = FastAPI()
 
-API_BASE = "https://cost-katana-backend.store/api"
+API_BASE = "https://api.costkatana.com/api"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 
 class WorkflowExecuteRequest(BaseModel):

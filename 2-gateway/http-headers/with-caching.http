@@ -1,7 +1,7 @@
 ### Gateway Example: Semantic Caching
 # Save 100% on repeated or similar requests
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ### Test Semantic Cache - Similar Question
 # This should hit the semantic cache even though wording is different
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -46,7 +46,7 @@ Content-Type: application/json
 
 ### Caching with Multiple Responses (Bucket)
 # Return different cached responses for variety
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -66,7 +66,7 @@ Content-Type: application/json
 
 ### Deduplication - Block Duplicate Requests
 # Prevent duplicate requests from being processed simultaneously
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID

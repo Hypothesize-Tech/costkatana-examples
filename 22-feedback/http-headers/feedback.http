@@ -1,5 +1,5 @@
 ### Request Feedback
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_api_key
 
 ### Submit Feedback

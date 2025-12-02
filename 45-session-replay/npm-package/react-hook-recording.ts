@@ -40,7 +40,7 @@ export function useSessionRecording(
   useEffect(() => {
     clientRef.current = new SessionReplayClient({
       apiKey: process.env.REACT_APP_COST_KATANA_API_KEY || process.env.NEXT_PUBLIC_COST_KATANA_API_KEY!,
-      baseURL: 'https://cost-katana-backend.store'
+      baseURL: 'https://api.costkatana.com'
     });
   }, []);
 

@@ -9,7 +9,7 @@ Run: python 10-webhooks/python-sdk/cost-alerts.py
 import os
 import requests
 
-API_BASE_URL = "https://cost-katana-backend.store/api"
+API_BASE_URL = "https://api.costkatana.com/api"
 API_KEY = os.getenv("COST_KATANA_API_KEY")
 
 def setup_cost_alerts(webhook_url: str):

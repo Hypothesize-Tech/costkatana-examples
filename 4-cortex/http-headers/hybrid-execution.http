@@ -1,7 +1,7 @@
 ### Cortex Hybrid Execution: Mix Standard & Cortex Processing
 # Use Cortex for long parts, standard for short parts
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Enable-Cortex: true
 CostKatana-Cortex-Hybrid-Execution: true

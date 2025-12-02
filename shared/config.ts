@@ -9,7 +9,7 @@ export const config = {
   // Cost Katana
   costKatanaKey: process.env.COST_KATANA_API_KEY || '',
   projectId: process.env.PROJECT_ID || '',
-  gatewayUrl: process.env.COST_KATANA_GATEWAY_URL || 'https://cost-katana-backend.store/api/gateway',
+  gatewayUrl: process.env.COST_KATANA_GATEWAY_URL || 'https://api.costkatana.com/api/gateway',
   
   // Provider Keys
   openaiKey: process.env.OPENAI_API_KEY || '',

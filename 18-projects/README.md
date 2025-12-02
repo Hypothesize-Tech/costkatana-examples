@@ -4,7 +4,7 @@ Organize AI usage by projects with tracking and analytics.
 
 ## Quick Start
 ```bash
-curl -X POST https://cost-katana-backend.store/api/projects \
+curl -X POST https://api.costkatana.com/api/projects \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{"name": "My Project"}'
 ```

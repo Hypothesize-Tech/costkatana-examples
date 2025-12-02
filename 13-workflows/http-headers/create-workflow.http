@@ -1,7 +1,7 @@
 ### Cost Katana Workflows: Create and Execute Workflows
 ### Orchestrate multi-step AI operations with automatic retries and error handling
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key_here
 
 ### 1. Create a Simple Workflow Template

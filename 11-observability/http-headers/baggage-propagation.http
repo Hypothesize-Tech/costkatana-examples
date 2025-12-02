@@ -1,9 +1,9 @@
 ### Cost Katana OpenTelemetry: Baggage Propagation
 ### Propagate context across service boundaries
 
-@baseUrl = https://cost-katana-backend.store/api
+@baseUrl = https://api.costkatana.com/api
 @apiKey = your_cost_katana_api_key
-@gatewayUrl = https://cost-katana-backend.store/api/gateway
+@gatewayUrl = https://api.costkatana.com/api/gateway
 
 ### 1. Basic Baggage Propagation
 POST {{gatewayUrl}}/v1/chat/completions

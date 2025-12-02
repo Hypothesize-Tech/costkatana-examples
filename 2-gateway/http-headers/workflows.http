@@ -1,7 +1,7 @@
 ### Gateway Example: Workflow Tracking
 # Track multi-step AI workflows end-to-end
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Workflow Step 2: Generate Content
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID

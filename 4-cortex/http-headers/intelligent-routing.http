@@ -1,7 +1,7 @@
 ### Cortex Intelligent Routing: Auto-Optimize Based on Content
 # Cortex automatically decides whether to use its pipeline based on cost-benefit analysis
 
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
@@ -32,7 +32,7 @@ Content-Type: application/json
 # Result: Uses Cortex pipeline, saves 92%
 
 ### Short Question: Intelligent Routing Skips Cortex
-POST https://cost-katana-backend.store/api/gateway/v1/chat/completions
+POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Enable-Cortex: true
 CostKatana-Cortex-Priority: cost
