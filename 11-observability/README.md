@@ -288,7 +288,7 @@ scrape_configs:
     metrics_path: '/api/metrics'
     bearer_token: 'YOUR_API_KEY'
     static_configs:
-      - targets: ['cost-katana-backend.store']
+      - targets: ['app.costkatana.com']
 ```
 
 ### Datadog
