@@ -1,0 +1,79 @@
+### AI Governance & Security - HTTP Examples
+###
+### Update the Authorization header with your API key
+
+@apiKey = your_api_key_here
+@baseUrl = https://api.costkatana.com/v1
+
+### 1. Create Governed Agent
+POST {{baseUrl}}/governance/agents
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "agentName": "customer-support-bot",
+  "agentType": "multiagent",
+  "allowedModels": ["gpt-4-turbo", "gpt-3.5-turbo"],
+  "allowedProviders": ["openai", "anthropic"],
+  "allowedActions": ["read", "write", "execute"],
+  "budgetCapPerRequest": 0.25,
+  "budgetCapPerDay": 10.00,
+  "budgetCapPerMonth": 200.00,
+  "maxRequestsPerMinute": 20,
+  "maxRequestsPerHour": 500,
+  "sandboxRequired": true,
+  "sandboxConfig": {
+    "maxCpuCores": 0.5,
+    "maxMemoryMB": 512,
+    "isolationLevel": "container"
+  }
+}
+
+### 2. Get Agent Permissions
+GET {{baseUrl}}/governance/agents/{agentId}/permissions
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 3. Authenticate Agent
+POST {{baseUrl}}/governance/authenticate
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "agentToken": "your_agent_token_here"
+}
+
+### 4. Perform Governance Check
+POST {{baseUrl}}/governance/check
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "agentToken": "your_agent_token_here",
+  "action": "execute",
+  "resource": {
+    "model": "gpt-4-turbo",
+    "provider": "openai"
+  },
+  "estimatedCost": 0.05
+}
+
+### 5. Execute in Sandbox
+POST {{baseUrl}}/governance/sandbox/execute
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "agentToken": "your_agent_token_here",
+  "model": "gpt-4-turbo",
+  "messages": [
+    {"role": "user", "content": "Hello"}
+  ],
+  "enableMonitoring": true
+}
+
+### 6. Get Audit Logs
+GET {{baseUrl}}/governance/audit?agentId={agentId}&limit=50
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+

@@ -8,7 +8,7 @@
 
 ## Overview
 
-This repository contains **300+ production-ready code examples** demonstrating how to use Cost Katana across **44 different features**. Whether you're building with TypeScript, Python, or directly via HTTP APIs, you'll find working examples with full error handling and best practices.
+This repository contains **350+ production-ready code examples** demonstrating how to use Cost Katana across **49 different features**. Whether you're building with TypeScript, Python, or directly via HTTP APIs, you'll find working examples with full error handling and best practices.
 
 **What you'll find here:**
 - 🟦 **TypeScript/Node.js** - Complete SDK examples with type safety
@@ -48,6 +48,26 @@ python 1-cost-tracking/python-sdk/openai.py
 ---
 
 ## Examples by Category
+
+### 🏗️ Advanced Architecture & Intelligence
+
+Leverage Cost Katana's AI-native architecture with autonomous optimization and self-improving systems.
+
+| Feature | Description | Examples |
+|---------|-------------|----------|
+| **[Provider-Independent Core](PROVIDER_AGNOSTIC_GUIDE.md)** | Capability-based routing, zero vendor lock-in | Guide, Patterns |
+| **[Cost Intelligence Stack](46-cost-intelligence-stack/)** | 6-layer real-time intelligence system | HTTP, TypeScript, Python |
+| **[Closed-Loop Cost Brain](47-cost-brain/)** | Autonomous real-time optimization | HTTP, TypeScript, Python |
+| **[AI Governance & Security](48-governance-security/)** | Zero-trust agent governance with RBAC | HTTP, TypeScript, Python |
+| **[Data Network Effects](49-data-network-effects/)** | Self-improving AI with learning loops | HTTP, TypeScript, Python |
+
+**Key Benefits:** 
+- **AI-Native Architecture** - Platform designed from ground up with AI models as first-class infrastructure
+- **Autonomous Optimization** - Hands-free cost reduction with intelligent interventions
+- **Self-Improving** - System gets smarter with every user interaction
+- **Enterprise Security** - Zero-trust governance with comprehensive auditing
+
+---
 
 ### 💰 Cost Management
 

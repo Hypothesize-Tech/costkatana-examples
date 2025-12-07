@@ -1,0 +1,79 @@
+### Cost Intelligence Stack - HTTP Examples
+###
+### Update the Authorization header with your API key
+
+@apiKey = your_api_key_here
+@baseUrl = https://api.costkatana.com/v1
+
+### 1. Get Intelligence Insights
+GET {{baseUrl}}/intelligence/insights?timeRange=24h&includeRecommendations=true
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 2. Get Telemetry Trends
+GET {{baseUrl}}/intelligence/trends?timeRange=7d&granularity=day&metrics=cost,requests,latency
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 3. Get Layer-Specific Insights
+GET {{baseUrl}}/intelligence/layers
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 4. Configure Intelligence Mode
+POST {{baseUrl}}/intelligence/configure
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "mode": "high",
+  "sampling": {
+    "rate": 1.0,
+    "strategy": "adaptive"
+  },
+  "layers": {
+    "telemetry": {
+      "enabled": true,
+      "streaming": true
+    },
+    "intelligence": {
+      "enabled": true,
+      "anomalyDetection": true
+    },
+    "caching": {
+      "enabled": true,
+      "strategies": ["exact", "semantic"]
+    }
+  }
+}
+
+### 5. Get Telemetry Batch Data
+POST {{baseUrl}}/intelligence/telemetry/batch
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "startTime": "2024-01-01T00:00:00Z",
+  "endTime": "2024-01-02T00:00:00Z",
+  "granularity": "5m",
+  "metrics": ["cost", "requests", "latency"]
+}
+
+### 6. Set Anomaly Detection Thresholds
+POST {{baseUrl}}/intelligence/anomaly/thresholds
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "cost": {
+    "percentileThreshold": 95,
+    "absoluteThreshold": 10.0,
+    "windowSize": "1h"
+  },
+  "latency": {
+    "percentileThreshold": 95,
+    "absoluteThreshold": 10000,
+    "windowSize": "15m"
+  }
+}
+

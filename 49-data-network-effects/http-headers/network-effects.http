@@ -1,0 +1,76 @@
+### Data Network Effects - HTTP Examples
+###
+### Update the Authorization header with your API key
+
+@apiKey = your_api_key_here
+@baseUrl = https://api.costkatana.com/v1
+
+### 1. Get Recommendations
+GET {{baseUrl}}/network-effects/recommendations?types=model_switch,caching&minSavings=0.01&limit=5
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 2. Accept Recommendation
+POST {{baseUrl}}/network-effects/recommendations/{recommendationId}/accept
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "applyImmediately": false,
+  "feedback": {
+    "reason": "Looks promising",
+    "confidence": 0.8
+  }
+}
+
+### 3. Reject Recommendation
+POST {{baseUrl}}/network-effects/recommendations/{recommendationId}/reject
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "reason": "Not suitable for our use case",
+  "feedback": "Prefer to keep current model"
+}
+
+### 4. Track Outcome
+POST {{baseUrl}}/network-effects/outcomes
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "recommendationId": "rec_123",
+  "acceptanceId": "acc_456",
+  "actualOutcome": {
+    "implemented": true,
+    "actualSavings": 0.035,
+    "qualityImpact": 0.02,
+    "latencyImpact": -50,
+    "userSatisfaction": 0.9
+  }
+}
+
+### 5. Get Learning Statistics
+GET {{baseUrl}}/network-effects/learning/stats?timeRange=30d
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 6. Get Global Benchmarks
+POST {{baseUrl}}/network-effects/benchmarks
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "metrics": ["cost", "latency", "quality", "cacheHitRate"],
+  "timeRange": "30d",
+  "filters": {
+    "industry": "technology",
+    "companySize": "medium"
+  }
+}
+
+### 7. Get Improvement Opportunities
+GET {{baseUrl}}/network-effects/opportunities?basedOnBenchmarks=true&minImpact=medium
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+

@@ -1,0 +1,65 @@
+### Closed-Loop Cost Brain - HTTP Examples
+###
+### Update the Authorization header with your API key
+
+@apiKey = your_api_key_here
+@baseUrl = https://api.costkatana.com/v1
+
+### 1. Enable Cost Brain
+POST {{baseUrl}}/brain/enable
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "mode": "autonomous",
+  "interventions": {
+    "modelDowngrade": true,
+    "providerSwitch": true,
+    "promptCompression": true,
+    "requestBlocking": true
+  },
+  "thresholds": {
+    "maxCostPerRequest": 0.50,
+    "qualityThreshold": 0.85
+  }
+}
+
+### 2. Get Brain Statistics
+GET {{baseUrl}}/brain/statistics?timeRange=24h
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 3. Get Recent Interventions
+GET {{baseUrl}}/brain/interventions?limit=10
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 4. Enable Shadow Mode
+POST {{baseUrl}}/brain/enable
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+{
+  "mode": "shadow",
+  "interventions": {
+    "modelDowngrade": true,
+    "providerSwitch": true,
+    "promptCompression": true
+  },
+  "shadowConfig": {
+    "logAllDecisions": true,
+    "compareQuality": true,
+    "estimateSavings": true
+  }
+}
+
+### 5. Get Shadow Analytics
+GET {{baseUrl}}/brain/shadow/analytics?timeRange=1h
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
+### 6. Disable Cost Brain
+POST {{baseUrl}}/brain/disable
+Authorization: Bearer {{apiKey}}
+Content-Type: application/json
+
