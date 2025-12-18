@@ -24,7 +24,7 @@ async function exampleWithoutTracking() {
   // Initialize gateway with autoTrack disabled
   const gateway = tracker.initializeGateway({
     baseUrl: 'https://api.costkatana.com/api/gateway',
-    apiKey: process.env.API_KEY || 'your-cost-katana-key',
+    apiKey: process.env.COST_KATANA_API_KEY || 'your-cost-katana-key',
     autoTrack: false // Disable tracking for all requests through this gateway
   });
 
@@ -67,7 +67,7 @@ async function examplePerRequestTracking() {
   // Initialize gateway with autoTrack enabled by default
   const gateway = tracker.initializeGateway({
     baseUrl: 'https://api.costkatana.com/api/gateway',
-    apiKey: process.env.API_KEY || 'your-cost-katana-key',
+    apiKey: process.env.COST_KATANA_API_KEY || 'your-cost-katana-key',
     autoTrack: true // Default: track all requests
   });
 
@@ -116,7 +116,7 @@ async function exampleUseCases() {
 
   const gateway = tracker.initializeGateway({
     baseUrl: 'https://api.costkatana.com/api/gateway',
-    apiKey: process.env.API_KEY || 'your-cost-katana-key',
+    apiKey: process.env.COST_KATANA_API_KEY || 'your-cost-katana-key',
     autoTrack: true // Default: track most requests
   });
 
