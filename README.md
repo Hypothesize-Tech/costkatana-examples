@@ -56,7 +56,6 @@ Leverage Cost Katana's AI-native architecture with autonomous optimization and s
 | Feature | Description | Examples |
 |---------|-------------|----------|
 | **[Provider-Independent Core](PROVIDER_AGNOSTIC_GUIDE.md)** | Capability-based routing, zero vendor lock-in | Guide, Patterns |
-| **[Cost Intelligence Stack](45-cost-intelligence-stack/)** | 6-layer real-time intelligence system | HTTP, TypeScript, Python |
 | **[AI Governance & Security](47-governance-security/)** | Zero-trust agent governance with RBAC | HTTP, TypeScript, Python |
 | **[Data Network Effects](48-data-network-effects/)** | Self-improving AI with learning loops | HTTP, TypeScript, Python |
 
