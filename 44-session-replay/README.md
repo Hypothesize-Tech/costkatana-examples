@@ -131,7 +131,7 @@ feature: 'experimentation'
 #### Workflow Sessions
 Monitor multi-step AI workflows:
 ```typescript
-feature: 'workflow'
+feature: 'agent_trace'
 ```
 
 #### Agent Sessions

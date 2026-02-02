@@ -5,7 +5,7 @@
 @apiKey = your_cost_katana_api_key
 
 ### 1. Create Workflow with Error Handling
-POST {{baseUrl}}/workflows/templates
+POST {{baseUrl}}/agent-trace/templates
 Content-Type: application/json
 Authorization: Bearer {{apiKey}}
 
@@ -76,11 +76,11 @@ Authorization: Bearer {{apiKey}}
 #    - Slack notifications
 
 ### 2. Monitor Failed Workflows
-GET {{baseUrl}}/workflows/executions?status=failed
+GET {{baseUrl}}/agent-trace/executions?status=failed
 Authorization: Bearer {{apiKey}}
 
 ### 3. Retry Failed Execution
-POST {{baseUrl}}/workflows/executions/{{executionId}}/retry
+POST {{baseUrl}}/agent-trace/executions/{{executionId}}/retry
 Authorization: Bearer {{apiKey}}
 
 ###

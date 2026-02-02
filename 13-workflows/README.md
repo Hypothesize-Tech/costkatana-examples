@@ -1,15 +1,15 @@
-# Cost Katana Workflows Examples
+# Cost Katana Agent Trace Examples
 
-**Orchestrate complex multi-step AI operations with automatic dependency management, retries, and error handling.**
+**Monitor and optimize agent traces: multi-step AI operations with automatic dependency management, retries, and error handling.**
 
-Workflows allow you to chain multiple AI operations together, execute steps in parallel, implement conditional logic, and build resilient AI pipelines that automatically handle failures and retries.
+Agent Trace lets you chain multiple AI operations together, execute steps in parallel, implement conditional logic, and build resilient AI pipelines that automatically handle failures and retries.
 
 ## Quick Start
 
-### 1. Create a Workflow Template
+### 1. Create a Trace Template
 
 ```bash
-curl -X POST https://api.costkatana.com/api/workflows/templates \
+curl -X POST https://api.costkatana.com/api/agent-trace/templates \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -35,10 +35,10 @@ curl -X POST https://api.costkatana.com/api/workflows/templates \
   }'
 ```
 
-### 2. Execute Workflow
+### 2. Execute Trace
 
 ```bash
-curl -X POST https://api.costkatana.com/api/workflows/templates/{templateId}/execute \
+curl -X POST https://api.costkatana.com/api/agent-trace/templates/{templateId}/execute \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{"variables": {"document": "Your document content..."}}'
 ```
@@ -46,7 +46,7 @@ curl -X POST https://api.costkatana.com/api/workflows/templates/{templateId}/exe
 ### 3. Monitor Execution
 
 ```bash
-curl https://api.costkatana.com/api/workflows/executions/{executionId} \
+curl https://api.costkatana.com/api/agent-trace/executions/{executionId} \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -54,33 +54,33 @@ curl https://api.costkatana.com/api/workflows/executions/{executionId} \
 
 ### HTTP Headers (.http files)
 
-Direct REST API workflow management:
+Direct REST API agent trace management:
 
-- **[create-workflow.http](./http-headers/create-workflow.http)** - Create, execute, and monitor workflows
+- **[create-workflow.http](./http-headers/create-workflow.http)** - Create, execute, and monitor traces
 - **[parallel-workflows.http](./http-headers/parallel-workflows.http)** - Parallel step execution
 - **[conditional-workflows.http](./http-headers/conditional-workflows.http)** - Conditional branching logic
 - **[error-handling.http](./http-headers/error-handling.http)** - Retries and error recovery
 
 ### NPM/TypeScript Examples
 
-Production-ready workflow implementations:
+Production-ready agent trace implementations:
 
-- **[create-workflow.ts](./npm-package/create-workflow.ts)** - Complete workflow setup
+- **[create-workflow.ts](./npm-package/create-workflow.ts)** - Complete trace setup
 - **[parallel-execution.ts](./npm-package/parallel-execution.ts)** - 3x faster with parallel steps
-- **[workflow-monitoring.ts](./npm-package/workflow-monitoring.ts)** - Monitor and analyze workflows
+- **[workflow-monitoring.ts](./npm-package/workflow-monitoring.ts)** - Monitor and analyze traces
 - **[workflow-control.ts](./npm-package/workflow-control.ts)** - Pause/resume/cancel operations
 
 ### Python SDK Examples
 
-Python workflow implementations:
+Python agent trace implementations:
 
-- **[create_workflow.py](./python-sdk/create_workflow.py)** - Create and execute workflows
-- **[workflow_monitoring.py](./python-sdk/workflow_monitoring.py)** - Monitor workflow executions
-- **[workflow_control.py](./python-sdk/workflow_control.py)** - Control workflow execution
+- **[create_workflow.py](./python-sdk/create_workflow.py)** - Create and execute traces
+- **[workflow_monitoring.py](./python-sdk/workflow_monitoring.py)** - Monitor trace executions
+- **[workflow_control.py](./python-sdk/workflow_control.py)** - Control trace execution
 
 ### Framework Integrations
 
-Framework-specific workflow implementations:
+Framework-specific agent trace implementations:
 
 - **[express-workflow.ts](./frameworks/express-workflow.ts)** - Express.js REST API
 - **[nextjs-workflow.ts](./frameworks/nextjs-workflow.ts)** - Next.js API routes
@@ -88,9 +88,9 @@ Framework-specific workflow implementations:
 
 ## Core Concepts
 
-### Workflow Steps
+### Trace Steps
 
-A workflow consists of multiple steps that can be chained together:
+A trace consists of multiple steps that can be chained together:
 
 ```json
 {
@@ -428,7 +428,7 @@ const template = {
 ### Pause Execution
 
 ```bash
-POST /api/workflows/executions/{executionId}/pause
+POST /api/agent-trace/executions/{executionId}/pause
 ```
 
 - Pauses after current step completes
@@ -438,7 +438,7 @@ POST /api/workflows/executions/{executionId}/pause
 ### Resume Execution
 
 ```bash
-POST /api/workflows/executions/{executionId}/resume
+POST /api/agent-trace/executions/{executionId}/resume
 ```
 
 - Continues from paused state
@@ -448,7 +448,7 @@ POST /api/workflows/executions/{executionId}/resume
 ### Cancel Execution
 
 ```bash
-POST /api/workflows/executions/{executionId}/cancel
+POST /api/agent-trace/executions/{executionId}/cancel
 ```
 
 - Stops execution immediately
@@ -460,7 +460,7 @@ POST /api/workflows/executions/{executionId}/cancel
 ### Execution Status
 
 ```bash
-GET /api/workflows/executions/{executionId}
+GET /api/agent-trace/executions/{executionId}
 ```
 
 **Response includes:**
@@ -473,7 +473,7 @@ GET /api/workflows/executions/{executionId}
 ### Workflow Analytics
 
 ```bash
-GET /api/workflows/analytics
+GET /api/agent-trace/analytics
 ```
 
 **Metrics:**
@@ -487,7 +487,7 @@ GET /api/workflows/analytics
 ### Workflow Trace
 
 ```bash
-GET /api/workflows/executions/{executionId}/trace
+GET /api/agent-trace/executions/{executionId}/trace
 ```
 
 **Includes:**
@@ -508,7 +508,7 @@ All workflows are visible in the Cost Katana dashboard:
 - ⚠️ Error alerts
 - 🌐 Dependency graphs
 
-Visit: [costkatana.com/dashboard/workflows](https://costkatana.com/dashboard/workflows)
+Visit: [app.costkatana.com/agent-trace](https://app.costkatana.com/agent-trace)
 
 ## Best Practices
 
@@ -545,7 +545,7 @@ Always configure retries and fallbacks:
 Track costs per workflow and optimize:
 
 ```bash
-GET /api/workflows/{workflowId}/metrics
+GET /api/agent-trace/{traceId}/metrics
 ```
 
 ### 5. Use Meaningful Names ✅
@@ -568,8 +568,8 @@ GET /api/workflows/{workflowId}/metrics
 
 ## Support
 
-- **Documentation**: [docs.costkatana.com/workflows](https://docs.costkatana.com/workflows)
-- **Dashboard**: [costkatana.com/dashboard/workflows](https://costkatana.com/dashboard/workflows)
+- **Documentation**: [docs.costkatana.com/features/agent-trace](https://docs.costkatana.com/features/agent-trace)
+- **Dashboard**: [app.costkatana.com/agent-trace](https://app.costkatana.com/agent-trace)
 - **Discord**: [discord.gg/Wcwzw8wM](https://discord.gg/D8nDArmKbY)
 
 ---

@@ -1,13 +1,13 @@
-### Gateway Example: Workflow Tracking
-# Track multi-step AI workflows end-to-end
+### Gateway Example: Agent Trace Tracking
+# Track multi-step AI agent traces end-to-end
 
 POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
-CostKatana-Workflow-Id: workflow_content_gen_123
-CostKatana-Workflow-Name: blog-post-generation
-CostKatana-Workflow-Step: generate-outline
+CostKatana-Trace-Id: trace_content_gen_123
+CostKatana-Trace-Name: blog-post-generation
+CostKatana-Trace-Step: generate-outline
 Content-Type: application/json
 
 {
@@ -20,14 +20,14 @@ Content-Type: application/json
   ]
 }
 
-### Workflow Step 2: Generate Content
+### Trace Step 2: Generate Content
 POST https://api.costkatana.com/api/gateway/v1/chat/completions
 CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
 CostKatana-Target-Url: https://api.openai.com
 CostKatana-Project-Id: YOUR_PROJECT_ID
-CostKatana-Workflow-Id: workflow_content_gen_123
-CostKatana-Workflow-Name: blog-post-generation
-CostKatana-Workflow-Step: generate-content
+CostKatana-Trace-Id: trace_content_gen_123
+CostKatana-Trace-Name: blog-post-generation
+CostKatana-Trace-Step: generate-content
 Content-Type: application/json
 
 {
@@ -41,12 +41,12 @@ Content-Type: application/json
 }
 
 ###
-# 📊 Workflow Benefits:
-# ✅ Track end-to-end workflow costs
+# 📊 Agent Trace Benefits:
+# ✅ Track end-to-end trace costs
 # ✅ Analyze step-by-step performance
 # ✅ Identify bottlenecks
 # ✅ Optimize complex processes
-# ✅ Visualize workflow flow
+# ✅ Visualize trace flow
 #
-# View workflow analytics at:
-# https://costkatana.com/workflows
+# View agent trace analytics at:
+# https://app.costkatana.com/agent-trace

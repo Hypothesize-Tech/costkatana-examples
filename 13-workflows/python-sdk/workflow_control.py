@@ -16,7 +16,7 @@ def pause_workflow(execution_id: str):
     """Pause a running workflow"""
     
     response = requests.post(
-        f"{API_BASE}/workflows/executions/{execution_id}/pause",
+        f"{API_BASE}/agent-trace/executions/{execution_id}/pause",
         headers={"Authorization": f"Bearer {API_KEY}"}
     )
     
@@ -28,7 +28,7 @@ def resume_workflow(execution_id: str):
     """Resume a paused workflow"""
     
     response = requests.post(
-        f"{API_BASE}/workflows/executions/{execution_id}/resume",
+        f"{API_BASE}/agent-trace/executions/{execution_id}/resume",
         headers={"Authorization": f"Bearer {API_KEY}"}
     )
     
@@ -40,7 +40,7 @@ def cancel_workflow(execution_id: str):
     """Cancel a workflow"""
     
     response = requests.post(
-        f"{API_BASE}/workflows/executions/{execution_id}/cancel",
+        f"{API_BASE}/agent-trace/executions/{execution_id}/cancel",
         headers={"Authorization": f"Bearer {API_KEY}"}
     )
     

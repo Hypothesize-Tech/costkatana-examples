@@ -18,13 +18,13 @@ class WorkflowExecuteRequest(BaseModel):
     templateId: str
     variables: dict
 
-@app.post("/api/workflows/execute")
+@app.post("/api/agent-trace/execute")
 async def execute_workflow(request: WorkflowExecuteRequest):
     """Execute a workflow"""
     
     try:
         response = requests.post(
-            f"{API_BASE}/workflows/templates/{request.templateId}/execute",
+            f"{API_BASE}/agent-trace/templates/{request.templateId}/execute",
             json={"variables": request.variables},
             headers={
                 "Authorization": f"Bearer {API_KEY}",
@@ -45,13 +45,13 @@ async def execute_workflow(request: WorkflowExecuteRequest):
             detail=e.response.json() if e.response else str(e)
         )
 
-@app.get("/api/workflows/executions/{execution_id}")
+@app.get("/api/agent-trace/executions/{execution_id}")
 async def get_execution(execution_id: str):
     """Get workflow execution status"""
     
     try:
         response = requests.get(
-            f"{API_BASE}/workflows/executions/{execution_id}",
+            f"{API_BASE}/agent-trace/executions/{execution_id}",
             headers={"Authorization": f"Bearer {API_KEY}"}
         )
         
@@ -68,7 +68,7 @@ async def get_execution(execution_id: str):
             detail=e.response.json() if e.response else str(e)
         )
 
-@app.post("/api/workflows/executions/{execution_id}/{action}")
+@app.post("/api/agent-trace/executions/{execution_id}/{action}")
 async def control_workflow(execution_id: str, action: str):
     """Control workflow execution (pause/resume/cancel)"""
     
@@ -77,7 +77,7 @@ async def control_workflow(execution_id: str, action: str):
     
     try:
         response = requests.post(
-            f"{API_BASE}/workflows/executions/{execution_id}/{action}",
+            f"{API_BASE}/agent-trace/executions/{execution_id}/{action}",
             headers={"Authorization": f"Bearer {API_KEY}"}
         )
         

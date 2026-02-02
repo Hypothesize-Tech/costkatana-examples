@@ -15,7 +15,7 @@ const API_KEY = process.env.COST_KATANA_API_KEY;
 async function pauseWorkflow(executionId: string) {
   try {
     const response = await axios.post(
-      `${API_BASE}/workflows/executions/${executionId}/pause`,
+      `${API_BASE}/agent-trace/executions/${executionId}/pause`,
       {},
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }
@@ -33,7 +33,7 @@ async function pauseWorkflow(executionId: string) {
 async function resumeWorkflow(executionId: string) {
   try {
     const response = await axios.post(
-      `${API_BASE}/workflows/executions/${executionId}/resume`,
+      `${API_BASE}/agent-trace/executions/${executionId}/resume`,
       {},
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }
@@ -51,7 +51,7 @@ async function resumeWorkflow(executionId: string) {
 async function cancelWorkflow(executionId: string) {
   try {
     const response = await axios.post(
-      `${API_BASE}/workflows/executions/${executionId}/cancel`,
+      `${API_BASE}/agent-trace/executions/${executionId}/cancel`,
       {},
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }

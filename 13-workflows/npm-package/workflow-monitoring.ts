@@ -23,7 +23,7 @@ async function listWorkflowExecutions(filters?: {
     if (filters?.offset) params.append('offset', filters.offset.toString());
 
     const response = await axios.get(
-      `${API_BASE}/workflows/executions?${params.toString()}`,
+      `${API_BASE}/agent-trace/executions?${params.toString()}`,
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }
       }
@@ -50,7 +50,7 @@ async function listWorkflowExecutions(filters?: {
 async function getWorkflowAnalytics() {
   try {
     const response = await axios.get(
-      `${API_BASE}/workflows/analytics`,
+      `${API_BASE}/agent-trace/analytics`,
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }
       }
@@ -87,7 +87,7 @@ async function getWorkflowAnalytics() {
 async function getWorkflowTrace(executionId: string) {
   try {
     const response = await axios.get(
-      `${API_BASE}/workflows/executions/${executionId}/trace`,
+      `${API_BASE}/agent-trace/executions/${executionId}/trace`,
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }
       }

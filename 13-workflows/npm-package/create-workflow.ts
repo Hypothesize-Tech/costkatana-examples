@@ -47,7 +47,7 @@ interface WorkflowTemplate {
 async function createWorkflowTemplate(template: WorkflowTemplate) {
   try {
     const response = await axios.post(
-      `${API_BASE}/workflows/templates`,
+      `${API_BASE}/agent-trace/templates`,
       template,
       {
         headers: {
@@ -75,7 +75,7 @@ async function createWorkflowTemplate(template: WorkflowTemplate) {
 async function executeWorkflow(templateId: string, variables: Record<string, any>) {
   try {
     const response = await axios.post(
-      `${API_BASE}/workflows/templates/${templateId}/execute`,
+      `${API_BASE}/agent-trace/templates/${templateId}/execute`,
       { variables },
       {
         headers: {
@@ -102,7 +102,7 @@ async function executeWorkflow(templateId: string, variables: Record<string, any
 async function getExecutionStatus(executionId: string) {
   try {
     const response = await axios.get(
-      `${API_BASE}/workflows/executions/${executionId}`,
+      `${API_BASE}/agent-trace/executions/${executionId}`,
       {
         headers: {
           'Authorization': `Bearer ${API_KEY}`

@@ -47,10 +47,10 @@ Authorization: Bearer {{API_KEY}}
 
 {
   "userId": "user_12345",
-  "feature": "workflow",
+  "feature": "agent_trace",
   "label": "Document Processing Pipeline",
   "metadata": {
-    "workflow": "doc-processing",
+    "trace": "doc-processing",
     "version": "v2.1"
   }
 }

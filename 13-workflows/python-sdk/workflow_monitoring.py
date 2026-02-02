@@ -20,7 +20,7 @@ def list_executions(status=None, limit=10):
         params["status"] = status
     
     response = requests.get(
-        f"{API_BASE}/workflows/executions",
+        f"{API_BASE}/agent-trace/executions",
         params=params,
         headers={"Authorization": f"Bearer {API_KEY}"}
     )
@@ -43,7 +43,7 @@ def get_analytics():
     """Get workflow analytics"""
     
     response = requests.get(
-        f"{API_BASE}/workflows/analytics",
+        f"{API_BASE}/agent-trace/analytics",
         headers={"Authorization": f"Bearer {API_KEY}"}
     )
     

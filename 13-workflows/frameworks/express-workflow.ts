@@ -14,13 +14,13 @@ const API_BASE = 'https://api.costkatana.com/api';
 const API_KEY = process.env.COST_KATANA_API_KEY;
 
 // Create and execute workflow endpoint
-app.post('/api/workflows/execute', async (req, res) => {
+app.post('/api/agent-trace/execute', async (req, res) => {
   try {
     const { templateId, variables } = req.body;
     
     // Execute workflow
     const response = await axios.post(
-      `${API_BASE}/workflows/templates/${templateId}/execute`,
+      `${API_BASE}/agent-trace/templates/${templateId}/execute`,
       { variables },
       {
         headers: {
@@ -44,10 +44,10 @@ app.post('/api/workflows/execute', async (req, res) => {
 });
 
 // Get workflow status endpoint
-app.get('/api/workflows/executions/:executionId', async (req, res) => {
+app.get('/api/agent-trace/executions/:executionId', async (req, res) => {
   try {
     const response = await axios.get(
-      `${API_BASE}/workflows/executions/${req.params.executionId}`,
+      `${API_BASE}/agent-trace/executions/${req.params.executionId}`,
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }
       }
@@ -67,7 +67,7 @@ app.get('/api/workflows/executions/:executionId', async (req, res) => {
 });
 
 // Control endpoints
-app.post('/api/workflows/executions/:executionId/:action', async (req, res) => {
+app.post('/api/agent-trace/executions/:executionId/:action', async (req, res) => {
   try {
     const { executionId, action } = req.params;
     
@@ -76,7 +76,7 @@ app.post('/api/workflows/executions/:executionId/:action', async (req, res) => {
     }
     
     const response = await axios.post(
-      `${API_BASE}/workflows/executions/${executionId}/${action}`,
+      `${API_BASE}/agent-trace/executions/${executionId}/${action}`,
       {},
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }

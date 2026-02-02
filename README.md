@@ -119,7 +119,7 @@ Build complex AI workflows and multi-agent systems.
 
 | Feature | Description | Examples |
 |---------|-------------|----------|
-| **[Workflows](13-workflows/)** | Multi-step AI orchestration | HTTP, TypeScript, Python, FastAPI |
+| **[Agent Trace](13-workflows/)** | Monitor and optimize agent traces | HTTP, TypeScript, Python, FastAPI |
 | **[Agents](27-agents/)** | AI agent management | HTTP, TypeScript, Python |
 | **[Memory](20-memory/)** | Persistent agent context | HTTP, TypeScript, Python |
 | **[Templates](21-templates/)** | Reusable prompt templates | HTTP, TypeScript, Python |

@@ -18,7 +18,7 @@ def create_workflow_template(template: Dict[str, Any]) -> Dict:
     """Create a workflow template"""
     
     response = requests.post(
-        f"{API_BASE}/workflows/templates",
+        f"{API_BASE}/agent-trace/templates",
         json=template,
         headers={
             "Authorization": f"Bearer {API_KEY}",
@@ -40,7 +40,7 @@ def execute_workflow(template_id: str, variables: Dict[str, Any]) -> Dict:
     """Execute a workflow"""
     
     response = requests.post(
-        f"{API_BASE}/workflows/templates/{template_id}/execute",
+        f"{API_BASE}/agent-trace/templates/{template_id}/execute",
         json={"variables": variables},
         headers={
             "Authorization": f"Bearer {API_KEY}",
@@ -61,7 +61,7 @@ def get_execution_status(execution_id: str) -> Dict:
     """Get workflow execution status"""
     
     response = requests.get(
-        f"{API_BASE}/workflows/executions/{execution_id}",
+        f"{API_BASE}/agent-trace/executions/{execution_id}",
         headers={"Authorization": f"Bearer {API_KEY}"}
     )
     

@@ -5,7 +5,7 @@
 @apiKey = your_cost_katana_api_key_here
 
 ### 1. Create a Simple Workflow Template
-POST {{baseUrl}}/workflows/templates
+POST {{baseUrl}}/agent-trace/templates
 Content-Type: application/json
 Authorization: Bearer {{apiKey}}
 
@@ -70,18 +70,18 @@ Authorization: Bearer {{apiKey}}
 # }
 
 ### 2. List All Workflow Templates
-GET {{baseUrl}}/workflows/templates
+GET {{baseUrl}}/agent-trace/templates
 Authorization: Bearer {{apiKey}}
 
 ###
 # Response shows all available templates
 
 ### 3. Get Specific Template
-GET {{baseUrl}}/workflows/templates/{{templateId}}
+GET {{baseUrl}}/agent-trace/templates/{{templateId}}
 Authorization: Bearer {{apiKey}}
 
 ### 4. Execute Workflow with Variables
-POST {{baseUrl}}/workflows/templates/{{templateId}}/execute
+POST {{baseUrl}}/agent-trace/templates/{{templateId}}/execute
 Content-Type: application/json
 Authorization: Bearer {{apiKey}}
 
@@ -109,7 +109,7 @@ Authorization: Bearer {{apiKey}}
 # }
 
 ### 5. Get Workflow Execution Status
-GET {{baseUrl}}/workflows/executions/{{executionId}}
+GET {{baseUrl}}/agent-trace/executions/{{executionId}}
 Authorization: Bearer {{apiKey}}
 
 ###
@@ -163,7 +163,7 @@ Authorization: Bearer {{apiKey}}
 # }
 
 ### 6. Get Workflow Trace (Observability)
-GET {{baseUrl}}/workflows/executions/{{executionId}}/trace
+GET {{baseUrl}}/agent-trace/executions/{{executionId}}/trace
 Authorization: Bearer {{apiKey}}
 
 ###
@@ -175,7 +175,7 @@ Authorization: Bearer {{apiKey}}
 # - Error details (if any)
 
 ### 7. List All Workflow Executions
-GET {{baseUrl}}/workflows/executions?status=completed&limit=20
+GET {{baseUrl}}/agent-trace/executions?status=completed&limit=20
 Authorization: Bearer {{apiKey}}
 
 ###
@@ -187,7 +187,7 @@ Authorization: Bearer {{apiKey}}
 # - endDate: filter by end date
 
 ### 8. Get Workflow Analytics
-GET {{baseUrl}}/workflows/analytics
+GET {{baseUrl}}/agent-trace/analytics
 Authorization: Bearer {{apiKey}}
 
 ###
@@ -215,28 +215,28 @@ Authorization: Bearer {{apiKey}}
 # }
 
 ### 9. Pause Running Workflow
-POST {{baseUrl}}/workflows/executions/{{executionId}}/pause
+POST {{baseUrl}}/agent-trace/executions/{{executionId}}/pause
 Authorization: Bearer {{apiKey}}
 
 ###
 # Pauses workflow execution after current step completes
 
 ### 10. Resume Paused Workflow
-POST {{baseUrl}}/workflows/executions/{{executionId}}/resume
+POST {{baseUrl}}/agent-trace/executions/{{executionId}}/resume
 Authorization: Bearer {{apiKey}}
 
 ###
 # Resumes workflow from where it was paused
 
 ### 11. Cancel Workflow Execution
-POST {{baseUrl}}/workflows/executions/{{executionId}}/cancel
+POST {{baseUrl}}/agent-trace/executions/{{executionId}}/cancel
 Authorization: Bearer {{apiKey}}
 
 ###
 # Cancels running or paused workflow immediately
 
 ### 12. Get Workflow Metrics
-GET {{baseUrl}}/workflows/{{workflowId}}/metrics
+GET {{baseUrl}}/agent-trace/{{workflowId}}/metrics
 Authorization: Bearer {{apiKey}}
 
 ###

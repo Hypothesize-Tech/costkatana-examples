@@ -11,7 +11,7 @@ The Cost Katana Gateway provides:
 - 🛡️ **Security Firewall** - Block prompt injection and malicious content
 - 🔑 **Proxy Keys** - Secure API key management
 - 🔀 **Multi-Provider Failover** - Automatic fallback when providers fail
-- 📊 **Workflow Tracking** - Track multi-step AI workflows
+- 📊 **Agent Trace Tracking** - Track multi-step AI agent traces
 
 ## Quick Start
 
@@ -58,7 +58,7 @@ const response = await gateway.openai({
 4. [With Firewall](./http-headers/with-firewall.http) - Security scanning
 5. [Proxy Keys](./http-headers/proxy-keys.http) - Secure key management
 6. [Failover](./http-headers/failover.http) - Multi-provider fallback
-7. [Workflows](./http-headers/workflows.http) - Track multi-step processes
+7. [Agent Trace](./http-headers/workflows.http) - Track multi-step traces
 8. [Without Tracking](./http-headers/without-tracking.http) - Disable auto-tracking
 
 ### NPM Package
@@ -69,7 +69,7 @@ const response = await gateway.openai({
 4. [With Firewall](./npm-package/with-firewall.ts)
 5. [Proxy Keys](./npm-package/proxy-keys.ts)
 6. [Failover](./npm-package/failover.ts)
-7. [Workflows](./npm-package/workflows.ts)
+7. [Agent Trace](./npm-package/workflows.ts)
 8. [Without Tracking](./npm-package/without-tracking.ts) - Disable auto-tracking
 
 ## Key Features
@@ -155,18 +155,18 @@ CostKatana-Failover-Policy: cost-optimized
 - `quality-first`: Prioritize model quality
 - Custom: Define your own rules
 
-### 6. Workflow Tracking
+### 6. Agent Trace Tracking
 
-Track multi-step AI workflows:
+Track multi-step AI agent traces:
 
 ```http
-CostKatana-Workflow-Id: workflow_abc123
-CostKatana-Workflow-Name: content-generation
-CostKatana-Workflow-Step: generate-outline
+CostKatana-Trace-Id: trace_abc123
+CostKatana-Trace-Name: content-generation
+CostKatana-Trace-Step: generate-outline
 ```
 
 **Benefits:**
-- Track end-to-end workflow costs
+- Track end-to-end trace costs
 - Analyze step-by-step performance
 - Identify bottlenecks
 - Optimize complex processes
@@ -204,9 +204,9 @@ CostKatana-Workflow-Step: generate-outline
 - `CostKatana-Auto-Track`: Enable/disable automatic tracking (default: true)
 - `CostKatana-Project-Id`: Project for cost allocation
 - `CostKatana-Session-Id`: Session identifier
-- `CostKatana-Workflow-Id`: Workflow identifier
-- `CostKatana-Workflow-Name`: Workflow name
-- `CostKatana-Workflow-Step`: Current workflow step
+- `CostKatana-Trace-Id`: Trace identifier
+- `CostKatana-Trace-Name`: Trace name
+- `CostKatana-Trace-Step`: Current trace step
 - `CostKatana-User-Id`: End user identifier
 
 ### Custom Properties
@@ -267,7 +267,7 @@ const response = await gateway.makeRequest(endpoint, data, {
 3. **Enable retries** for production reliability
 4. **Enable firewall** for user-facing applications
 5. **Use proxy keys** instead of exposing real API keys
-6. **Track workflows** for complex multi-step processes
+6. **Track agent traces** for complex multi-step processes
 7. **Set appropriate budgets** on proxy keys
 8. **Monitor gateway analytics** for optimization opportunities
 

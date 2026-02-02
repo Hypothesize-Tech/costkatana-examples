@@ -1,7 +1,7 @@
 /**
  * Cost Katana Workflows: Next.js Integration
  * 
- * Location: app/api/workflows/execute/route.ts
+ * Location: app/api/agent-trace/execute/route.ts
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     
     // Execute workflow
     const response = await axios.post(
-      `${API_BASE}/workflows/templates/${templateId}/execute`,
+      `${API_BASE}/agent-trace/templates/${templateId}/execute`,
       { variables },
       {
         headers: {
@@ -43,14 +43,14 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Location: app/api/workflows/[executionId]/route.ts
+// Location: app/api/agent-trace/[executionId]/route.ts
 export async function GET(
   request: NextRequest,
   { params }: { params: { executionId: string } }
 ) {
   try {
     const response = await axios.get(
-      `${API_BASE}/workflows/executions/${params.executionId}`,
+      `${API_BASE}/agent-trace/executions/${params.executionId}`,
       {
         headers: { 'Authorization': `Bearer ${API_KEY}` }
       }
