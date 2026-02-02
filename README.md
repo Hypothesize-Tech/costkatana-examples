@@ -56,10 +56,9 @@ Leverage Cost Katana's AI-native architecture with autonomous optimization and s
 | Feature | Description | Examples |
 |---------|-------------|----------|
 | **[Provider-Independent Core](PROVIDER_AGNOSTIC_GUIDE.md)** | Capability-based routing, zero vendor lock-in | Guide, Patterns |
-| **[Cost Intelligence Stack](46-cost-intelligence-stack/)** | 6-layer real-time intelligence system | HTTP, TypeScript, Python |
-| **[Closed-Loop Cost Brain](47-cost-brain/)** | Autonomous real-time optimization | HTTP, TypeScript, Python |
-| **[AI Governance & Security](48-governance-security/)** | Zero-trust agent governance with RBAC | HTTP, TypeScript, Python |
-| **[Data Network Effects](49-data-network-effects/)** | Self-improving AI with learning loops | HTTP, TypeScript, Python |
+| **[Cost Intelligence Stack](45-cost-intelligence-stack/)** | 6-layer real-time intelligence system | HTTP, TypeScript, Python |
+| **[AI Governance & Security](47-governance-security/)** | Zero-trust agent governance with RBAC | HTTP, TypeScript, Python |
+| **[Data Network Effects](48-data-network-effects/)** | Self-improving AI with learning loops | HTTP, TypeScript, Python |
 
 **Key Benefits:** 
 - **AI-Native Architecture** - Platform designed from ground up with AI models as first-class infrastructure
@@ -78,8 +77,7 @@ Track and optimize your AI spending with comprehensive cost management tools.
 | **[Cost Tracking](1-cost-tracking/)** | Monitor costs across all AI providers | HTTP, TypeScript, Python |
 | **[Analytics](5-analytics/)** | Analyze spending patterns and trends | HTTP, TypeScript, Python |
 | **[Budgets](19-budgets/)** | Set spending limits and alerts | HTTP, TypeScript, Python |
-| **[Cost Optimization](41-cost-optimization/)** | AI-powered cost reduction recommendations | HTTP, TypeScript, Python |
-| **[Unexplained Costs](30-unexplained-costs/)** | Detect anomalies in spending | HTTP, TypeScript, Python |
+| **[Cost Optimization](40-cost-optimization/)** | AI-powered cost reduction recommendations | HTTP, TypeScript, Python |
 
 **Expected Savings:** 30-80% cost reduction through optimization
 
@@ -93,8 +91,8 @@ Boost performance and reduce costs with intelligent caching and optimization.
 |---------|-------------|----------|
 | **[Semantic Caching](14-cache/)** | Cache similar requests (30-40% savings) | HTTP, TypeScript, Python, Frameworks |
 | **[Cortex Optimization](4-cortex/)** | AI-powered prompt compression | HTTP, TypeScript, Python |
-| **[Model Routing](40-model-routing/)** | Route to optimal models automatically | HTTP, TypeScript, Python |
-| **[Failover](39-failover/)** | Auto-failover between providers | HTTP, TypeScript, Python |
+| **[Model Routing](39-model-routing/)** | Route to optimal models automatically | HTTP, TypeScript, Python |
+| **[Failover](38-failover/)** | Auto-failover between providers | HTTP, TypeScript, Python |
 
 **Performance Gains:** 3-10x faster responses with caching
 
@@ -109,8 +107,8 @@ Stay informed with real-time notifications and comprehensive monitoring.
 | **[Webhooks](10-webhooks/)** | Real-time event notifications (65+ events) | HTTP, TypeScript, Python, Frameworks |
 | **[OpenTelemetry](11-observability/)** | Distributed tracing & metrics | HTTP, TypeScript, Python, Frameworks |
 | **[Monitoring](17-monitoring/)** | System health & performance | HTTP, TypeScript, Python |
-| **[Alerts](42-alerts/)** | Custom alert rules | HTTP, TypeScript, Python |
-| **[Email Tracking](32-email-tracking/)** | Automated email notifications | HTTP, TypeScript, Python |
+| **[Alerts](41-alerts/)** | Custom alert rules | HTTP, TypeScript, Python |
+| **[Email Tracking](31-email-tracking/)** | Automated email notifications | HTTP, TypeScript, Python |
 
 **Coverage:** 65+ webhook event types available
 
@@ -167,11 +165,11 @@ Comprehensive analytics and automated reporting.
 
 | Feature | Description | Examples |
 |---------|-------------|----------|
-| **[Reports](43-reports/)** | Automated report generation | HTTP, TypeScript, Python |
+| **[Reports](42-reports/)** | Automated report generation | HTTP, TypeScript, Python |
 | **[Feedback](22-feedback/)** | Request quality ratings | HTTP, TypeScript, Python |
 | **[Tagging](23-tagging/)** | Custom request tagging | HTTP, TypeScript, Python |
 | **[Experiments](24-experiments/)** | A/B testing & comparison | HTTP, TypeScript, Python |
-| **[AI Cost Monitoring](33-ai-cost-monitoring/)** | Real-time cost tracking | HTTP, TypeScript, Python |
+| **[AI Cost Monitoring](32-ai-cost-monitoring/)** | Real-time cost tracking | HTTP, TypeScript, Python |
 
 ---
 
@@ -194,8 +192,8 @@ Connect with your favorite tools and platforms.
 
 | Feature | Description | Examples |
 |---------|-------------|----------|
-| **[Integrations](44-integrations/)** | Third-party connections | HTTP, TypeScript, Python |
-| **[Ingestion](34-ingestion/)** | Data import pipelines | HTTP, TypeScript, Python |
+| **[Integrations](43-integrations/)** | Third-party connections | HTTP, TypeScript, Python |
+| **[Ingestion](33-ingestion/)** | Data import pipelines | HTTP, TypeScript, Python |
 | **[Express.js](7-frameworks/)** | Express integration | TypeScript |
 | **[Next.js](7-frameworks/)** | Next.js integration | TypeScript |
 | **[FastAPI](7-frameworks/)** | FastAPI integration | Python |
@@ -239,27 +237,26 @@ All 44 features with direct links to examples:
 23. [Tagging](23-tagging/) - Custom tagging
 24. [Experiments](24-experiments/) - A/B testing
 
-### Specialized Features (25-44)
+### Specialized Features (25-43)
 25. [Notebooks](25-notebooks/) - Interactive notebooks
 26. [CKQL](26-ckql/) - Query language
 27. [Agents](27-agents/) - AI agents
 28. [MFA](28-mfa/) - Multi-factor auth
 29. [Moderation](29-moderation/) - Content moderation
-30. [Unexplained Costs](30-unexplained-costs/) - Anomaly detection
-31. [Cortex Training](31-cortex-training/) - Custom training
-32. [Email Tracking](32-email-tracking/) - Email notifications
-33. [AI Cost Monitoring](33-ai-cost-monitoring/) - Real-time monitoring
-34. [Ingestion](34-ingestion/) - Data ingestion
-35. [User Telemetry](35-user-telemetry/) - Telemetry config
-36. [Team Management](36-team-management/) - Team collaboration
-37. [Audit Logs](37-audit-logs/) - Audit trail
-38. [Rate Limiting](38-rate-limiting/) - Rate controls
-39. [Failover](39-failover/) - Provider failover
-40. [Model Routing](40-model-routing/) - Intelligent routing
-41. [Cost Optimization](41-cost-optimization/) - Recommendations
-42. [Alerts](42-alerts/) - Alert management
-43. [Reports](43-reports/) - Report generation
-44. [Integrations](44-integrations/) - Third-party integrations
+30. [Cortex Training](30-cortex-training/) - Custom training
+31. [Email Tracking](31-email-tracking/) - Email notifications
+32. [AI Cost Monitoring](32-ai-cost-monitoring/) - Real-time monitoring
+33. [Ingestion](33-ingestion/) - Data ingestion
+34. [User Telemetry](34-user-telemetry/) - Telemetry config
+35. [Team Management](35-team-management/) - Team collaboration
+36. [Audit Logs](36-audit-logs/) - Audit trail
+37. [Rate Limiting](37-rate-limiting/) - Rate controls
+38. [Failover](38-failover/) - Provider failover
+39. [Model Routing](39-model-routing/) - Intelligent routing
+40. [Cost Optimization](40-cost-optimization/) - Recommendations
+41. [Alerts](41-alerts/) - Alert management
+42. [Reports](42-reports/) - Report generation
+43. [Integrations](43-integrations/) - Third-party integrations
 
 </details>
 
@@ -353,7 +350,7 @@ async def chat(messages: list):
 **Features Used:**
 - [Cortex Optimization](4-cortex/) - Compress prompts
 - [Semantic Caching](14-cache/) - Cache similar requests
-- [Model Routing](40-model-routing/) - Use optimal models
+- [Model Routing](39-model-routing/) - Use optimal models
 - [Cost Tracking](1-cost-tracking/) - Monitor spending
 
 **Expected Results:**
