@@ -1,0 +1,53 @@
+### Multi-turn chat: same session, two gateway calls
+# Replace YOUR_COSTKATANA_KEY and YOUR_PROJECT_ID.
+#
+# Pattern:
+# 1) First POST: messages = [ { role: user, content: "..." } ]
+# 2) Second POST: messages = [ user1, assistant1, user2 ]  (full thread)
+#
+# The model needs the full array each time. On costkatana-backend-nest, Usage rows
+# default to one turn: Request + stored input tokens use the latest user message
+# when 2+ messages are present (full body still proxied upstream).
+#
+# If your gateway infers the provider, you can omit CostKatana-Target-Url (see 2-gateway README).
+
+@baseUrl = https://api.costkatana.com/api/gateway
+@ckKey = YOUR_COSTKATANA_KEY
+@projectId = YOUR_PROJECT_ID
+
+### Turn 1 — single user message
+POST {{baseUrl}}/v1/chat/completions
+CostKatana-Auth: Bearer {{ckKey}}
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: {{projectId}}
+Content-Type: application/json
+
+{
+  "model": "gpt-4o-mini",
+  "messages": [
+    { "role": "user", "content": "Say hello in exactly five words." }
+  ]
+}
+
+### Turn 2 — include assistant reply from turn 1, then the new user line
+# Paste the assistant message.content from the previous response into the placeholder below.
+
+POST {{baseUrl}}/v1/chat/completions
+CostKatana-Auth: Bearer {{ckKey}}
+CostKatana-Target-Url: https://api.openai.com
+CostKatana-Project-Id: {{projectId}}
+Content-Type: application/json
+
+{
+  "model": "gpt-4o-mini",
+  "messages": [
+    { "role": "user", "content": "Say hello in exactly five words." },
+    { "role": "assistant", "content": "REPLACE_WITH_ASSISTANT_TEXT_FROM_TURN_1" },
+    { "role": "user", "content": "Now reply with a six-word follow-up question." }
+  ]
+}
+
+###
+# ✅ OpenAI: /v1/chat/completions + chat models (gpt-4o-mini, gpt-4o, …)
+# ✅ Anthropic: /v1/messages + Claude model ids + max_tokens (see basic-routing.http)
+# ❌ Do not use a Claude model id on chat/completions or a GPT id on /v1/messages

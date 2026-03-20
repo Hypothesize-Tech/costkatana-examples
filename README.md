@@ -150,7 +150,7 @@ Essential tools for development and testing.
 
 | Feature | Description | Examples |
 |---------|-------------|----------|
-| **[Gateway](2-gateway/)** | Unified API for all providers | HTTP, TypeScript, Python |
+| **[Gateway](2-gateway/)** | Unified API for all providers; [multi-turn + Usage “Request” patterns](2-gateway/README.md#usage-rows-gateway-vs-trackusage) | HTTP, TypeScript, Python |
 | **[CLI](9-cli/)** | Command-line interface | Shell scripts, Guides |
 | **[Python SDK](8-python-sdk/)** | Complete Python package | Python examples |
 | **[CKQL](26-ckql/)** | SQL-like query language | HTTP, TypeScript, Python |

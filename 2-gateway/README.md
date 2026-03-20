@@ -48,6 +48,12 @@ const response = await gateway.openai({
 });
 ```
 
+From the **costkatana-examples** repo root (with `COST_KATANA_API_KEY`, `PROJECT_ID`, `OPENAI_API_KEY` in `.env`):
+
+```bash
+npx ts-node 2-gateway/npm-package/multi-turn-chat-usage-tracking.ts
+```
+
 ## Examples
 
 ### HTTP Headers
@@ -60,6 +66,7 @@ const response = await gateway.openai({
 6. [Failover](./http-headers/failover.http) - Multi-provider fallback
 7. [Agent Trace](./http-headers/workflows.http) - Track multi-step traces
 8. [Without Tracking](./http-headers/without-tracking.http) - Disable auto-tracking
+9. [Multi-turn chat & usage](./http-headers/multi-turn-chat-usage.http) - Full `messages` per turn + dashboard prompt semantics
 
 ### NPM Package
 
@@ -71,6 +78,22 @@ const response = await gateway.openai({
 6. [Failover](./npm-package/failover.ts)
 7. [Agent Trace](./npm-package/workflows.ts)
 8. [Without Tracking](./npm-package/without-tracking.ts) - Disable auto-tracking
+9. [Multi-turn chat & usage tracking](./npm-package/multi-turn-chat-usage-tracking.ts) - Correct thread shape vs Usage “Request”
+
+## Usage rows: gateway vs `trackUsage`
+
+| Mechanism | You send | What shows in Usage |
+|-----------|-----------|---------------------|
+| **Gateway** (`/api/gateway/...`) | Provider JSON (`model`, `messages`, …) | Server records from that request. For chat, the stored **request / prompt** is the **latest user message** on that call—not every `messages[].content` concatenated (which pulls in prior assistant text). |
+| **SDK `trackUsage` / comprehensive** | Your own payload (prompt, tokens, model, …) | Whatever fields you (or the SDK) post to the tracking API. |
+
+**One row = one turn (default on costkatana-backend-nest):** **Request** and stored **input tokens** (when the body has **2+** chat messages) reflect the **latest user message**; **output** tokens are this reply. Forward whatever `messages` you need—the gateway still proxies the full body upstream.
+
+**Multi-turn apps:** Send the **full** `messages` array when the model needs memory. In the UI, capture `const userText = input.trim()`, clear the input, then `[...prior, { role: 'user', content: userText }]`.
+
+**Model / route:** Use `/v1/chat/completions` with OpenAI-style models; use `/v1/messages` with Claude models and `max_tokens`. See [multi-turn-chat-usage.http](./http-headers/multi-turn-chat-usage.http).
+
+**Docs:** [cost-katana `examples/GATEWAY_USAGE_AND_TRACKING.md`](https://github.com/Hypothesize-Tech/cost-katana/blob/main/examples/GATEWAY_USAGE_AND_TRACKING.md) (same workspace: `costkatana-core/examples/GATEWAY_USAGE_AND_TRACKING.md`).
 
 ## Key Features
 
