@@ -9,7 +9,7 @@
  * prompt + estimated input tokens when 2+ chat messages). Core doc:
  * cost-katana/examples/GATEWAY_USAGE_AND_TRACKING.md
  */
-import { AICostTracker, AIProvider } from 'cost-katana';
+import { gateway } from 'cost-katana';
 import { config, validateConfig } from '../../shared/config';
 import { logResult } from '../../shared/utils';
 
@@ -29,18 +29,12 @@ function getOpenAiAssistantText(data: unknown): string {
 async function main() {
   console.log('\n💬 Gateway multi-turn chat (usage-tracking friendly)\n');
 
-  validateConfig(['costKatanaKey', 'projectId']);
+  validateConfig(['costKatanaKey']);
 
-  const tracker = await AICostTracker.create({
-    providers: [{ provider: AIProvider.OpenAI, apiKey: config.openaiKey }],
-    tracking: { enableAutoTracking: true },
-    projectId: config.projectId,
-  });
-
-  const gateway = tracker.initializeGateway({
+  const g = gateway({
     baseUrl: config.gatewayUrl,
     enableCache: false,
-    enableRetries: false,
+    enableRetries: false
   });
 
   const model = 'gpt-4o-mini';
@@ -50,7 +44,7 @@ async function main() {
   const firstUserText = 'Reply with exactly one short sentence defining "API gateway".';
   history.push({ role: 'user', content: firstUserText });
 
-  const res1 = await gateway.openai({
+  const res1 = await g.openai({
     model,
     messages: [...history],
   });
@@ -61,7 +55,7 @@ async function main() {
   const secondUserText = 'Now in one sentence: how does that relate to AI providers?';
   history.push({ role: 'user', content: secondUserText });
 
-  const res2 = await gateway.openai({
+  const res2 = await g.openai({
     model,
     messages: [...history],
   });

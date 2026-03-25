@@ -8,7 +8,8 @@ Get up and running with Cost Katana examples in 5 minutes!
 
 - Node.js 18+ installed
 - Cost Katana API key ([Get one here](https://costkatana.com/settings/api-keys))
-- At least one AI provider API key (OpenAI, Anthropic, etc.)
+- For **gateway** examples: only `COST_KATANA_API_KEY` is required
+- For **direct provider** examples: an OpenAI / Anthropic / etc. key as noted per folder
 
 ### 2. Installation
 
@@ -31,64 +32,66 @@ cp shared/env.example .env
 nano .env  # or use your favorite editor
 ```
 
-**Required variables:**
+**Minimum for gateway + dashboard:**
 ```bash
 COST_KATANA_API_KEY=dak_your_api_key_here
+```
+
+**Recommended (per-project analytics):**
+```bash
 PROJECT_ID=your_project_id_here
-OPENAI_API_KEY=sk-your_openai_key  # or another provider
+```
+
+**Direct provider examples** (when not using the hosted gateway for that call):
+```bash
+OPENAI_API_KEY=sk-your_openai_key  # or ANTHROPIC_API_KEY, etc.
 ```
 
 ## 🎯 Run Your First Example (3 minutes)
 
-### Option 1: HTTP Example (Simplest)
+### Option 0: Add headers to existing OpenAI calls (no SDK)
 
-1. **Install VS Code REST Client extension**
-   - Open VS Code
-   - Install "REST Client" extension by Huachao Mao
+**No code refactor** — keep calling `api.openai.com` and add Cost Katana headers:
 
-2. **Open any `.http` file**
-   ```
-   1-cost-tracking/http-headers/openai.http
-   ```
+```http
+POST https://api.openai.com/v1/chat/completions
+Authorization: Bearer YOUR_OPENAI_KEY
+CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
+CostKatana-Project-Id: YOUR_PROJECT_ID
+```
 
-3. **Update placeholder keys**
-   - Replace `YOUR_COSTKATANA_KEY` with your key
-   - Replace `YOUR_OPENAI_KEY` with your OpenAI key
-   - Replace `YOUR_PROJECT_ID` with your project ID
+`CostKatana-Project-Id` is optional if you only need account-level tracking.
 
-4. **Click "Send Request"**
-   - Look for the "Send Request" link above the POST line
-   - Click it and see the response!
+See: `1-cost-tracking/http-headers/openai.http`
 
-5. **View tracked data**
-   - Go to [costkatana.com/dashboard](https://costkatana.com/dashboard)
-   - See your request tracked with costs!
+### Option 1: Gateway in TypeScript (`gateway()` — least configuration)
 
-### Option 2: NPM Example (Best DX)
+Uses **`cost-katana`** and only **`COST_KATANA_API_KEY`** in `.env` for most `2-gateway` samples:
+
+```bash
+npm run example 2-gateway/npm-package/basic-routing.ts
+```
+
+Other one-liner-friendly gateway scripts: `2-gateway/npm-package/without-tracking.ts`, `with-caching.ts`, `with-retry.ts`.
+
+### Option 2: NPM cost-tracking example (direct provider)
 
 1. **Run an example**
    ```bash
    npm run example 1-cost-tracking/npm-package/openai.ts
    ```
 
-2. **See the output**
-   ```
-   🚀 OpenAI Cost Tracking Examples
-
-   📝 Example 1: Simple GPT-4 Request
-   ============================================================
-     GPT-4 Response
-   ============================================================
-   Text Preview         : Quantum computing is...
-   Cost                 : $0.030000
-   Tokens               : 450
-   Model                : gpt-4
-   Provider             : OpenAI
-   ============================================================
-   ```
+2. **See the output** (cost + tokens in the terminal)
 
 3. **View in dashboard**
    - [costkatana.com/dashboard](https://costkatana.com/dashboard)
+
+### Option 3: HTTP file (VS Code REST Client)
+
+1. Install **REST Client** (Huachao Mao) in VS Code  
+2. Open `1-cost-tracking/http-headers/openai.http` (or `2-gateway/http-headers/without-tracking.http`)  
+3. Replace placeholders and click **Send Request**  
+4. Check the [dashboard](https://costkatana.com/dashboard)
 
 ## 📚 What to Explore Next
 
@@ -134,23 +137,11 @@ npm run example 2-gateway/npm-package/with-firewall.ts
 **Google AI**
 - HTTP: `1-cost-tracking/http-headers/google-ai.http`
 
-**And more!** See [INDEX.md](./INDEX.md) for all examples.
+**And more!** See [README.md](./README.md) for the feature index.
 
 ## 💡 Common Use Cases
 
-### 1. Track Costs for Existing API
-**No code changes needed!** Just add headers:
-
-```http
-POST https://api.openai.com/v1/chat/completions
-Authorization: Bearer YOUR_OPENAI_KEY
-CostKatana-Auth: Bearer YOUR_COSTKATANA_KEY
-CostKatana-Project-Id: YOUR_PROJECT_ID
-```
-
-See: `1-cost-tracking/http-headers/openai.http`
-
-### 2. Enable Caching to Save 100%
+### 1. Enable Caching to Save 100%
 **For repeated requests:**
 
 ```http
@@ -160,7 +151,7 @@ CostKatana-Semantic-Cache-Enabled: true
 
 See: `2-gateway/http-headers/with-caching.http`
 
-### 3. Use Cortex for 40-75% Savings
+### 2. Use Cortex for 40-75% Savings
 **For long-form content:**
 
 ```typescript
@@ -169,7 +160,7 @@ const response = await ai('gpt-4', longPrompt, { cortex: true });
 
 See: `4-cortex/npm-package/basic-cortex.ts`
 
-### 4. Build Production API
+### 3. Build Production API
 **Full Express.js example:**
 
 ```bash
@@ -190,7 +181,7 @@ Then visit: `http://localhost:3000/api/chat`
 - [Frameworks](./7-frameworks/) - Express, Next.js, etc.
 
 ### Full Index
-See [INDEX.md](./INDEX.md) for complete navigation.
+See [README.md](./README.md) for complete navigation.
 
 ## 📊 Expected Results
 
@@ -259,7 +250,12 @@ Update package.json:
 
 ---
 
-**Ready?** Start with:
+**Ready?** Start with the gateway (simplest):
+```bash
+npm run example 2-gateway/npm-package/basic-routing.ts
+```
+
+Or add headers to your existing OpenAI client (Option 0 above), or run full cost-tracking:
 ```bash
 npm run example 1-cost-tracking/npm-package/openai.ts
 ```

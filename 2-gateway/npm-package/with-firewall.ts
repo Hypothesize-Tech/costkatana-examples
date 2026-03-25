@@ -1,30 +1,26 @@
 /**
  * Gateway Example: Security Firewall
  */
-import { AICostTracker, AIProvider } from 'cost-katana';
+import { gateway } from 'cost-katana';
 import { config, validateConfig } from '../../shared/config';
 
 async function main() {
   console.log('\n🛡️ Gateway Security Firewall Example\n');
-  
-  validateConfig();
-  
-  const tracker = await AICostTracker.create({
-    providers: [{ provider: AIProvider.OpenAI, apiKey: config.openaiKey }],
-    projectId: config.projectId,
-  });
-  
-  const gateway = tracker.initializeGateway();
-  
+
+  validateConfig(['costKatanaKey']);
+
+  const g = gateway({ baseUrl: config.gatewayUrl });
+
   try {
-    await gateway.makeFirewallProtectedRequest(
+    await g.makeFirewallProtectedRequest(
       '/v1/chat/completions',
       { model: 'gpt-4', messages: [{ role: 'user', content: 'Safe request' }] },
-      { enabled: true, advanced: true, blockThreshold: 0.8 }
+      { enabled: true, advanced: true, promptThreshold: 0.8 }
     );
     console.log('✅ Safe request passed firewall!\n');
-  } catch (error: any) {
-    console.log('🚫 Request blocked by firewall:', error.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.log('🚫 Request blocked by firewall:', message);
   }
 }
 

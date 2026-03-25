@@ -2,20 +2,16 @@
  * Gateway Example: Automatic Retries
  * Handle rate limits and failures automatically
  */
-import { AICostTracker, AIProvider } from 'cost-katana';
+import { gateway } from 'cost-katana';
 import { config, validateConfig } from '../../shared/config';
 
 async function main() {
   console.log('\n🔄 Gateway Automatic Retry Example\n');
-  
-  validateConfig();
-  
-  const tracker = await AICostTracker.create({
-    providers: [{ provider: AIProvider.OpenAI, apiKey: config.openaiKey }],
-    projectId: config.projectId,
-  });
-  
-  const gateway = tracker.initializeGateway({
+
+  validateConfig(['costKatanaKey']);
+
+  const g = gateway({
+    baseUrl: config.gatewayUrl,
     enableRetries: true,
     retryConfig: {
       count: 3,
@@ -24,12 +20,12 @@ async function main() {
       maxTimeout: 10000
     }
   });
-  
-  const response = await gateway.openai({
+
+  await g.openai({
     model: 'gpt-4',
     messages: [{ role: 'user', content: 'Explain resilience patterns.' }]
   });
-  
+
   console.log('✅ Request completed with automatic retry protection!\n');
 }
 

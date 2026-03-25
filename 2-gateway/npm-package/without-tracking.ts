@@ -1,176 +1,76 @@
 /**
- * Gateway Example: Disable Auto-Tracking
- * 
- * This example shows how to use the gateway with auto-tracking disabled.
- * The gateway will still proxy requests but won't track usage in the database.
+ * Gateway Example: Simple proxy + privacy options
+ *
+ * Uses `gateway()` — only `COST_KATANA_API_KEY` is required (see shared/env.example).
+ * No `AICostTracker` or provider `TrackerConfig` needed for gateway proxy calls.
+ *
+ * For sensitive payloads, use `omitRequest` / `omitResponse` so content is not stored in logs.
  */
 
-import { AICostTracker } from 'cost-katana';
+import { gateway } from 'cost-katana';
+import { config, validateConfig } from '../../shared/config';
 
-async function exampleWithoutTracking() {
-  // Initialize tracker
-  const tracker = await AICostTracker.create({
-    providers: [
-      {
-        provider: 'openai' as any,
-        apiKey: process.env.OPENAI_API_KEY || 'your-openai-key'
-      }
-    ],
-    tracking: {
-      enableAutoTracking: true
-    }
+async function exampleSimpleGateway() {
+  validateConfig(['costKatanaKey']);
+
+  const g = gateway({
+    baseUrl: config.gatewayUrl
   });
 
-  // Initialize gateway with autoTrack disabled
-  const gateway = tracker.initializeGateway({
-    baseUrl: 'https://api.costkatana.com/api/gateway',
-    apiKey: process.env.COST_KATANA_API_KEY || 'your-cost-katana-key',
-    autoTrack: false // Disable tracking for all requests through this gateway
+  const response = await g.openai({
+    model: 'gpt-4o',
+    messages: [{ role: 'user', content: 'Hello from the gateway example.' }]
   });
 
-  // Make a request - this will be proxied but not tracked
-  const response = await gateway.openai(
-    {
-      model: 'gpt-4',
-      messages: [
-        { role: 'user', content: 'Hello, this request will not be tracked!' }
-      ]
-    },
-    {
-      targetUrl: 'https://api.openai.com'
-      // autoTrack is already false from gateway config
-    }
-  );
-
-  console.log('Response received:', response.data);
-  console.log('Note: This request was NOT tracked in the database');
+  console.log('Response:', response.data);
 }
 
 /**
- * Example: Per-Request Auto-Track Control
- * 
- * You can also control tracking on a per-request basis
+ * Omit request/response bodies from stored logs (privacy-sensitive flows).
  */
-async function examplePerRequestTracking() {
-  const tracker = await AICostTracker.create({
-    providers: [
-      {
-        provider: 'openai' as any,
-        apiKey: process.env.OPENAI_API_KEY || 'your-openai-key'
-      }
-    ],
-    tracking: {
-      enableAutoTracking: true
-    }
-  });
+async function examplePrivacyOmit() {
+  validateConfig(['costKatanaKey']);
 
-  // Initialize gateway with autoTrack enabled by default
-  const gateway = tracker.initializeGateway({
-    baseUrl: 'https://api.costkatana.com/api/gateway',
-    apiKey: process.env.COST_KATANA_API_KEY || 'your-cost-katana-key',
-    autoTrack: true // Default: track all requests
-  });
+  const g = gateway({ baseUrl: config.gatewayUrl });
 
-  // This request WILL be tracked (uses gateway default)
-  const trackedResponse = await gateway.openai(
+  const response = await g.openai(
     {
-      model: 'gpt-4',
-      messages: [{ role: 'user', content: 'This will be tracked' }]
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: 'Sensitive prompt' }]
     },
     {
-      targetUrl: 'https://api.openai.com'
+      omitRequest: true,
+      omitResponse: true
     }
   );
 
-  // This request will NOT be tracked (per-request override)
-  const untrackedResponse = await gateway.openai(
-    {
-      model: 'gpt-4',
-      messages: [{ role: 'user', content: 'This will NOT be tracked' }]
-    },
-    {
-      targetUrl: 'https://api.openai.com',
-      autoTrack: false // Override gateway default for this request
-    }
-  );
-
-  console.log('Tracked response:', trackedResponse.data);
-  console.log('Untracked response:', untrackedResponse.data);
+  console.log('Response received (content may be omitted from dashboard logs):', response.data);
 }
 
 /**
- * Example: Use Cases for Disabling Tracking
+ * Cached high-volume pattern: same gateway(), enable cache on the client config.
  */
-async function exampleUseCases() {
-  const tracker = await AICostTracker.create({
-    providers: [
-      {
-        provider: 'openai' as any,
-        apiKey: process.env.OPENAI_API_KEY || 'your-openai-key'
-      }
-    ],
-    tracking: {
-      enableAutoTracking: true
-    }
+async function exampleCachedRequest() {
+  validateConfig(['costKatanaKey']);
+
+  const g = gateway({
+    baseUrl: config.gatewayUrl,
+    enableCache: true
   });
 
-  const gateway = tracker.initializeGateway({
-    baseUrl: 'https://api.costkatana.com/api/gateway',
-    apiKey: process.env.COST_KATANA_API_KEY || 'your-cost-katana-key',
-    autoTrack: true // Default: track most requests
-  });
-
-  // Use Case 1: Test/Development Requests
-  // Don't pollute production analytics with test data
-  if (process.env.NODE_ENV === 'test') {
-    const testResponse = await gateway.openai(
-      {
-        model: 'gpt-4',
-        messages: [{ role: 'user', content: 'Test prompt' }]
-      },
-      {
-        targetUrl: 'https://api.openai.com',
-        autoTrack: false // Skip tracking for tests
-      }
-    );
-  }
-
-  // Use Case 2: High-Volume Proxy-Only Scenarios
-  // When you just need the gateway features (caching, retries) but not tracking
-  const highVolumeRequest = await gateway.openai(
+  const response = await g.openai(
     {
-      model: 'gpt-4',
-      messages: [{ role: 'user', content: 'High volume request' }]
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: 'What is 2+2?' }]
     },
-    {
-      targetUrl: 'https://api.openai.com',
-      autoTrack: false, // Reduce database load
-      cache: true // Still use caching
-    }
+    { cache: true }
   );
 
-  // Use Case 3: Privacy-Sensitive Requests
-  // When tracking sensitive data is not desired
-  const sensitiveRequest = await gateway.openai(
-    {
-      model: 'gpt-4',
-      messages: [{ role: 'user', content: 'Sensitive information' }]
-    },
-    {
-      targetUrl: 'https://api.openai.com',
-      autoTrack: false, // Don't track sensitive requests
-      omitRequest: true, // Also omit request content
-      omitResponse: true // And response content
-    }
-  );
+  console.log('Cached request metadata:', response.metadata);
 }
 
-// Run examples
 if (require.main === module) {
-  exampleWithoutTracking().catch(console.error);
-  examplePerRequestTracking().catch(console.error);
-  exampleUseCases().catch(console.error);
+  exampleSimpleGateway().catch(console.error);
 }
 
-export { exampleWithoutTracking, examplePerRequestTracking, exampleUseCases };
-
+export { exampleSimpleGateway, examplePrivacyOmit, exampleCachedRequest };
