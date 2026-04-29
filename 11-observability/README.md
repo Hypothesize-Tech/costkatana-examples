@@ -40,7 +40,7 @@ curl -X POST https://api.costkatana.com/api/gateway/v1/chat/completions \
 ### 3. View Session Traces
 
 ```bash
-curl https://api.costkatana.com/api/v1/sessions/my_session_123 \
+curl https://api.costkatana.com/api/sessions/my_session_123/details \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -237,7 +237,7 @@ const summary = await client.chat.completions.create({
 });
 
 // View complete pipeline trace
-const session = await fetch(`${API_BASE}/v1/sessions/${sessionId}`, {
+const session = await fetch(`${API_BASE}/sessions/${sessionId}/details`, {
   headers: { 'Authorization': `Bearer ${API_KEY}` }
 });
 ```

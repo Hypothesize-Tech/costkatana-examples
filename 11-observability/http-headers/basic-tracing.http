@@ -31,7 +31,7 @@ tracestate: costkatana=tracked
 # X-Request-Duration: 1250ms
 
 ### 2. View Trace Session
-GET {{baseUrl}}/v1/sessions/{{sessionId}}
+GET {{baseUrl}}/sessions/{{sessionId}}/details
 Authorization: Bearer {{apiKey}}
 
 # Response shows all requests in the session:
@@ -51,7 +51,7 @@ Authorization: Bearer {{apiKey}}
 # }
 
 ### 3. Get Specific Trace
-GET {{baseUrl}}/v1/traces/{{traceId}}
+GET {{baseUrl}}/sessions/{{traceId}}/graph
 Authorization: Bearer {{apiKey}}
 
 # Response shows detailed trace information:
@@ -136,7 +136,7 @@ traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-{{new_span_id}}-01
 }
 
 ### 6. View Complete Session Trace
-GET {{baseUrl}}/v1/sessions/multi_service_session/traces
+GET {{baseUrl}}/sessions/multi_service_session/details
 Authorization: Bearer {{apiKey}}
 
 # Shows trace hierarchy:

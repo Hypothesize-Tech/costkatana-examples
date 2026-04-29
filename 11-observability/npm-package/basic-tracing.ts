@@ -171,7 +171,7 @@ async function viewSessionTrace(sessionId: string) {
 
   try {
     const response = await fetch(
-      `https://api.costkatana.com/api/v1/sessions/${sessionId}`,
+      `https://api.costkatana.com/api/sessions/${sessionId}/details`,
       {
         headers: {
           'Authorization': `Bearer ${process.env.COST_KATANA_API_KEY}`
